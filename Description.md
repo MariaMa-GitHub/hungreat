@@ -30,8 +30,6 @@ We plan to make use of the Spoonacular API to implement our app's main features.
 
 **Spoonacular API Documentation:** [Link to Spoonacular API Docs](https://spoonacular.com/food-api/docs)
 
-Besides, to enhance the functionality of our project, we further plan to integrate weather API like OpenWeatherMap API, which considering weather data to suggest recipes based on the current weather conditions in the use's location. For example, it could recommend warm soup recipes on a cold day.
-
 
 ## API Usage Screenshot
 Below is a screenshot of using the Edamam Recipe API with Postman:
