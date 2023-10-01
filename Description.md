@@ -1,18 +1,36 @@
-# Recipe Organizer Project
+# Meal Planner Project
 
 ## Problem Domain
-Our team is focusing on the culinary domain. We aim to create a Recipe Organizer application that allows users to store, organize, and customize their favorite recipes. The application will provide features for managing ingredients, instructions, and categorizing recipes.
+Our team is focusing on the culinary domain. We will use an API that deals with recipes and meal planning in order to create a program that allow people to manage their diet.
 
 ## Application Description
-Our project involves developing a web or mobile application for recipe management. Users can input their recipes and store them in an organized manner. The application will also allow users to customize recipes, add ingredients and instructions, and search for recipes based on various criteria.
+Our project involves developing a desktop application for meal planning. We aim to create a Meal Planner application allows users to create, retrieve, and save recipes. The application will provide features such as recipe recommendations, recipe filtering, recipe analysis, and recipe sharing.
 
+The app will include the following functionalities:
+
+1. Recipe
+    1. Create own recipe
+    2. Search existing recipe
+    3. Save recipe
+    3. Customize saved recipe
+    4. Analyse the nutrition obtained
+2. Community
+    1. Allowing recipe sharing
+3. Meal Planner
+    1. Suggest recipe based on:
+        1. Calories
+        2. Proteins
+        3. Vegetarian
+        4. Allergies
+        5. Ingredients
+        6. Etc.
 
 ## API Documentation
-We plan to integrate the Edamam Recipe API to enhance our application's functionality. The Edamam Recipe API provides access to a vast database of recipes, nutritional information, and ingredient data.
+We plan to make use of the Spoonacular API to implement our app's main features. It provides access to a large database of recipes, nutritional information, and ingredient data.
 
-**Edamam Recipe API Documentation:** [Link to Edamam API Docs](https://developer.edamam.com/edamam-docs-recipe-api)
+**Spoonacular API Documentation:** [Link to Spoonacular API Docs](https://spoonacular.com/food-api/docs)
 
-Besides, to enhance the functionality of our project, we further plan to intgrate weather API like OpenWeatherMap API, which considering weather data to suggest recipes based on the current weather conditions in the use's location. For example, it could recommend warm soup recipes on a cold day.
+Besides, to enhance the functionality of our project, we further plan to integrate weather API like OpenWeatherMap API, which considering weather data to suggest recipes based on the current weather conditions in the use's location. For example, it could recommend warm soup recipes on a cold day.
 
 **OpenWeatherMap API Documentation:** [Link to OpenWeatherMap API Docs](https://www.meteomatics.com/en/api/getting-started/i)
 
