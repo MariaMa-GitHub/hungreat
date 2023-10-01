@@ -32,7 +32,7 @@ We plan to make use of the Spoonacular API to implement our app's main features.
 
 
 ## API Usage Screenshot
-Below is a screenshot of using the Edamam Recipe API with Postman:
+Below is a screenshot of using the Edamam Recipe API with Hoppscotch:
 
 ![Waiting for the picture](./pic/Week3.jpg)
 
