@@ -34,7 +34,7 @@ We plan to make use of the Spoonacular API to implement our app's main features.
 ## API Usage Screenshot
 Below is a screenshot of using the Spoonacular API with Hoppscotch:
 
-![Waiting for the picture](./pic/Week3.jpg)
+![Waiting for the picture](./img/api_call_example.jpg)
 
 ## Java Code Example
 ```
