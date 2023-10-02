@@ -13,17 +13,17 @@ The app will include the following functionalities:
     2. Search existing recipe
     3. Save recipe
     3. Customize saved recipe
-    4. Analyse the nutrition obtained
+    4. Analyze nutritional information
 2. Community
-    1. Allowing recipe sharing
+    1. Allow recipe sharing
 3. Meal Planner
-    1. Suggest recipe based on:
-        1. Calories
-        2. Proteins
-        3. Vegetarian
-        4. Allergies
-        5. Ingredients
-        6. Etc.
+    1. Suggest recipes based on:
+       1. Nutrition
+       2. Lifestyle
+       3. Allergies
+       4. Ingredients
+       5. Intolerances
+       6. Etc.
 
 ## API Documentation
 We plan to make use of the Spoonacular API to implement our app's main features. It provides access to a large database of recipes, nutritional information, and ingredient data.
