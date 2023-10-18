@@ -16,7 +16,7 @@ class RecipeInfoFactory {
 
 class NutritionDataFactory {
 
-    + NutritionData create(int recipeID, Map<String, float> nutrients)
+    + NutritionData create(int recipeID, Map<String, Float> nutrients)
 
 }
 
@@ -63,10 +63,10 @@ class RecipeInfo {
 class NutritionData {
 
     - int recipeID
-    - Map<String, float> nutrients
+    - Map<String, Float> nutrients
 
     + int getRecipeID()
-    + Map<String, float> getNutrients()
+    + Map<String, Float> getNutrients()
     + String analyze()
     + String toString()
 
@@ -79,7 +79,7 @@ abstract class SearchFilter {
     - Collection<String> diet
     - Collection<String> intolerances
     - Collection<String> excludeIngredients
-    - Map<String, float[]> nutrients
+    - Map<String, Float[]> nutrients
 
     + {abstract} Collection<Recipe> getMatchingRecipes()
 
@@ -101,6 +101,7 @@ class RecommendationSearchFilter {
 
 }
 
+Recipe *-- Recipe
 Recipe <.. RecipeFactory
 RecipeInfo <.. RecipeFactory
 NutritionData <.. RecipeFactory

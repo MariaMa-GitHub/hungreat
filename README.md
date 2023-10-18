@@ -43,7 +43,7 @@ import okhttp3.*;
 
 import org.json.JSONException;
 
-public class Main {
+public class app.Main {
 
     public static void main(String[] args) {
         OkHttpClient client = new OkHttpClient().newBuilder()
