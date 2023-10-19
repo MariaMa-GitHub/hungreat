@@ -20,7 +20,6 @@ public class Main {
         HomeView homeView = new HomeView();
         views.add(homeView);
 
-
         application.pack();
 
         application.setSize(800, 600);
