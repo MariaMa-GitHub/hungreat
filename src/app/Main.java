@@ -5,6 +5,7 @@ import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.recommend.RecommendController;
 import view.HomeView;
+import view.RecipeView;
 
 import javax.swing.*;
 
@@ -33,8 +34,6 @@ public class Main {
 
 
         application.add(homeView);
-
-
 
 
 

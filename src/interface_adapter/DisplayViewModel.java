@@ -10,35 +10,18 @@ import java.util.Collection;
 
 public class DisplayViewModel {
 
-    private ArrayList<JButton> recipeBtns = new ArrayList<>();
+    private ArrayList<Recipe> recipes = new ArrayList<>();
 
     public DisplayViewModel() {
     }
 
-    public ArrayList<JButton> getRecipes() {
-        return recipeBtns;
+    public ArrayList<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public void setRecipes(Collection<Recipe> recipes) {
+    public void setRecipes(ArrayList<Recipe> recipes) {
 
-        for (Recipe recipe : recipes) {
-
-            JButton button = new JButton(recipe.getTitle());
-            button.addActionListener(
-                    new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent evt) {
-                            if (evt.getSource().equals(button)) {
-
-                                // TODO (Everyone and Maria)
-
-                            }
-                        }
-                    }
-            );
-            recipeBtns.add(button);
-
-        }
+        this.recipes = recipes;
 
     }
 
