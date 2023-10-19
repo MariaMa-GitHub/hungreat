@@ -3,6 +3,7 @@ package app;
 import entity.NutritionDataFactory;
 import entity.RecipeFactory;
 import entity.RecipeInfoFactory;
+import interface_adapter.DisplayViewModel;
 import interface_adapter.recommend.RecommendController;
 import interface_adapter.recommend.RecommendPresenter;
 import use_case.recommend.RecommendDataAccessInterface;
@@ -17,10 +18,10 @@ public class RecommendUseCaseFactory {
 
     private RecommendUseCaseFactory() {}
 
-    public static RecommendController create(RecommendDataAccessInterface dataAccessObject) {
+    public static RecommendController create(RecommendDataAccessInterface dataAccessObject, DisplayViewModel displayViewModel) {
 
         try {
-            RecommendController recommendController = createRecommendUseCase(dataAccessObject);
+            RecommendController recommendController = createRecommendUseCase(dataAccessObject, displayViewModel);
             return recommendController;
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open data file.");
@@ -29,9 +30,9 @@ public class RecommendUseCaseFactory {
         return null;
     }
 
-    private static RecommendController createRecommendUseCase(RecommendDataAccessInterface dataAccessObject) throws IOException {
+    private static RecommendController createRecommendUseCase(RecommendDataAccessInterface dataAccessObject, DisplayViewModel displayViewModel) throws IOException {
 
-        RecommendOutputBoundary recommendOutputBoundary = new RecommendPresenter();
+        RecommendOutputBoundary recommendOutputBoundary = new RecommendPresenter(displayViewModel);
 
         RecipeFactory recipeFactory = new RecipeFactory();
         RecipeInfoFactory recipeInfoFactory = new RecipeInfoFactory();

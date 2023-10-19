@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.SearchController;
+import interface_adapter.DisplayViewModel;
 import interface_adapter.recommend.RecommendController;
 
 import javax.swing.*;
@@ -20,7 +21,13 @@ public class SearchView extends JFrame {
     final JTextField excludeIngredientsInput;
     final JTextField nutrientsInput;
 
-    public SearchView(String function, SearchController controller) {
+    private final SearchController controller;
+    private final DisplayViewModel displayViewModel;
+
+    public SearchView(String function, SearchController controller, DisplayViewModel displayViewModel) {
+
+        this.controller = controller;
+        this.displayViewModel = displayViewModel;
 
         this.setTitle("Search Recipes");
 
@@ -292,6 +299,8 @@ public class SearchView extends JFrame {
                                         getExcludeIngredientsInput(),
                                         getNutrientsInput()
                                 );
+
+                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
 
                             }
 

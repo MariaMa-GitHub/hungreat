@@ -81,7 +81,7 @@ public class RecommendInteractor implements RecommendInputBoundary {
         }
 
         RecommendOutputData recommendOutputData = new RecommendOutputData(recipes);
-//        recommendPresenter.prepareSuccessView(recommendOutputData);
+        recommendPresenter.prepareSuccessView(recommendOutputData);
 
     }
 

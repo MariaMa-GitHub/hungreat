@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.recommend.RecommendController;
 
@@ -16,7 +17,7 @@ public class HomeView extends JPanel {
     final JButton export;
     final JPanel savedRecipesList;
 
-    public HomeView(BrowseController browseController, RecommendController recommendController) {
+    public HomeView(BrowseController browseController, RecommendController recommendController, DisplayViewModel displayViewModel) {
 
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(800, 600));
@@ -114,7 +115,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Maria)
 
-                            SearchView searchView = new SearchView("recommend", recommendController);
+                            SearchView searchView = new SearchView("recommend", recommendController, displayViewModel);
 
                         }
                     }
