@@ -76,10 +76,49 @@ public class HomeView extends JPanel {
         gbc.gridheight = 6;
         this.add(scrPane, gbc);
 
+        create.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(create)) {
+
+                            // TODO
+
+
+                        }
+                    }
+                }
+        );
+
         browse.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(browse)) {
+
+                            // TODO
+
+
+                        }
+                    }
+                }
+        );
+
+        recommend.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(recommend)) {
+
+                            // TODO
+
+
+                        }
+                    }
+                }
+        );
+
+        export.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(export)) {
 
                             // TODO
 
