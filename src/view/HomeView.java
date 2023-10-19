@@ -80,7 +80,10 @@ public class HomeView extends JPanel {
 
         create.addActionListener(
                 new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
+                        // ^_^
+                        JOptionPane.showMessageDialog(null, "Maria太c了！");
                         if (evt.getSource().equals(create)) {
 
                             // TODO
@@ -92,7 +95,10 @@ public class HomeView extends JPanel {
 
         browse.addActionListener(
                 new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
+                        // ^_^
+                        JOptionPane.showMessageDialog(null, "Maria无敌！");
                         if (evt.getSource().equals(browse)) {
 
                             // TODO
@@ -105,7 +111,10 @@ public class HomeView extends JPanel {
 
         recommend.addActionListener(
                 new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
+                        // ^_^
+                        JOptionPane.showMessageDialog(null, "Maria我的神！");
                         if (evt.getSource().equals(recommend)) {
 
                             // TODO
@@ -117,7 +126,10 @@ public class HomeView extends JPanel {
 
         export.addActionListener(
                 new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent evt) {
+                        // ^_^
+                        JOptionPane.showMessageDialog(null, "Maria tql！");
                         if (evt.getSource().equals(export)) {
 
                             // TODO

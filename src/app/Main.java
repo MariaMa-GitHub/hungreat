@@ -44,7 +44,6 @@ public class Main {
 
 
 
-
         application.pack();
 
         application.setSize(800, 600);
