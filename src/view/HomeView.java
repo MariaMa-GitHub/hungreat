@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.browse.BrowseController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +15,7 @@ public class HomeView extends JPanel {
     final JButton export;
     final JPanel savedRecipesList;
 
-    public HomeView() {
+    public HomeView(BrowseController browseController) {
 
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(800, 600));
@@ -83,7 +85,6 @@ public class HomeView extends JPanel {
 
                             // TODO
 
-
                         }
                     }
                 }
@@ -95,7 +96,7 @@ public class HomeView extends JPanel {
                         if (evt.getSource().equals(browse)) {
 
                             // TODO
-
+                            browseController.execute();
 
                         }
                     }
@@ -109,7 +110,6 @@ public class HomeView extends JPanel {
 
                             // TODO
 
-
                         }
                     }
                 }
@@ -122,14 +122,11 @@ public class HomeView extends JPanel {
 
                             // TODO
 
-
                         }
                     }
                 }
         );
 
     }
-
-
 
 }

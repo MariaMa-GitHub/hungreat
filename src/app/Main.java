@@ -1,8 +1,15 @@
 package app;
 
+import data_access.RecipeDataAccessObject;
+import interface_adapter.browse.BrowseController;
 import view.HomeView;
+import view.SearchView;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -13,12 +20,29 @@ public class Main {
         JFrame application = new JFrame("Hungreat");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        GridBagLayout layout = new GridBagLayout();
-        JPanel views = new JPanel(layout);
-        application.add(views);
 
-        HomeView homeView = new HomeView();
-        views.add(homeView);
+        RecipeDataAccessObject dataAccessObject;
+//        try {
+            dataAccessObject = new RecipeDataAccessObject();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+        BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject);
+        HomeView homeView = new HomeView(browseController);
+
+
+        application.add(homeView);
+
+
+
+
+
+
+
+
+
 
 
         application.pack();
