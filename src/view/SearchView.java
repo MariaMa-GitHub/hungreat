@@ -302,6 +302,10 @@ public class SearchView extends JFrame {
 
                                 DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
 
+                                JComponent comp = (JComponent) evt.getSource();
+                                Window win = SwingUtilities.getWindowAncestor(comp);
+                                win.dispose();
+
                             }
 
 

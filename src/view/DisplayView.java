@@ -28,4 +28,5 @@ public class DisplayView extends JFrame {
         this.setVisible(true);
         
     }
+
 }

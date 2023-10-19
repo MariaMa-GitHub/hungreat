@@ -1,7 +1,6 @@
 package interface_adapter;
 
 import entity.Recipe;
-import view.SearchView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -38,7 +37,6 @@ public class DisplayViewModel {
                     }
             );
             recipeBtns.add(button);
-
 
         }
 
