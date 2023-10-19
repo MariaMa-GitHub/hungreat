@@ -2,14 +2,8 @@ package app;
 
 import data_access.RecipeDataAccessObject;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.recommend.RecommendController;
 import view.HomeView;
-import view.SearchView;
-
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.IOException;
 
 import javax.swing.*;
 
@@ -30,7 +24,8 @@ public class Main {
 
 
         BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject);
-        HomeView homeView = new HomeView(browseController);
+        RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject);
+        HomeView homeView = new HomeView(browseController, recommendController);
 
 
         application.add(homeView);
