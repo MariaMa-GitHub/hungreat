@@ -82,11 +82,9 @@ public class HomeView extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        // ^_^
-                        JOptionPane.showMessageDialog(null, "Maria太c了！");
                         if (evt.getSource().equals(create)) {
 
-                            // TODO
+                            // TODO (Michelle)
 
                         }
                     }
@@ -97,11 +95,9 @@ public class HomeView extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        // ^_^
-                        JOptionPane.showMessageDialog(null, "Maria无敌！");
                         if (evt.getSource().equals(browse)) {
 
-                            // TODO
+                            // TODO (Everyone)
                             browseController.execute();
 
                         }
@@ -113,11 +109,9 @@ public class HomeView extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        // ^_^
-                        JOptionPane.showMessageDialog(null, "Maria我的神！");
                         if (evt.getSource().equals(recommend)) {
 
-                            // TODO
+                            // TODO (Maria)
 
                         }
                     }
@@ -128,11 +122,9 @@ public class HomeView extends JPanel {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        // ^_^
-                        JOptionPane.showMessageDialog(null, "Maria tql！");
                         if (evt.getSource().equals(export)) {
 
-                            // TODO
+                            // TODO (Chloe)
 
                         }
                     }
