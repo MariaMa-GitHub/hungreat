@@ -1,15 +1,11 @@
 package app;
 
 import data_access.RecipeDataAccessObject;
+import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.recommend.RecommendController;
 import view.HomeView;
-import view.SearchView;
-
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.IOException;
+import view.RecipeView;
 
 import javax.swing.*;
 
@@ -21,6 +17,8 @@ public class Main {
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
+        DisplayViewModel displayViewModel = new DisplayViewModel();
+
         RecipeDataAccessObject dataAccessObject;
 //        try {
             dataAccessObject = new RecipeDataAccessObject();
@@ -30,12 +28,12 @@ public class Main {
 
 
         BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject);
-        HomeView homeView = new HomeView(browseController);
+
+        RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, displayViewModel);
+        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel);
 
 
         application.add(homeView);
-
-
 
 
 

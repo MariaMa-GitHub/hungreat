@@ -1,8 +1,15 @@
 package view;
 
+import interface_adapter.SearchController;
+import interface_adapter.DisplayViewModel;
+import interface_adapter.recommend.RecommendController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class SearchView extends JFrame {
 
@@ -14,18 +21,22 @@ public class SearchView extends JFrame {
     final JTextField excludeIngredientsInput;
     final JTextField nutrientsInput;
 
-    public SearchView() {
+    private final SearchController controller;
+    private final DisplayViewModel displayViewModel;
 
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    public SearchView(String function, SearchController controller, DisplayViewModel displayViewModel) {
+
+        this.controller = controller;
+        this.displayViewModel = displayViewModel;
+
+        this.setTitle("Search Recipes");
 
         JPanel searchWindow = new JPanel();
-//        searchWindow.setPreferredSize(new Dimension(800, 600));
         searchWindow.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5,5,5,5);
-//        gbc.weighty = 1d;
 
         // title
 
@@ -240,7 +251,7 @@ public class SearchView extends JFrame {
         gbc.gridy = 7;
         gbc.ipadx = 350;
 
-        nutrientsInput = new PTextField("Separate fields (nutrient : value) by comma");
+        nutrientsInput = new PTextField("Separate fields (nutrient : range) by comma");
         nutrientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
         nutrientsInput.setForeground(Color.DARK_GRAY);
         nutrientsInput.setOpaque(false);
@@ -274,7 +285,29 @@ public class SearchView extends JFrame {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(create)) {
 
-                            // TODO
+                            // TODO (Everyone and Maria)
+
+                            if (function.equals("recommend")) {
+
+                                RecommendController recommendController = (RecommendController) controller;
+                                recommendController.execute(
+                                        getCuisineInput(),
+                                        getExcludeCuisineInput(),
+                                        getDietInput(),
+                                        getIntolerancesInput(),
+                                        getIngredientsInput(),
+                                        getExcludeIngredientsInput(),
+                                        getNutrientsInput()
+                                );
+
+                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
+
+                                JComponent comp = (JComponent) evt.getSource();
+                                Window win = SwingUtilities.getWindowAncestor(comp);
+                                win.dispose();
+
+                            }
+
 
                         }
                     }
@@ -301,4 +334,54 @@ public class SearchView extends JFrame {
 
     }
 
+    public ArrayList<String> getCuisineInput() {
+        String text = cuisineInput.getText().strip();
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        return inputs;
+    }
+
+    public ArrayList<String> getExcludeCuisineInput() {
+        String text = excludeCuisineInput.getText().strip();
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        return inputs;
+    }
+
+    public ArrayList<String> getDietInput() {
+        String text = dietInput.getText().strip();
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        return inputs;
+    }
+
+    public ArrayList<String> getIntolerancesInput() {
+        String text = intolerancesInput.getText().strip();
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        return inputs;
+    }
+
+    public ArrayList<String> getIngredientsInput() {
+        String text = ingredientsInput.getText().strip();
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        return inputs;
+    }
+
+    public ArrayList<String> getExcludeIngredientsInput() {
+        String text = excludeIngredientsInput.getText().strip();
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        return inputs;
+    }
+
+    public HashMap<String, Float[]> getNutrientsInput() {
+
+        String text = nutrientsInput.getText().strip();
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        HashMap<String, Float[]> nutrients = new HashMap<>();
+        for (String input : inputs) {
+            ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
+            ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
+            Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
+            nutrients.put(nutrient.get(0), values);
+        }
+
+        return nutrients;
+    }
 }
