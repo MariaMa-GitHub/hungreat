@@ -47,7 +47,7 @@ public class DisplayView extends JFrame {
                         if (evt.getSource().equals(button)) {
 
                             // TODO (Everyone and Maria)
-//                            RecipeView recipeView = new RecipeView(recipe);
+                            RecipeView recipeView = new RecipeView(recipe);
 
                         }
                     }

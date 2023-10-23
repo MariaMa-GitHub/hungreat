@@ -275,15 +275,15 @@ public class SearchView extends JFrame {
         gbc.gridwidth = 2;
         gbc.insets = new Insets(30, 0, 30, 0);
 
-        JButton create = new JButton("Create Recipe");
-        create.setFont(new Font("Arial", Font.PLAIN, 18));
-        create.setPreferredSize(new Dimension(50, 10));
-        searchWindow.add(create, gbc);
+        JButton search = new JButton("Search Recipe");
+        search.setFont(new Font("Arial", Font.PLAIN, 18));
+        search.setPreferredSize(new Dimension(50, 10));
+        searchWindow.add(search, gbc);
 
-        create.addActionListener(
+        search.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(create)) {
+                        if (evt.getSource().equals(search)) {
 
                             // TODO (Everyone and Maria)
 
