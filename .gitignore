@@ -1,0 +1,10 @@
+# Ignore the files in 'out' directory
+out/
+
+# Ignore the files in '.idea' directory
+.idea/
+
+# Ignore the files ending with '.xml'
+*.xml
+
+
