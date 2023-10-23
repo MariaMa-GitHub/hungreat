@@ -1,0 +1,12 @@
+# Ignore the files inside the 'out' directory
+out/
+
+# Ignore the files inside the '.idea' directory
+.idea/
+
+# Ignore the files ending with .xml
+*.xml
+
+# Ignore the files ending with .gitignore
+*.gitignore
+
