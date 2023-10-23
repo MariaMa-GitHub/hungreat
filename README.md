@@ -1,7 +1,7 @@
 # Meal Planner Project
 
 ## Problem Domain
-Our team is focusing on the culinary domain. We will use an API that deals with recipes and meal planning in order to create a program that allow people to manage their diet.
+Our team is focusing on the culinary domain. We will use an API that deals with recipes and meal planning in order to create a program that allow people to look for recipes that suit their needs.
 
 ## Application Description
 Our project involves developing a desktop application for meal planning. We aim to create a Meal Planner application allows users to create, retrieve, and save recipes. The application will provide features such as recipe recommendations, recipe filtering, recipe analysis, and recipe sharing.
