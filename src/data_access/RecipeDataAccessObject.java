@@ -1,9 +1,9 @@
 package data_access;
 
+import entity.BrowseFilter;
 import entity.Recipe;
 import entity.RecipeInfo;
 import use_case.browse.BrowseDataAccessInterface;
-import use_case.browse.BrowseInputData;
 import use_case.recommend.RecommendDataAccessInterface;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     private final Map<String, Recipe> savedRecipes = new HashMap<>();
 
     @Override
-    public ArrayList<Recipe> browse(BrowseInputData browseInputData) {
+    public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
         return null;
     }
 
