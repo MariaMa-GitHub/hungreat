@@ -1,4 +1,4 @@
 package entity;
 
-public class RecommendFilter {
+public class RecommendFilter extends Filter{
 }

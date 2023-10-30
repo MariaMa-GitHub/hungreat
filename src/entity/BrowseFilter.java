@@ -1,4 +1,4 @@
 package entity;
 
-public class BrowseFilter {
+public class BrowseFilter extends Filter {
 }
