@@ -14,5 +14,7 @@ public class BrowseFilter extends Filter {
         this.query = query;
     }
 
-
+    public String getQuery() {
+        return query;
+    }
 }
