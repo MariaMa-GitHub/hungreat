@@ -3,6 +3,7 @@ package data_access;
 import entity.BrowseFilter;
 import entity.Recipe;
 import entity.RecipeInfo;
+import entity.RecommendFilter;
 import use_case.browse.BrowseDataAccessInterface;
 import use_case.recommend.RecommendDataAccessInterface;
 
@@ -18,7 +19,10 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return null;
     }
 
+    public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {return null;}
+
     public RecipeInfo getRecipeInfo(int recipeID){
         return null;
     }
+
 }

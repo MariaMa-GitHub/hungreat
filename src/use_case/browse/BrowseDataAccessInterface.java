@@ -10,6 +10,4 @@ public interface BrowseDataAccessInterface {
 
     ArrayList<Recipe> browse(BrowseFilter browseFilter);
 
-
-
 }
