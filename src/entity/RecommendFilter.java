@@ -17,4 +17,19 @@ public class RecommendFilter extends Filter{
         this.type = type;
     }
 
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public String getExcludeCuisine() {
+        return excludeCuisine;
+    }
+
+    public String getType() {
+        return type;
+    }
 }
