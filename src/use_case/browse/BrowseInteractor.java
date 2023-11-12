@@ -15,4 +15,8 @@ public class BrowseInteractor implements BrowseInputBoundary {
         this.browsePresenter = browseOutputBoundary;
     }
 
+    @Override
+    public void execute(BrowseInputData browseInputData) {
+
+    }
 }

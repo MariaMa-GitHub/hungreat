@@ -9,6 +9,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
+import org.json.JSONObject;
 import use_case.browse.BrowseDataAccessInterface;
 import use_case.recommend.RecommendDataAccessInterface;
 
@@ -36,11 +37,24 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                 .build();
         
         try{
-            Response response = client.newCall(request).execute();
+            //handling data in the returned json-format recipes
+            Response response = client.newCall(request).execute();  //make the request and get response from the api
+            JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
+
+            //handle different status code. consult documentation (RecipesApi.md) to see response details.
+            if (response.code() == 200) {    //success. For our api, responseBody does not contain object "code", but response always has a code.
+                //TODO: implement
+            } else if (responseBody.getInt("code") == 401) {    //unauthorized. responseBody has "code" object for failed status.
+                throw new RuntimeException(responseBody.getString("message"));
+            } else if (responseBody.getInt("code") == 403) {    //forbidden
+                throw new RuntimeException(responseBody.getString("message"));
+            } else if (responseBody.getInt("code") == 404) {    //not found
+                throw new RuntimeException(responseBody.getString("message"));
+            }
+
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
-
 
         return null;
     }
