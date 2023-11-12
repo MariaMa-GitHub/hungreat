@@ -13,40 +13,40 @@ public class Main {
 
     public static void main(String[] args) {
 
-        JFrame application = new JFrame("Hungreat");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-
-        DisplayViewModel displayViewModel = new DisplayViewModel();
-
-        RecipeDataAccessObject dataAccessObject;
-//        try {
-            dataAccessObject = new RecipeDataAccessObject();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
-
-        BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject);
-
-        RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, displayViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel);
-
-
-        application.add(homeView);
-
-
-
-
-
-
-
-
-        application.pack();
-
-        application.setSize(800, 600);
-        application.setLocationRelativeTo(null);
-        application.setVisible(true);
+//        JFrame application = new JFrame("Hungreat");
+//        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//
+//
+//        DisplayViewModel displayViewModel = new DisplayViewModel();
+//
+//        RecipeDataAccessObject dataAccessObject;
+////        try {
+//            dataAccessObject = new RecipeDataAccessObject();
+////        } catch (IOException e) {
+////            throw new RuntimeException(e);
+////        }
+//
+//
+//        BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject);
+//
+//        RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, displayViewModel);
+//        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel);
+//
+//
+//        application.add(homeView);
+//
+//
+//
+//
+//
+//
+//
+//
+//        application.pack();
+//
+//        application.setSize(800, 600);
+//        application.setLocationRelativeTo(null);
+//        application.setVisible(true);
 
 
 
@@ -63,6 +63,12 @@ public class Main {
 //        catch (IOException | JSONException e) {
 //            throw new RuntimeException(e);
 //        }
+
+
+
+        //Test api call - browse
+
+
 
     }
 

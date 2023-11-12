@@ -4,6 +4,8 @@ import entity.BrowseFilter;
 import entity.Recipe;
 import entity.RecipeInfo;
 import entity.RecommendFilter;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import use_case.browse.BrowseDataAccessInterface;
 import use_case.recommend.RecommendDataAccessInterface;
 
@@ -12,10 +14,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RecipeDataAccessObject implements BrowseDataAccessInterface, RecommendDataAccessInterface {
+
+    private static final String API_KEY = System.getenv("API_KEY");     //load API key from environment variable
     private final Map<String, Recipe> savedRecipes = new HashMap<>();
 
     @Override
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
+        //Accessing query parameters from the browse filter
+        String query = browseFilter.getQuery();
+        String diet = browseFilter.getDiet();
+        String excludeIngredients = browseFilter.getExcludeIngredients();
+        String intolerances = browseFilter.getIntolerances();
+        Map<String, Float> nutritionRequirements = browseFilter.getNutritionRequirements();
+
+        ArrayList<Recipe> recipes = new ArrayList<>();  //creating the list to store returned recipes later
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
+
+        //creating the request url for a searching recipe request
+        StringBuilder urlBuilder
+                = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");   //the base request url for searching recipes
+        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+        //add all user-defined query parameters to the request url
+        //checking for null because the absence of some parameter values will cause 404 error
+        if (query != null) {urlBuilder.append("&query=").append(query);}
+        if (diet != null) {urlBuilder.append("&diet=").append(diet);}
+        if (excludeIngredients != null) {urlBuilder.append("&excludeIngredients=").append(excludeIngredients);}
+        if (intolerances != null) {urlBuilder.append("&intolerances=").append(intolerances);}
+        for (Map.Entry<String, Float> nutritionRequirement : nutritionRequirements.entrySet()) {
+            String nutrientRequirementName = nutritionRequirement.getKey();
+            Float nutrientRequirementValue = nutritionRequirement.getValue();
+            if (nutrientRequirementValue != null) {
+                urlBuilder.append("&").append(nutrientRequirementName).append("=").append(nutrientRequirementValue);
+            }
+        }
+        String url = urlBuilder.toString();     //convert the request url we built to string
+
+        Request request = new Request.Builder()
+                .url()
+
+
         return null;
     }
 
