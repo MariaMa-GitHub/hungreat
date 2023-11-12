@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import use_case.browse.BrowseDataAccessInterface;
@@ -33,7 +34,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         //creating the request for searching recipes
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("Content-Type", "application/json")  //TODO:[Q] delete? what is the porpuse of headers?
+                .addHeader("Content-Type", "application/json")  //TODO:[Q] delete? what is the purpose of headers?
                 .build();
         
         try{
@@ -41,10 +42,20 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
             Response response = client.newCall(request).execute();  //make the request and get response from the api
             JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
 
-            //handle different status code. consult documentation (RecipesApi.md) to see response details.
-            if (response.code() == 200) {    //success. For our api, responseBody does not contain object "code", but response always has a code.
-                //TODO: implement
-            } else if (responseBody.getInt("code") == 401) {    //unauthorized. responseBody has "code" object for failed status.
+            //Handle different status code. consult documentation (RecipesApi.md) to see response details.
+            //For our api, responseBody does not contain object "code" when success, but response always contains code.
+            //For failed status, responseBody contains "code" object.
+            if (response.code() == 200) {    //success.
+                JSONArray results = responseBody.getJSONArray("results");   //get the returned recipes
+                for (int i = 0; i < results.length(); i++) {    //loop over each recipe object in results
+                    JSONObject rawRecipe = results.getJSONObject(i);
+                    int id = rawRecipe.getInt("id");
+                    String title = rawRecipe.getString("title");
+                    String imageUrl = rawRecipe.getString("image");
+                    //TODO: search + addInfo & addNutrition & fillIngredienrts / different api calls?
+                }
+
+            } else if (responseBody.getInt("code") == 401) {    //unauthorized.
                 throw new RuntimeException(responseBody.getString("message"));
             } else if (responseBody.getInt("code") == 403) {    //forbidden
                 throw new RuntimeException(responseBody.getString("message"));
