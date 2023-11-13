@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BrowseInputData {
-    final private Map<String, Float> nutritionRequirements;
+    final private Map<String, Float> nutrients;
     final private String diet;
-    final private String intolerances;
+    final private String intolerance;
     final private String excludeIngredients;
     private final String query;
-    public BrowseInputData(String diet, String intolerances, String excludeIngredients, Map<String, Float> nutritionRequirements,String query) {
+    public BrowseInputData(String diet, String intolerance, String excludeIngredients, Map<String, Float> nutrients,String query) {
         this.diet = diet;
-        this.intolerances = intolerances;
+        this.intolerance = intolerance;
         this.excludeIngredients = excludeIngredients;
-        this.nutritionRequirements = nutritionRequirements;
+        this.nutrients = nutrients;
         this.query = query;
         }
 
@@ -21,16 +21,16 @@ public class BrowseInputData {
         return diet;
     }
 
-    public String getIntolerances() {
-        return intolerances;
+    public String getIntolerance() {
+        return intolerance;
     }
 
     public String getExcludeIngredients() {
         return excludeIngredients;
     }
 
-    public Map<String, Float> getNutritionRequirements() {
-        return nutritionRequirements;
+    public Map<String, Float> getNutrients() {
+        return nutrients;
     }
     public String getQuery() {
         return query;
