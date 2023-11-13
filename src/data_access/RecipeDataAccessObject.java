@@ -54,32 +54,36 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                     String title = rawRecipe.getString("title");
                     String imageUrl = rawRecipe.getString("image");
                     String recipeURL = rawRecipe.getString("sourceUrl");
+
                     //get the recipeInfo information
                     RecipeInfo recipeInfo = getRecipeInfo(id);
+
                     // get the nutritionData information TODO: test
-                    Map<String[], Float> nutrients = new HashMap<>();
+                    Map<String, String> nutrients = new HashMap<>();
                     JSONArray rawNutrients = rawRecipe.getJSONObject("nutrition").getJSONArray("nutrients");
                     for (int j = 0; j < rawNutrients.length(); j++) {
                         JSONObject rawNutrient = rawNutrients.getJSONObject(j);
                         String nutrientName = rawNutrient.getString("name");
                         String nutrientUnit = rawNutrient.getString("unit");
                         Float nutrientAmount = rawNutrient.getFloat("amount");
-                        String[] nameAndUnit = new String[2];
-                        nameAndUnit[0] = nutrientName;
-                        nameAndUnit[1] = nutrientUnit;
-                        nutrients.put(nameAndUnit, nutrientAmount);
+                        String amountAndUnit = nutrientAmount + nutrientUnit;
+                        nutrients.put(nutrientName, amountAndUnit);
                     }
                     NutritionData nutritionData = new NutritionData(id, nutrients);
+
+                    // create a recipe and put into the recipes list
                     Recipe recipe = new Recipe(
                             id,
                             title,
                             recipeURL,
                             imageUrl,
                             recipeInfo,
-                            nutrients
+                            nutritionData
                     );
+                    recipes.add(recipe);
 
                 }
+                return recipes;
 
             } else if (responseBody.getInt("code") == 401) {    //unauthorized.
                 throw new RuntimeException(responseBody.getString("message"));
