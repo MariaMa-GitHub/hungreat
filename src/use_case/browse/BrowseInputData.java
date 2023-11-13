@@ -8,12 +8,13 @@ public class BrowseInputData {
     final private String diet;
     final private String intolerances;
     final private String excludeIngredients;
-
-    public BrowseInputData(String diet, String intolerances, String excludeIngredients, Map<String, Float> nutritionRequirements) {
+    private final String query;
+    public BrowseInputData(String diet, String intolerances, String excludeIngredients, Map<String, Float> nutritionRequirements,String query) {
         this.diet = diet;
         this.intolerances = intolerances;
         this.excludeIngredients = excludeIngredients;
         this.nutritionRequirements = nutritionRequirements;
+        this.query = query;
         }
 
     public String getDiet() {
@@ -30,6 +31,9 @@ public class BrowseInputData {
 
     public Map<String, Float> getNutritionRequirements() {
         return nutritionRequirements;
+    }
+    public String getQuery() {
+        return query;
     }
 }
 
