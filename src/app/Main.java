@@ -44,12 +44,6 @@ public class Main {
         application.add(homeView);
 
 
-
-
-
-
-
-
         application.pack();
 
         application.setSize(800, 600);
