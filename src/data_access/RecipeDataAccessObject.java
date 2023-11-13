@@ -1,9 +1,6 @@
 package data_access;
 
-import entity.BrowseFilter;
-import entity.Recipe;
-import entity.RecipeInfo;
-import entity.RecommendFilter;
+import entity.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -27,7 +24,6 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     @Override
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
         String url = getBrowseUrl(browseFilter);
-
         return searchRecipes(url);
     }
 
@@ -57,6 +53,30 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                     int id = rawRecipe.getInt("id");
                     String title = rawRecipe.getString("title");
                     String imageUrl = rawRecipe.getString("image");
+                    String recipeURL = rawRecipe.getString("sourceUrl");
+                    RecipeInfo recipeInfo = getRecipeInfo(id);
+                    // get the nutrition information TODO: test
+                    Map<String[], Float> nutrients = new HashMap<>();
+                    JSONArray rawNutrients = rawRecipe.getJSONObject("nutrition").getJSONArray("nutrients");
+                    for (int j = 0; j < rawNutrients.length(); j++) {
+                        JSONObject rawNutrient = rawNutrients.getJSONObject(j);
+                        String nutrientName = rawNutrient.getString("name");
+                        String nutrientUnit = rawNutrient.getString("unit");
+                        Float nutrientAmount = rawNutrient.getFloat("amount");
+                        String[] nameAndUnit = new String[2];
+                        nameAndUnit[0] = nutrientName;
+                        nameAndUnit[1] = nutrientUnit;
+                        nutrients.put(nameAndUnit, nutrientAmount);
+                    }
+                    NutritionData nutritionData = new NutritionData(id, nutrients);
+                    Recipe recipe = new Recipe(
+                            id,
+                            title,
+                            recipeURL,
+                            imageUrl,
+                            recipeInfo,
+                            nutrients
+                    );
 
                 }
 
@@ -91,6 +111,8 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         StringBuilder urlBuilder
                 = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");
         urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+        urlBuilder.append("&fillIngredients=true")
+                .append("&addRecipeInformation=true").append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
         //add all user-defined query parameters to the request url
         //checking for null because the absence of some parameter values will cause 404 error
