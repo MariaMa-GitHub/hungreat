@@ -5,9 +5,9 @@ import java.util.Map;
 public class NutritionData {
 
     private int recipeID;
-    private Map<String, Float> nutrients;
+    private Map<String[], Float> nutrients;
 
-    public NutritionData(int recipeID, Map<String, Float> nutrients) {
+    public NutritionData(int recipeID, Map<String[], Float> nutrients) {
         this.recipeID = recipeID;
         this.nutrients = nutrients;
     }
@@ -16,7 +16,7 @@ public class NutritionData {
         return recipeID;
     }
 
-    public Map<String, Float> getNutrients() {
+    public Map<String[], Float> getNutrients() {
         return nutrients;
     }
 

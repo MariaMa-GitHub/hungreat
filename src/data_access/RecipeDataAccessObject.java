@@ -54,8 +54,9 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                     String title = rawRecipe.getString("title");
                     String imageUrl = rawRecipe.getString("image");
                     String recipeURL = rawRecipe.getString("sourceUrl");
+                    //get the recipeInfo information
                     RecipeInfo recipeInfo = getRecipeInfo(id);
-                    // get the nutrition information TODO: test
+                    // get the nutritionData information TODO: test
                     Map<String[], Float> nutrients = new HashMap<>();
                     JSONArray rawNutrients = rawRecipe.getJSONObject("nutrition").getJSONArray("nutrients");
                     for (int j = 0; j < rawNutrients.length(); j++) {
