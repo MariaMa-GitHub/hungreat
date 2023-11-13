@@ -7,7 +7,7 @@ import entity.RecommendFilter;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,17 +26,22 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
     @Override
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
-        ArrayList<Recipe> recipes = new ArrayList<>();  //creating the list to store returned recipes later
-        //TODO: Test the requesting section
-        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
         String url = getBrowseUrl(browseFilter);
+
+        return searchRecipes(url);
+    }
+
+    @Nullable
+    private ArrayList<Recipe> searchRecipes(String url) {
+        ArrayList<Recipe> recipes = new ArrayList<>();  //creating the list to store returned recipes later
+        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
 
         //creating the request for searching recipes
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("Content-Type", "application/json")  //TODO:[Q] delete? what is the purpose of headers?
                 .build();
-        
+
         try{
             //handling data in the returned json-format recipes
             Response response = client.newCall(request).execute();  //make the request and get response from the api
@@ -52,7 +57,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                     int id = rawRecipe.getInt("id");
                     String title = rawRecipe.getString("title");
                     String imageUrl = rawRecipe.getString("image");
-                    //TODO: search + addInfo & addNutrition & fillIngredienrts / different api calls?
+
                 }
 
             } else if (responseBody.getInt("code") == 401) {    //unauthorized.
@@ -70,7 +75,10 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return null;
     }
 
-    @NotNull
+    public RecipeInfo getRecipeInfo(int recipeID){
+        return null;
+    }
+
     private String getBrowseUrl(BrowseFilter browseFilter) {
         //Accessing query parameters from the browse filter
         String query = browseFilter.getQuery();
@@ -103,9 +111,5 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {return null;}
-
-    public RecipeInfo getRecipeInfo(int recipeID){
-        return null;
-    }
 
 }
