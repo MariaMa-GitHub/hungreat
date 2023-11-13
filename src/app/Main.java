@@ -44,12 +44,6 @@ public class Main {
         application.add(homeView);
 
 
-
-
-
-
-
-
         application.pack();
 
         application.setSize(800, 600);
@@ -74,7 +68,7 @@ public class Main {
 
 
 
-        //Test api call - browse
+////        Test api call - browse
 //        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
 //
 //        String API_KEY = System.getenv("API_KEY");
@@ -89,8 +83,9 @@ public class Main {
 //
 //        StringBuilder urlBuilder
 //                = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");
-//        System.out.println(API_KEY);
 //        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+//        urlBuilder.append("&fillIngredients=true")
+//                .append("&addRecipeInformation=true").append("&addRecipeNutrition=true&number=2");
 //
 //        //add all user-defined query parameters to the request url
 //        //checking for null because the absence of some parameter values will cause 404 error
@@ -131,7 +126,6 @@ public class Main {
 //        } catch (IOException | JSONException e) {
 //            throw new RuntimeException(e);
 //        }
-
 
     }
 

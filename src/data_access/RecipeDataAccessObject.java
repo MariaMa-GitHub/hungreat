@@ -1,13 +1,10 @@
 package data_access;
 
-import entity.BrowseFilter;
-import entity.Recipe;
-import entity.RecipeInfo;
-import entity.RecommendFilter;
+import entity.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,17 +23,21 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
     @Override
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
-        ArrayList<Recipe> recipes = new ArrayList<>();  //creating the list to store returned recipes later
-        //TODO: Test the requesting section
-        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
         String url = getBrowseUrl(browseFilter);
+        return searchRecipes(url);
+    }
+
+    @Nullable
+    private ArrayList<Recipe> searchRecipes(String url) {
+        ArrayList<Recipe> recipes = new ArrayList<>();  //creating the list to store returned recipes later
+        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
 
         //creating the request for searching recipes
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("Content-Type", "application/json")  //TODO:[Q] delete? what is the purpose of headers?
                 .build();
-        
+
         try{
             //handling data in the returned json-format recipes
             Response response = client.newCall(request).execute();  //make the request and get response from the api
@@ -52,8 +53,37 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                     int id = rawRecipe.getInt("id");
                     String title = rawRecipe.getString("title");
                     String imageUrl = rawRecipe.getString("image");
-                    //TODO: search + addInfo & addNutrition & fillIngredienrts / different api calls?
+                    String recipeURL = rawRecipe.getString("sourceUrl");
+
+                    //get the recipeInfo information
+                    RecipeInfo recipeInfo = getRecipeInfo(id);
+
+                    // get the nutritionData information TODO: test
+                    Map<String, String> nutrients = new HashMap<>();
+                    JSONArray rawNutrients = rawRecipe.getJSONObject("nutrition").getJSONArray("nutrients");
+                    for (int j = 0; j < rawNutrients.length(); j++) {
+                        JSONObject rawNutrient = rawNutrients.getJSONObject(j);
+                        String nutrientName = rawNutrient.getString("name");
+                        String nutrientUnit = rawNutrient.getString("unit");
+                        Float nutrientAmount = rawNutrient.getFloat("amount");
+                        String amountAndUnit = nutrientAmount + nutrientUnit;
+                        nutrients.put(nutrientName, amountAndUnit);
+                    }
+                    NutritionData nutritionData = new NutritionData(id, nutrients);
+
+                    // create a recipe and put into the recipes list
+                    Recipe recipe = new Recipe(
+                            id,
+                            title,
+                            recipeURL,
+                            imageUrl,
+                            recipeInfo,
+                            nutritionData
+                    );
+                    recipes.add(recipe);
+
                 }
+                return recipes;
 
             } else if (responseBody.getInt("code") == 401) {    //unauthorized.
                 throw new RuntimeException(responseBody.getString("message"));
@@ -70,7 +100,10 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return null;
     }
 
-    @NotNull
+    public RecipeInfo getRecipeInfo(int recipeID){
+        return null;
+    }
+
     private String getBrowseUrl(BrowseFilter browseFilter) {
         //Accessing query parameters from the browse filter
         String query = browseFilter.getQuery();
@@ -83,6 +116,8 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         StringBuilder urlBuilder
                 = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");
         urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+        urlBuilder.append("&fillIngredients=true")
+                .append("&addRecipeInformation=true").append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
         //add all user-defined query parameters to the request url
         //checking for null because the absence of some parameter values will cause 404 error
@@ -103,9 +138,5 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {return null;}
-
-    public RecipeInfo getRecipeInfo(int recipeID){
-        return null;
-    }
 
 }
