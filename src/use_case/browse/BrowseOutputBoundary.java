@@ -1,7 +1,7 @@
 package use_case.browse;
 
 public interface BrowseOutputBoundary {
-    void prepareSuccessView(BrowseOutputBoundary user);
+    void prepareSuccessView(BrowseOutputData recipes);
 
     void prepareFailView(String error);
 
