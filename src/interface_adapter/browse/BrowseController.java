@@ -1,8 +1,9 @@
 package interface_adapter.browse;
 
+import interface_adapter.SearchController;
 import use_case.browse.BrowseInputBoundary;
 
-public class BrowseController {
+public class BrowseController implements SearchController {
 
     final BrowseInputBoundary browseInteractor;
 
@@ -11,7 +12,7 @@ public class BrowseController {
     }
 
     public void execute() {
-
+//        System.out.println("YESSSSSSSSS");
     }
 
 }
