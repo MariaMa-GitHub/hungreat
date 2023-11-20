@@ -2,7 +2,7 @@ package entity;
 
 import java.util.Map;
 
-public class RecommendFilter extends Filter{
+public class RecommendFilter extends Filter {
     private final String ingredients;
     private final String cuisine;
     private final String excludeCuisine;
