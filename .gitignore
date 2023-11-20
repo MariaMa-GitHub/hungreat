@@ -9,3 +9,7 @@ out/
 
 # Ignore the files ending with .gitignore
 *.gitignore
+
+# Ignore the files in 'target' directory
+.target/
+
