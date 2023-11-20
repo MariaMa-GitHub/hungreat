@@ -3,7 +3,6 @@ package use_case.recommend;
 import entity.Recipe;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class RecommendOutputData {
 
