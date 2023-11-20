@@ -55,8 +55,8 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                     String imageUrl = rawRecipe.getString("image");
                     String recipeURL = rawRecipe.getString("sourceUrl");
 
-                    //get the recipeInfo information
-                    RecipeInfo recipeInfo = getRecipeInfo(id);
+                    //get the recipeInfo information TODO
+                    RecipeInfo recipeInfo = getRecipeInfo(id, rawRecipe);
 
                     // get the nutritionData information TODO: test
                     Map<String, String> nutrients = new HashMap<>();
@@ -65,7 +65,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                         JSONObject rawNutrient = rawNutrients.getJSONObject(j);
                         String nutrientName = rawNutrient.getString("name");
                         String nutrientUnit = rawNutrient.getString("unit");
-                        Float nutrientAmount = rawNutrient.getFloat("amount");
+                        Float nutrientAmount = Float.valueOf(rawNutrient.getFloat("amount"));
                         String amountAndUnit = nutrientAmount + nutrientUnit;
                         nutrients.put(nutrientName, amountAndUnit);
                     }
@@ -84,7 +84,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
                 }
                 return recipes;
-
+            //TODO: handel exception. exception = crash. return code/message instead.
             } else if (responseBody.getInt("code") == 401) {    //unauthorized.
                 throw new RuntimeException(responseBody.getString("message"));
             } else if (responseBody.getInt("code") == 403) {    //forbidden
@@ -100,8 +100,31 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return null;
     }
 
-    public RecipeInfo getRecipeInfo(int recipeID){
-        return null;
+    public RecipeInfo getRecipeInfo(int id, JSONObject rawRecipe){
+        int servings = rawRecipe.getInt("servings");
+        int readyInMinutes = rawRecipe.getInt("readyInMinutes");
+        int healthScore = (int) rawRecipe.getFloat("healthScore");  //TODO: change to float?
+
+        // get the ingredients information
+        ArrayList<String> ingredients = new ArrayList<>();      //TODO: has amount and name, change to map?
+        JSONArray rawIngredients = rawRecipe.getJSONArray("extendedIngredients");
+        for (int i = 0; i < rawIngredients.length(); i++){
+            JSONObject rawIngredient = rawIngredients.getJSONObject(i);
+            String ingredientName = rawIngredient.getString("name");
+            String ingredientUnit = rawIngredient.getString("unit");
+            Float ingredientAmount = Float.valueOf(rawIngredient.getFloat("amount"));
+//            ArrayList<String> descriptions = new ArrayList<>();
+//            JSONArray meta = rawIngredient.getJSONArray("meta");  TODO: leave this if instruction is kept
+            String ingredient = ingredientName + ": " + ingredientAmount + " " + ingredientUnit;
+            ingredients.add(ingredient);
+        }
+
+        //get the instructions
+        ArrayList<String> instructions = new ArrayList<>();
+
+        //create the recipeInfo
+        RecipeInfo recipeInfo = new RecipeInfo(id, servings, readyInMinutes, healthScore, ingredients, instructions);
+        return recipeInfo;
     }
 
     private String getBrowseUrl(BrowseFilter browseFilter) {
