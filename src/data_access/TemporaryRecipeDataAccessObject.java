@@ -26,6 +26,7 @@ public class TemporaryRecipeDataAccessObject {
     }
 
     public void storeRecipes(ArrayList<Recipe> recipeList) {
+        recipes.clear();
         for (Recipe recipe : recipeList) {
             recipes.put(recipe.getID(), recipe);
         }
