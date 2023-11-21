@@ -20,12 +20,19 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
     private static final String API_KEY = System.getenv("API_KEY");     //load API key from environment variable
     private final Map<String, Recipe> savedRecipes = new HashMap<>();
+    private final Map<Integer, Recipe> searchedRecipes = new HashMap<>();
+
+
 
     @Override
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
         String url = getBrowseUrl(browseFilter);
         return searchRecipes(url);
     }
+
+    public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {return null;}
+
+    public Map<Integer, Recipe> getSearchedRecipes() { return searchedRecipes; }
 
     @Nullable
     private ArrayList<Recipe> searchRecipes(String url) {
@@ -81,10 +88,13 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                             nutritionData
                     );
                     recipes.add(recipe);
-
                 }
+                //update the temporary saved searched recipes
+                updateSearchedRecipes(recipes);
+
+                //return the searched recipes
                 return recipes;
-            //TODO: handel exception. exception = crash. return code/message instead.
+            //TODO[recall exception]: do I need to write new exceptions?
             } else if (responseBody.getInt("code") == 401) {    //unauthorized.
                 throw new RuntimeException(responseBody.getString("message"));
             } else if (responseBody.getInt("code") == 403) {    //forbidden
@@ -106,17 +116,25 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         int healthScore = (int) rawRecipe.getFloat("healthScore");  //TODO: change to float?
 
         // get the ingredients information
-        ArrayList<String> ingredients = new ArrayList<>();      //TODO: has amount and name, change to map?
+        ArrayList<String> ingredients = new ArrayList<>();
         JSONArray rawIngredients = rawRecipe.getJSONArray("extendedIngredients");
         for (int i = 0; i < rawIngredients.length(); i++){
             JSONObject rawIngredient = rawIngredients.getJSONObject(i);
             String ingredientName = rawIngredient.getString("name");
             String ingredientUnit = rawIngredient.getString("unit");
             Float ingredientAmount = Float.valueOf(rawIngredient.getFloat("amount"));
-//            ArrayList<String> descriptions = new ArrayList<>();
-//            JSONArray meta = rawIngredient.getJSONArray("meta");  TODO: leave this if instruction is kept
-            String ingredient = ingredientName + ": " + ingredientAmount + " " + ingredientUnit;
-            ingredients.add(ingredient);
+            //get the descriptions for ingredients
+            JSONArray rawDescriptions = rawIngredient.getJSONArray("meta");  //TODO: leave this if instruction is kept
+            ArrayList<String> descriptionsList = new ArrayList<>();
+            for (int j = 0; j < rawDescriptions.length(); j++){
+                descriptionsList.add(rawDescriptions.getString(j));
+            }
+            String description = String.join(", ", descriptionsList);
+            String ingredient = ": " + ingredientAmount + " " + ingredientUnit;
+            if (description.isEmpty()){
+                //TODO END HERE
+            }
+            ingredients.add(ingredient);    //ingredient
         }
 
         //get the instructions
@@ -125,6 +143,15 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         //create the recipeInfo
         RecipeInfo recipeInfo = new RecipeInfo(id, servings, readyInMinutes, healthScore, ingredients, instructions);
         return recipeInfo;
+    }
+
+    private void updateSearchedRecipes(ArrayList<Recipe> recipes) {
+        this.searchedRecipes.clear();
+        for (int i = 0; i < recipes.size(); i++){
+            Recipe currentRecipe = recipes.get(i);
+            Integer id = currentRecipe.getID();
+            this.searchedRecipes.put(id, currentRecipe);
+        }
     }
 
     private String getBrowseUrl(BrowseFilter browseFilter) {
@@ -159,7 +186,5 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         //return the url we built as a string
         return urlBuilder.toString();
     }
-
-    public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {return null;}
 
 }
