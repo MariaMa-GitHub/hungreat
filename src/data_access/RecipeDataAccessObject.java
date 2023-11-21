@@ -106,7 +106,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     public RecipeInfo getRecipeInfo(int id, JSONObject rawRecipe){
         int servings = rawRecipe.getInt("servings");
         int readyInMinutes = rawRecipe.getInt("readyInMinutes");
-        int healthScore = (int) rawRecipe.getFloat("healthScore");  //TODO: change to float?
+        int healthScore = (int) rawRecipe.getFloat("healthScore");
 
         // get the ingredients information
         ArrayList<String> ingredients = new ArrayList<>();
@@ -117,7 +117,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
             String ingredientUnit = rawIngredient.getString("unit");
             Float ingredientAmount = Float.valueOf(rawIngredient.getFloat("amount"));
             //get the descriptions for ingredients
-            JSONArray rawDescriptions = rawIngredient.getJSONArray("meta");  //TODO: leave this if instruction is kept
+            JSONArray rawDescriptions = rawIngredient.getJSONArray("meta");
             ArrayList<String> descriptionsList = new ArrayList<>();
             for (int j = 0; j < rawDescriptions.length(); j++){
                 descriptionsList.add(rawDescriptions.getString(j));
@@ -125,9 +125,11 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
             String description = String.join(", ", descriptionsList);
             String ingredient = ": " + ingredientAmount + " " + ingredientUnit;
             if (description.isEmpty()){
-                //TODO END HERE
+                ingredient = ingredientName + ingredient;
+            } else {    //description non-empty
+                ingredient = ingredientName + " (" + description + ")" + ingredient;
             }
-            ingredients.add(ingredient);    //ingredient
+            ingredients.add(ingredient);    //name (description1, description2): amount unit; name: amount unit
         }
 
         //get the instructions
