@@ -1,6 +1,7 @@
 package app;
 
 import data_access.RecipeDataAccessObject;
+import data_access.TemporaryRecipeDataAccessObject;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.recommend.RecommendController;
@@ -29,8 +30,10 @@ public class Main {
         DisplayViewModel displayViewModel = new DisplayViewModel();
 
         RecipeDataAccessObject dataAccessObject;
+        TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject;
 //        try {
             dataAccessObject = new RecipeDataAccessObject();
+            temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject();
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
@@ -38,7 +41,7 @@ public class Main {
 
         BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject);
 
-        RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, displayViewModel);
+        RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
         HomeView homeView = new HomeView(browseController, recommendController, displayViewModel);
 
 

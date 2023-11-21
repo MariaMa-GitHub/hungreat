@@ -10,7 +10,7 @@ public class RecommendFilter extends Filter{
 
     public RecommendFilter(ArrayList<String> diet, ArrayList<String> intolerances, ArrayList<String> includeIngredients,
                            ArrayList<String> excludeIngredients, ArrayList<String> cuisine, ArrayList<String> excludeCuisine,
-                           String type, Map<String, Float> nutrients) {
+                           String type, Map<String, Float[]> nutrients) {
         super(diet, intolerances, includeIngredients, excludeIngredients, nutrients);
         this.cuisine = String.join(",", cuisine);
         this.excludeCuisine = String.join(",", excludeCuisine);

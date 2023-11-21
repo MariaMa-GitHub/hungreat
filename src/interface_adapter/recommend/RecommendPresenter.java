@@ -14,7 +14,7 @@ public class RecommendPresenter implements RecommendOutputBoundary {
 
     public void prepareSuccessView(RecommendOutputData response) {
 
-        displayViewModel.setRecipes(response.getRecipes());
+        displayViewModel.setRecipeIDs(response.getRecipes());
 
     }
 
