@@ -21,11 +21,14 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     private static final String API_KEY = System.getenv("API_KEY");     //load API key from environment variable
     private final Map<String, Recipe> savedRecipes = new HashMap<>();
 
+
     @Override
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
         String url = getBrowseUrl(browseFilter);
         return searchRecipes(url);
     }
+
+    public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {return null;}
 
     @Nullable
     private ArrayList<Recipe> searchRecipes(String url) {
@@ -55,8 +58,8 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                     String imageUrl = rawRecipe.getString("image");
                     String recipeURL = rawRecipe.getString("sourceUrl");
 
-                    //get the recipeInfo information
-                    RecipeInfo recipeInfo = getRecipeInfo(id);
+                    //get the recipeInfo information TODO
+                    RecipeInfo recipeInfo = getRecipeInfo(id, rawRecipe);
 
                     // get the nutritionData information TODO: test
                     Map<String, String> nutrients = new HashMap<>();
@@ -65,7 +68,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                         JSONObject rawNutrient = rawNutrients.getJSONObject(j);
                         String nutrientName = rawNutrient.getString("name");
                         String nutrientUnit = rawNutrient.getString("unit");
-                        Float nutrientAmount = rawNutrient.getFloat("amount");
+                        Float nutrientAmount = Float.valueOf(rawNutrient.getFloat("amount"));
                         String amountAndUnit = nutrientAmount + nutrientUnit;
                         nutrients.put(nutrientName, amountAndUnit);
                     }
@@ -81,10 +84,10 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                             nutritionData
                     );
                     recipes.add(recipe);
-
                 }
+                //return the searched recipes
                 return recipes;
-
+            //TODO[recall exception]: do I need to write new exceptions?
             } else if (responseBody.getInt("code") == 401) {    //unauthorized.
                 throw new RuntimeException(responseBody.getString("message"));
             } else if (responseBody.getInt("code") == 403) {    //forbidden
@@ -100,14 +103,47 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return null;
     }
 
-    public RecipeInfo getRecipeInfo(int recipeID){
-        return null;
+    public RecipeInfo getRecipeInfo(int id, JSONObject rawRecipe){
+        int servings = rawRecipe.getInt("servings");
+        int readyInMinutes = rawRecipe.getInt("readyInMinutes");
+        int healthScore = (int) rawRecipe.getFloat("healthScore");  //TODO: change to float?
+
+        // get the ingredients information
+        ArrayList<String> ingredients = new ArrayList<>();
+        JSONArray rawIngredients = rawRecipe.getJSONArray("extendedIngredients");
+        for (int i = 0; i < rawIngredients.length(); i++){
+            JSONObject rawIngredient = rawIngredients.getJSONObject(i);
+            String ingredientName = rawIngredient.getString("name");
+            String ingredientUnit = rawIngredient.getString("unit");
+            Float ingredientAmount = Float.valueOf(rawIngredient.getFloat("amount"));
+            //get the descriptions for ingredients
+            JSONArray rawDescriptions = rawIngredient.getJSONArray("meta");  //TODO: leave this if instruction is kept
+            ArrayList<String> descriptionsList = new ArrayList<>();
+            for (int j = 0; j < rawDescriptions.length(); j++){
+                descriptionsList.add(rawDescriptions.getString(j));
+            }
+            String description = String.join(", ", descriptionsList);
+            String ingredient = ": " + ingredientAmount + " " + ingredientUnit;
+            if (description.isEmpty()){
+                //TODO END HERE
+            }
+            ingredients.add(ingredient);    //ingredient
+        }
+
+        //get the instructions
+        ArrayList<String> instructions = new ArrayList<>();
+
+        //create the recipeInfo
+        RecipeInfo recipeInfo = new RecipeInfo(id, servings, readyInMinutes, healthScore, ingredients, instructions);
+        return recipeInfo;
     }
 
     private String getBrowseUrl(BrowseFilter browseFilter) {
+        //TODO return 6 recipes each call
         //Accessing query parameters from the browse filter
         String query = browseFilter.getQuery();
         String diet = browseFilter.getDiet();
+        String includeIngredients = browseFilter.getIncludeIngredients();
         String excludeIngredients = browseFilter.getExcludeIngredients();
         String intolerances = browseFilter.getIntolerances();
         Map<String, Float> nutritionRequirements = browseFilter.getNutritionRequirements();
@@ -120,23 +156,21 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                 .append("&addRecipeInformation=true").append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
         //add all user-defined query parameters to the request url
-        //checking for null because the absence of some parameter values will cause 404 error
-        if (query != null) {urlBuilder.append("&query=").append(query);}
-        if (diet != null) {urlBuilder.append("&diet=").append(diet);}
-        if (excludeIngredients != null) {urlBuilder.append("&excludeIngredients=").append(excludeIngredients);}
-        if (intolerances != null) {urlBuilder.append("&intolerances=").append(intolerances);}
+        //checking for empty because the absence of some parameter values will cause 404 error
+        if (!query.isEmpty()) {urlBuilder.append("&query=").append(query);}
+        if (!diet.isEmpty()) {urlBuilder.append("&diet=").append(diet);}
+        if (!includeIngredients.isEmpty()) {urlBuilder.append("&includeIngredients=").append(includeIngredients);}
+        if (!excludeIngredients.isEmpty()) {urlBuilder.append("&excludeIngredients=").append(excludeIngredients);}
+        if (!intolerances.isEmpty()) {urlBuilder.append("&intolerances=").append(intolerances);}
         for (Map.Entry<String, Float> nutritionRequirement : nutritionRequirements.entrySet()) {    //loop over every key-value pairs
             String nutrientRequirementName = nutritionRequirement.getKey();
             Float nutrientRequirementValue = nutritionRequirement.getValue();
-            if (nutrientRequirementValue != null) {
-                urlBuilder.append("&").append(nutrientRequirementName).append("=").append(nutrientRequirementValue);
-            }
+            //TODO no need to check null for this?
+            urlBuilder.append("&").append(nutrientRequirementName).append("=").append(nutrientRequirementValue);
         }
 
         //return the url we built as a string
         return urlBuilder.toString();
     }
-
-    public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {return null;}
 
 }
