@@ -47,8 +47,9 @@ public class RecommendInteractor implements RecommendInputBoundary {
           recommendInputData.getExcludeIngredients(),
           recommendInputData.getCuisine(),
           recommendInputData.getExcludeCuisine(),
+          // TODO: get actual TYPE input from user
           "type",
-                recommendInputData.getNutrients()
+          recommendInputData.getNutrients()
         );
 
         ArrayList<Recipe> recipes = this.dataAccessObject.recommend(recommendFilter);
