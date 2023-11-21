@@ -19,6 +19,9 @@ import java.util.Map;
 public class RecipeDataAccessObject implements BrowseDataAccessInterface, RecommendDataAccessInterface {
 
     private static final String API_KEY = System.getenv("API_KEY");     //load API key from environment variable
+    private final RecipeFactory recipeFactory = new RecipeFactory();
+    private final RecipeInfoFactory recipeInfoFactory = new RecipeInfoFactory();
+    private final NutritionDataFactory nutritionDataFactory = new NutritionDataFactory();
     private final Map<String, Recipe> savedRecipes = new HashMap<>();
 
 
@@ -72,10 +75,10 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                         String amountAndUnit = nutrientAmount + nutrientUnit;
                         nutrients.put(nutrientName, amountAndUnit);
                     }
-                    NutritionData nutritionData = new NutritionData(id, nutrients);
+                    NutritionData nutritionData = nutritionDataFactory.create(id, nutrients);
 
                     // create a recipe and put into the recipes list
-                    Recipe recipe = new Recipe(
+                    Recipe recipe = recipeFactory.create(
                             id,
                             title,
                             recipeURL,
@@ -132,11 +135,18 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
             ingredients.add(ingredient);    //name (description1, description2): amount unit; name: amount unit
         }
 
-        //get the instructions
+        //get the instructions TODO next step
         ArrayList<String> instructions = new ArrayList<>();
 
         //create the recipeInfo
-        RecipeInfo recipeInfo = new RecipeInfo(id, servings, readyInMinutes, healthScore, ingredients, instructions);
+        RecipeInfo recipeInfo = recipeInfoFactory.create(
+                id,
+                servings,
+                readyInMinutes,
+                healthScore,
+                ingredients,
+                instructions
+        );
         return recipeInfo;
     }
 
