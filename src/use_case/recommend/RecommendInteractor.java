@@ -40,6 +40,27 @@ public class RecommendInteractor implements RecommendInputBoundary {
     @Override
     public void execute(RecommendInputData recommendInputData) {
 
+        RecommendFilter recommendFilter = new RecommendFilter(
+          recommendInputData.getDiet(),
+          recommendInputData.getIntolerances(),
+          recommendInputData.getIngredients(),
+          recommendInputData.getExcludeIngredients(),
+          recommendInputData.getCuisine(),
+          recommendInputData.getExcludeCuisine(),
+          "type",
+                recommendInputData.getNutrients()
+        );
+
+
+
+
+
+
+
+
+
+
+
         ArrayList<Recipe> recipes = new ArrayList<>();
 
         OkHttpClient client = new OkHttpClient().newBuilder()
