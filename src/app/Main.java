@@ -4,23 +4,15 @@ import data_access.RecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.json.JSONException;
-import org.json.JSONObject;
 import view.HomeView;
-import view.RecipeView;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args, DisplayController displayController) {
 
         JFrame application = new JFrame("Hungreat");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -41,7 +33,7 @@ public class Main {
         BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject);
 
         RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel);
+        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController);
 
 
         application.add(homeView);

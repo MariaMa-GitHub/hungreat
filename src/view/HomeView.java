@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
 
 import javax.swing.*;
@@ -16,11 +17,13 @@ public class HomeView extends JPanel {
     final JButton recommend;
     final JButton export;
     final JPanel savedRecipesList;
+    final DisplayController displayController;
 
-    public HomeView(BrowseController browseController, RecommendController recommendController, DisplayViewModel displayViewModel) {
+    public HomeView(BrowseController browseController, RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController) {
 
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(800, 600));
+        this.displayController = displayController;
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5,5,5,5);
@@ -115,7 +118,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Maria)
 
-                            SearchView searchView = new SearchView("recommend", recommendController, displayViewModel);
+                            SearchView searchView = new SearchView("recommend", recommendController, displayViewModel, displayController);
 
                         }
                     }

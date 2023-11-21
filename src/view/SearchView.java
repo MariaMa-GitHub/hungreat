@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.SearchController;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
 
 import javax.swing.*;
@@ -23,11 +24,13 @@ public class SearchView extends JFrame {
 
     private final SearchController controller;
     private final DisplayViewModel displayViewModel;
+    private final DisplayController displayController;
 
-    public SearchView(String function, SearchController controller, DisplayViewModel displayViewModel) {
+    public SearchView(String function, SearchController controller, DisplayViewModel displayViewModel, DisplayController displayController) {
 
         this.controller = controller;
         this.displayViewModel = displayViewModel;
+        this.displayController = displayController;
 
         this.setTitle("Search Recipes");
 
@@ -300,7 +303,7 @@ public class SearchView extends JFrame {
                                         getNutrientsInput()
                                 );
 
-                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
+                                DisplayView displayView = new DisplayView(displayController,displayViewModel.getRecipes());
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);
