@@ -20,8 +20,6 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
     private static final String API_KEY = System.getenv("API_KEY");     //load API key from environment variable
     private final Map<String, Recipe> savedRecipes = new HashMap<>();
-    private final Map<Integer, Recipe> searchedRecipes = new HashMap<>();   //TODO:[Recall Lab5]correct way to temporary saving?
-
 
 
     @Override
@@ -31,8 +29,6 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {return null;}
-
-    public Map<Integer, Recipe> getSearchedRecipes() { return searchedRecipes; }
 
     @Nullable
     private ArrayList<Recipe> searchRecipes(String url) {
@@ -89,9 +85,6 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                     );
                     recipes.add(recipe);
                 }
-                //update the temporary saved searched recipes
-                updateSearchedRecipes(recipes);
-
                 //return the searched recipes
                 return recipes;
             //TODO[recall exception]: do I need to write new exceptions?
@@ -143,15 +136,6 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         //create the recipeInfo
         RecipeInfo recipeInfo = new RecipeInfo(id, servings, readyInMinutes, healthScore, ingredients, instructions);
         return recipeInfo;
-    }
-
-    private void updateSearchedRecipes(ArrayList<Recipe> recipes) {
-        this.searchedRecipes.clear();
-        for (int i = 0; i < recipes.size(); i++){
-            Recipe currentRecipe = recipes.get(i);
-            Integer id = currentRecipe.getID();
-            this.searchedRecipes.put(id, currentRecipe);
-        }
     }
 
     private String getBrowseUrl(BrowseFilter browseFilter) {
