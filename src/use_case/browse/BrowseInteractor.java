@@ -27,7 +27,7 @@ public class BrowseInteractor implements BrowseInputBoundary {
         Map<String, Float[]> nutrients = browseInputData.getNutrients();
         String query = browseInputData.getQuery();
 
-        BrowseFilter browseFilter = new BrowseFilter(diet, intolerance,  excludeIngredients, nutrients, query);
+        BrowseFilter browseFilter = new BrowseFilter(diet, intolerance, excludeIngredients, nutrients, query);
         BrowseOutputData browseOutputData = new BrowseOutputData(this.dataAccessObject.browse(browseFilter));
         //if not Arrylist then handle failveiw.If yes, then give presenter a arrylist of recipes.
         if (browseOutputData.getRecipes() instanceof ArrayList) {
