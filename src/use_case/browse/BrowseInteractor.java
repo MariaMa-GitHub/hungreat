@@ -30,21 +30,25 @@ public class BrowseInteractor implements BrowseInputBoundary {
         ArrayList<String> includeIngredients = browseInputData.getIncludeIngredients();
 
         BrowseFilter browseFilter = new BrowseFilter(diet, intolerance, includeIngredients,excludeIngredients, nutrients, query);
-        ArrayList<Recipe> recipes = this.dataAccessObject.browse(browseFilter);
-        //if not Arrylist then handle failveiw.If yes, then give presenter a arrylist of recipes.
-        if (recipes instanceof ArrayList) {
+        try{ArrayList<Recipe> recipes = this.dataAccessObject.browse(browseFilter);
+        //if not Arrylist then handle failveiw.If yes, then give presenter an arrylist of recipes.
+
             Map<Integer, String> id_title = new HashMap<>();
             for (int i = 0; i < recipes.size(); i++) {
                 Integer recipeID = recipes.get(i).getID();
                 String recipeName = recipes.get(i).getTitle();
                 id_title.put(recipeID, recipeName);
             }
+
             browsePresenter.prepareSuccessView(id_title);
-        }
-        else{
-            browsePresenter.prepareFailView("Oops! Something went wrong. Try again or try with other key words");
+            }
+            catch (Exception e){
+                String errorMessage = e.getMessage();
+                browsePresenter.prepareFailView(errorMessage);
+            }
+
         }
 
 
-    }
 }
+
