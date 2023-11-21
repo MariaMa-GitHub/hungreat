@@ -1,27 +1,22 @@
 package interface_adapter;
 
-import entity.Recipe;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DisplayViewModel {
 
-    private ArrayList<Recipe> recipes = new ArrayList<>();
+    private Map<Integer, String> recipes = new HashMap<>();
 
     public DisplayViewModel() {
     }
 
-    public ArrayList<Recipe> getRecipes() {
+    public Map<Integer, String> getRecipes() {
         return recipes;
     }
 
-    public void setRecipes(ArrayList<Recipe> recipes) {
+    public void setRecipeIDs(Map<Integer, String> recipeIDs) {
 
-        this.recipes = recipes;
+        this.recipes = recipeIDs;
 
     }
 
