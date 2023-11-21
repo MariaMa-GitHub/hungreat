@@ -1,5 +1,6 @@
 package use_case.recommend;
 
+import data_access.TemporaryRecipeDataAccessObject;
 import entity.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -11,21 +12,25 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RecommendInteractor implements RecommendInputBoundary {
 
     final RecommendDataAccessInterface dataAccessObject;
+    final TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject;
     final RecommendOutputBoundary recommendPresenter;
     final RecipeFactory recipeFactory;
     final RecipeInfoFactory recipeInfoFactory;
     final NutritionDataFactory nutritionDataFactory;
 
     public RecommendInteractor(RecommendDataAccessInterface dataAccessInterface,
+                               TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject,
                                RecommendOutputBoundary recommendOutputBoundary,
                                RecipeFactory recipeFactory,
                                RecipeInfoFactory recipeInfoFactory,
                                NutritionDataFactory nutritionDataFactory) {
         this.dataAccessObject = dataAccessInterface;
+        this.temporaryRecipeDataAccessObject = temporaryRecipeDataAccessObject;
         this.recommendPresenter = recommendOutputBoundary;
         this.recipeFactory = recipeFactory;
         this.recipeInfoFactory = recipeInfoFactory;
@@ -80,7 +85,15 @@ public class RecommendInteractor implements RecommendInputBoundary {
             throw new RuntimeException(e);
         }
 
-        RecommendOutputData recommendOutputData = new RecommendOutputData(recipes);
+        temporaryRecipeDataAccessObject.storeRecipes(recipes);
+
+        Map<Integer, String> recipeIdAndTitle = new HashMap<>();
+
+        for (Recipe recipe : recipes) {
+            recipeIdAndTitle.put(recipe.getID(), recipe.getTitle());
+        }
+
+        RecommendOutputData recommendOutputData = new RecommendOutputData(recipeIdAndTitle);
         recommendPresenter.prepareSuccessView(recommendOutputData);
 
     }
