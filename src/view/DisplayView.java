@@ -9,10 +9,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import interface_adapter.display.DisplayController;
 
 public class DisplayView extends JFrame {
+    final DisplayController displayController;
 
-    public DisplayView(ArrayList<Recipe> recipes) {
+    public DisplayView(ArrayList<Recipe> recipes,DisplayController displayController) {
+        this.displayController = displayController;
 
         this.setTitle("View Recommendations");
 
@@ -21,7 +24,7 @@ public class DisplayView extends JFrame {
 
         for (int i = 0; i < 6; i++) {
 
-            JButton button = getjButton(recipes, i);
+            JButton button = getjButton(recipes, i, displayController);
 
             displayWindow.add(button);
 
@@ -36,7 +39,7 @@ public class DisplayView extends JFrame {
     }
 
     @NotNull
-    private static JButton getjButton(ArrayList<Recipe> recipes, int i) {
+    private static JButton getjButton(ArrayList<Recipe> recipes, int i,DisplayController displayController) {
         Recipe recipe = recipes.get(i);
 
         JButton button = new JButton(recipe.getTitle());
@@ -46,8 +49,10 @@ public class DisplayView extends JFrame {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(button)) {
 
+
                             // TODO (Everyone and Maria)
                             RecipeView recipeView = new RecipeView(recipe);
+                            displayController.excute(recipe);
 
                         }
                     }
