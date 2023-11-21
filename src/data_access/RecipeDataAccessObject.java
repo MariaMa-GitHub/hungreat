@@ -164,22 +164,23 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         StringBuilder urlBuilder
                 = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");
         urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
-        urlBuilder.append("&fillIngredients=true")
-                .append("&addRecipeInformation=true").append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
+        urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
+                .append("&addRecipeNutrition=true").append("number=6"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
-        //add all user-defined query parameters to the request url
-        //checking for empty because the absence of some parameter values will cause 404 error
-//        if (!query.isEmpty()) {urlBuilder.append("&query=").append(query);}
-//        if (!diet.isEmpty()) {urlBuilder.append("&diet=").append(diet);}
-//        if (!includeIngredients.isEmpty()) {urlBuilder.append("&includeIngredients=").append(includeIngredients);}
-//        if (!excludeIngredients.isEmpty()) {urlBuilder.append("&excludeIngredients=").append(excludeIngredients);}
-//        if (!intolerances.isEmpty()) {urlBuilder.append("&intolerances=").append(intolerances);}
-//        for (Map.Entry<String, Float> nutritionRequirement : nutritionRequirements.entrySet()) {    //loop over every key-value pairs
-//            String nutrientRequirementName = nutritionRequirement.getKey();
-//            Float nutrientRequirementValue = nutritionRequirement.getValue();
-//            //TODO no need to check null for this?
-//            urlBuilder.append("&").append(nutrientRequirementName).append("=").append(nutrientRequirementValue);
-//        }
+//        add all user-defined query parameters to the request url
+//        checking for empty because the absence of some parameter values will cause 404 error
+        if (!query.isEmpty()) {urlBuilder.append("&query=").append(query);}
+        if (!diet.isEmpty()) {urlBuilder.append("&diet=").append(diet);}
+        if (!includeIngredients.isEmpty()) {urlBuilder.append("&includeIngredients=").append(includeIngredients);}
+        if (!excludeIngredients.isEmpty()) {urlBuilder.append("&excludeIngredients=").append(excludeIngredients);}
+        if (!intolerances.isEmpty()) {urlBuilder.append("&intolerances=").append(intolerances);}
+        for (Map.Entry<String, Float[]> nutritionRequirement : nutritionRequirements.entrySet()) {    //loop over every key-value pairs
+            String nutrientRequirementName = nutritionRequirement.getKey();
+            Float minRequirementValue = nutritionRequirement.getValue()[0];
+            Float maxRequirementValue = nutritionRequirement.getValue()[1];
+            urlBuilder.append("&").append("min").append(nutrientRequirementName).append("=").append(minRequirementValue);
+            urlBuilder.append("&").append("max").append(nutrientRequirementName).append("=").append(maxRequirementValue);
+        }
 
         //return the url we built as a string
         return urlBuilder.toString();
