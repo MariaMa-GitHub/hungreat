@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +16,12 @@ public class Filter {
 //    private String sortDirection;
 //    private boolean instructionsRequired;     //Todo: if keep, remember to add to constructor & DAO & add getters
 
-    public Filter(String diet, String intolerances, String includeIngredients, String excludeIngredients, Map<String, Float> nutritionRequirements) {
-        this.diet = diet;
-        this.intolerances = intolerances;
-        this.excludeIngredients = excludeIngredients;
+    public Filter(ArrayList<String> diet, ArrayList<String> intolerances, ArrayList<String> includeIngredients, ArrayList<String> excludeIngredients, Map<String, Float> nutritionRequirements) {
+        this.diet = String.join(",", diet);
+        this.intolerances = String.join(",", intolerances);
+        this.includeIngredients = String.join(",", includeIngredients);
+        this.excludeIngredients = String.join(",", excludeIngredients);
         this.nutritionRequirements = nutritionRequirements;
-        this.includeIngredients = includeIngredients;
     }
 
     public String getDiet() {
