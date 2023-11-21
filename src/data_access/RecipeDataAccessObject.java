@@ -20,7 +20,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
     private static final String API_KEY = System.getenv("API_KEY");     //load API key from environment variable
     private final Map<String, Recipe> savedRecipes = new HashMap<>();
-    private final Map<Integer, Recipe> searchedRecipes = new HashMap<>();
+    private final Map<Integer, Recipe> searchedRecipes = new HashMap<>();   //TODO:[Recall Lab5]correct way to temporary saving?
 
 
 
@@ -155,9 +155,11 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     private String getBrowseUrl(BrowseFilter browseFilter) {
+        //TODO return 6 recipes each call
         //Accessing query parameters from the browse filter
         String query = browseFilter.getQuery();
         String diet = browseFilter.getDiet();
+        String includeIngredients = browseFilter.getIncludeIngredients();
         String excludeIngredients = browseFilter.getExcludeIngredients();
         String intolerances = browseFilter.getIntolerances();
         Map<String, Float> nutritionRequirements = browseFilter.getNutritionRequirements();
@@ -170,17 +172,17 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                 .append("&addRecipeInformation=true").append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
         //add all user-defined query parameters to the request url
-        //checking for null because the absence of some parameter values will cause 404 error
-        if (query != null) {urlBuilder.append("&query=").append(query);}
-        if (diet != null) {urlBuilder.append("&diet=").append(diet);}
-        if (excludeIngredients != null) {urlBuilder.append("&excludeIngredients=").append(excludeIngredients);}
-        if (intolerances != null) {urlBuilder.append("&intolerances=").append(intolerances);}
+        //checking for empty because the absence of some parameter values will cause 404 error
+        if (!query.isEmpty()) {urlBuilder.append("&query=").append(query);}
+        if (!diet.isEmpty()) {urlBuilder.append("&diet=").append(diet);}
+        if (!includeIngredients.isEmpty()) {urlBuilder.append("&includeIngredients=").append(includeIngredients);}
+        if (!excludeIngredients.isEmpty()) {urlBuilder.append("&excludeIngredients=").append(excludeIngredients);}
+        if (!intolerances.isEmpty()) {urlBuilder.append("&intolerances=").append(intolerances);}
         for (Map.Entry<String, Float> nutritionRequirement : nutritionRequirements.entrySet()) {    //loop over every key-value pairs
             String nutrientRequirementName = nutritionRequirement.getKey();
             Float nutrientRequirementValue = nutritionRequirement.getValue();
-            if (nutrientRequirementValue != null) {
-                urlBuilder.append("&").append(nutrientRequirementName).append("=").append(nutrientRequirementValue);
-            }
+            //TODO no need to check null for this?
+            urlBuilder.append("&").append(nutrientRequirementName).append("=").append(nutrientRequirementValue);
         }
 
         //return the url we built as a string
