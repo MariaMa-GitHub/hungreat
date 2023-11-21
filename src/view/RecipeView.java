@@ -1,7 +1,5 @@
 package view;
 
-import entity.Recipe;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,12 +11,12 @@ public class RecipeView extends JFrame {
     final JButton redirect;
     final JPanel recipeInfo;
 
-    final private Recipe recipe;
+    final private Integer recipeID;
 
-    public RecipeView(Recipe recipe) {
+    public RecipeView(Integer recipeID, String recipeTitle) {
 
-        this.recipe = recipe;
-        this.setTitle(recipe.getTitle());
+        this.recipeID = recipeID;
+        this.setTitle(recipeTitle);
 
         JPanel recipeWindow = new JPanel();
         recipeWindow.setLayout(new GridBagLayout());
@@ -33,7 +31,7 @@ public class RecipeView extends JFrame {
         gbc.gridy = 0;
         gbc.ipadx = 50;
         gbc.ipady = 90;
-        JLabel recipeName = new JLabel("<html><center>"+ recipe.getTitle() + "</html>", SwingConstants.CENTER);
+        JLabel recipeName = new JLabel("<html><center>"+ recipeTitle + "</html>", SwingConstants.CENTER);
         recipeName.setFont(new Font("Helvetica", Font.PLAIN, 18));
         recipeName.setPreferredSize(new Dimension(50, 50));
         recipeWindow.add(recipeName, gbc);
