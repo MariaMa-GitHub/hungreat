@@ -4,6 +4,7 @@ import data_access.TemporaryRecipeDataAccessObject;
 import entity.BrowseFilter;
 import entity.Filter;
 import entity.Recipe;
+import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.recommend.RecommendInputData;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class BrowseInteractor implements BrowseInputBoundary {
 
     final BrowseDataAccessInterface dataAccessObject;
     final BrowseOutputBoundary browsePresenter;
-    final TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject;
+    final TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject;
 
     public BrowseInteractor(BrowseDataAccessInterface dataAccessInterface,
                            BrowseOutputBoundary browseOutputBoundary,TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject) {
