@@ -3,14 +3,15 @@ package use_case.browse;
 import entity.Recipe;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class BrowseOutputData {
-    final ArrayList<Recipe> recipes;
-    public BrowseOutputData(ArrayList<Recipe> recipes){
-        this.recipes = recipes;
+    final Map<Integer, String>  id_title;
+    public BrowseOutputData(Map<Integer, String> id_title){
+        this.id_title = id_title;
     }
-    public ArrayList<Recipe> getRecipes(){
-        return recipes;
+    public Map<Integer, String> getID_title(){
+        return id_title;
     }
 
 }

@@ -19,16 +19,21 @@ import java.util.Map;
 public class RecipeDataAccessObject implements BrowseDataAccessInterface, RecommendDataAccessInterface {
 
     private static final String API_KEY = System.getenv("API_KEY");     //load API key from environment variable
+    private final RecipeFactory recipeFactory = new RecipeFactory();
+    private final RecipeInfoFactory recipeInfoFactory = new RecipeInfoFactory();
+    private final NutritionDataFactory nutritionDataFactory = new NutritionDataFactory();
     private final Map<String, Recipe> savedRecipes = new HashMap<>();
 
 
-    @Override
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
         String url = getBrowseUrl(browseFilter);
         return searchRecipes(url);
     }
 
-    public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {return null;}
+    public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {
+        String url = getRecommendUrl(recommendFilter);
+        return searchRecipes(url);
+    }
 
     @Nullable
     private ArrayList<Recipe> searchRecipes(String url) {
@@ -72,10 +77,10 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                         String amountAndUnit = nutrientAmount + nutrientUnit;
                         nutrients.put(nutrientName, amountAndUnit);
                     }
-                    NutritionData nutritionData = new NutritionData(id, nutrients);
+                    NutritionData nutritionData = nutritionDataFactory.create(id, nutrients);
 
                     // create a recipe and put into the recipes list
-                    Recipe recipe = new Recipe(
+                    Recipe recipe = recipeFactory.create(
                             id,
                             title,
                             recipeURL,
@@ -106,7 +111,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     public RecipeInfo getRecipeInfo(int id, JSONObject rawRecipe){
         int servings = rawRecipe.getInt("servings");
         int readyInMinutes = rawRecipe.getInt("readyInMinutes");
-        int healthScore = (int) rawRecipe.getFloat("healthScore");  //TODO: change to float?
+        int healthScore = (int) rawRecipe.getFloat("healthScore");
 
         // get the ingredients information
         ArrayList<String> ingredients = new ArrayList<>();
@@ -117,7 +122,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
             String ingredientUnit = rawIngredient.getString("unit");
             Float ingredientAmount = Float.valueOf(rawIngredient.getFloat("amount"));
             //get the descriptions for ingredients
-            JSONArray rawDescriptions = rawIngredient.getJSONArray("meta");  //TODO: leave this if instruction is kept
+            JSONArray rawDescriptions = rawIngredient.getJSONArray("meta");
             ArrayList<String> descriptionsList = new ArrayList<>();
             for (int j = 0; j < rawDescriptions.length(); j++){
                 descriptionsList.add(rawDescriptions.getString(j));
@@ -125,16 +130,25 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
             String description = String.join(", ", descriptionsList);
             String ingredient = ": " + ingredientAmount + " " + ingredientUnit;
             if (description.isEmpty()){
-                //TODO END HERE
+                ingredient = ingredientName + ingredient;
+            } else {    //description non-empty
+                ingredient = ingredientName + " (" + description + ")" + ingredient;
             }
-            ingredients.add(ingredient);    //ingredient
+            ingredients.add(ingredient);    //name (description1, description2): amount unit; name: amount unit
         }
 
-        //get the instructions
+        //get the instructions TODO next step
         ArrayList<String> instructions = new ArrayList<>();
 
         //create the recipeInfo
-        RecipeInfo recipeInfo = new RecipeInfo(id, servings, readyInMinutes, healthScore, ingredients, instructions);
+        RecipeInfo recipeInfo = recipeInfoFactory.create(
+                id,
+                servings,
+                readyInMinutes,
+                healthScore,
+                ingredients,
+                instructions
+        );
         return recipeInfo;
     }
 
@@ -146,27 +160,68 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         String includeIngredients = browseFilter.getIncludeIngredients();
         String excludeIngredients = browseFilter.getExcludeIngredients();
         String intolerances = browseFilter.getIntolerances();
-        Map<String, Float> nutritionRequirements = browseFilter.getNutritionRequirements();
+        Map<String, Float[]> nutritionRequirements = browseFilter.getNutritionRequirements();
 
         //creating the base request url for searching recipes
         StringBuilder urlBuilder
                 = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");
         urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
-        urlBuilder.append("&fillIngredients=true")
-                .append("&addRecipeInformation=true").append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
+        urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
+                .append("&addRecipeNutrition=true").append("number=6"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
-        //add all user-defined query parameters to the request url
-        //checking for empty because the absence of some parameter values will cause 404 error
+//        add all user-defined query parameters to the request url
+//        checking for empty because the absence of some parameter values will cause 404 error
         if (!query.isEmpty()) {urlBuilder.append("&query=").append(query);}
         if (!diet.isEmpty()) {urlBuilder.append("&diet=").append(diet);}
         if (!includeIngredients.isEmpty()) {urlBuilder.append("&includeIngredients=").append(includeIngredients);}
         if (!excludeIngredients.isEmpty()) {urlBuilder.append("&excludeIngredients=").append(excludeIngredients);}
         if (!intolerances.isEmpty()) {urlBuilder.append("&intolerances=").append(intolerances);}
-        for (Map.Entry<String, Float> nutritionRequirement : nutritionRequirements.entrySet()) {    //loop over every key-value pairs
+        for (Map.Entry<String, Float[]> nutritionRequirement : nutritionRequirements.entrySet()) {    //loop over every key-value pairs
             String nutrientRequirementName = nutritionRequirement.getKey();
-            Float nutrientRequirementValue = nutritionRequirement.getValue();
-            //TODO no need to check null for this?
-            urlBuilder.append("&").append(nutrientRequirementName).append("=").append(nutrientRequirementValue);
+            Float minRequirementValue = nutritionRequirement.getValue()[0];
+            Float maxRequirementValue = nutritionRequirement.getValue()[1];
+            urlBuilder.append("&").append("min").append(nutrientRequirementName).append("=").append(minRequirementValue);
+            urlBuilder.append("&").append("max").append(nutrientRequirementName).append("=").append(maxRequirementValue);
+        }
+
+        //return the url we built as a string
+        return urlBuilder.toString();
+    }
+
+    private String getRecommendUrl(RecommendFilter recommendFilter) {
+        //TODO return 6 recipes each call
+        //Accessing query parameters from the browse filter
+        String diet = recommendFilter.getDiet();
+        String includeIngredients = recommendFilter.getIncludeIngredients();
+        String excludeIngredients = recommendFilter.getExcludeIngredients();
+        String intolerances = recommendFilter.getIntolerances();
+        String includeCuisine = recommendFilter.getCuisine();
+        String excludeCuisine = recommendFilter.getExcludeCuisine();
+        String type = recommendFilter.getType();
+        Map<String, Float[]> nutritionRequirements = recommendFilter.getNutritionRequirements();
+
+        //creating the base request url for searching recipes
+        StringBuilder urlBuilder
+                = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");
+        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+        urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
+                .append("&addRecipeNutrition=true").append("number=6"); //make sure the response will contain ingredients, recipeInfo, and nutrition
+
+//        add all user-defined query parameters to the request url
+//        checking for empty because the absence of some parameter values will cause 404 error
+        if (!diet.isEmpty()) {urlBuilder.append("&diet=").append(diet);}
+        if (!includeIngredients.isEmpty()) {urlBuilder.append("&includeIngredients=").append(includeIngredients);}
+        if (!excludeIngredients.isEmpty()) {urlBuilder.append("&excludeIngredients=").append(excludeIngredients);}
+        if (!intolerances.isEmpty()) {urlBuilder.append("&intolerances=").append(intolerances);}
+        if (!includeCuisine.isEmpty()) {urlBuilder.append("&cuisine=").append(includeCuisine);}
+        if (!excludeCuisine.isEmpty()) {urlBuilder.append("&excludeCuisine=").append(excludeCuisine);}
+        if (!type.isEmpty()) {urlBuilder.append("&type=").append(type);}
+        for (Map.Entry<String, Float[]> nutritionRequirement : nutritionRequirements.entrySet()) {    //loop over every key-value pairs
+            String nutrientRequirementName = nutritionRequirement.getKey();
+            Float minRequirementValue = nutritionRequirement.getValue()[0];
+            Float maxRequirementValue = nutritionRequirement.getValue()[1];
+            urlBuilder.append("&").append("min").append(nutrientRequirementName).append("=").append(minRequirementValue);
+            urlBuilder.append("&").append("max").append(nutrientRequirementName).append("=").append(maxRequirementValue);
         }
 
         //return the url we built as a string

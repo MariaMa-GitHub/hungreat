@@ -4,15 +4,24 @@ import data_access.RecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
-import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import view.HomeView;
+import view.RecipeView;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args, DisplayController displayController) {
+    public static void main(String[] args) {
 
         JFrame application = new JFrame("Hungreat");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -33,7 +42,7 @@ public class Main {
         BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject);
 
         RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController);
+        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel);
 
 
         application.add(homeView);
@@ -66,7 +75,7 @@ public class Main {
 ////        Test api call - browse
 //        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
 //
-//        String API_KEY = System.getenv("API_KEY");
+//        String API_KEY = "73eb97ed01cc45afb92fce3c8c424418";
 //        String query = "pasta";
 //        String diet = "";
 //        String excludeIngredients = "";
@@ -115,6 +124,9 @@ public class Main {
 //
 //            JSONObject responseBody = new JSONObject(response.body().string());
 //            System.out.println(responseBody);
+//            JSONArray results = responseBody.getJSONArray("results");
+//            JSONObject rawRecipe = results.getJSONObject(0);
+//            System.out.println(rawRecipe.getInt("readyInMinutes"));
 ////            System.out.println(responseBody.getInt("code"));
 ////            System.out.println(responseBody.getString("message"));
 //

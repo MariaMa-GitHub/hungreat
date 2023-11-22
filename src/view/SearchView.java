@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SearchView extends JFrame {
 
@@ -373,11 +374,11 @@ public class SearchView extends JFrame {
         return inputs;
     }
 
-    public HashMap<String, Float[]> getNutrientsInput() {
+    public Map<String, Float[]> getNutrientsInput() {
 
         String text = nutrientsInput.getText().strip();
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        HashMap<String, Float[]> nutrients = new HashMap<>();
+        Map<String, Float[]> nutrients = new HashMap<>();
         for (String input : inputs) {
             ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
             ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
