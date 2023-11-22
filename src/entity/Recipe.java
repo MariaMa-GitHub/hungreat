@@ -48,4 +48,8 @@ public class Recipe {
     public Collection<Recipe> getSimilarRecipes() {
         return similarRecipes;
     }
+    //TODO Wright a toString method prepare for display.
+    public String toString(){
+
+    }
 }
