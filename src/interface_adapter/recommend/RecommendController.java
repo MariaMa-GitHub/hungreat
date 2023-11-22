@@ -6,6 +6,7 @@ import use_case.recommend.RecommendInputData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RecommendController implements SearchController {
 
@@ -15,7 +16,7 @@ public class RecommendController implements SearchController {
         this.recommendInteractor = recommendInteractor;
     }
 
-    public void execute(ArrayList<String> cuisine, ArrayList<String> excludeCuisine, ArrayList<String> diet, ArrayList<String> intolerances, ArrayList<String> ingredients, ArrayList<String> excludeIngredients, HashMap<String, Float[]> nutrients) {
+    public void execute(ArrayList<String> cuisine, ArrayList<String> excludeCuisine, ArrayList<String> diet, ArrayList<String> intolerances, ArrayList<String> ingredients, ArrayList<String> excludeIngredients, Map<String, Float[]> nutrients) {
 
         RecommendInputData recommendInputData = new RecommendInputData(cuisine, excludeCuisine, diet, intolerances, ingredients, excludeIngredients, nutrients);
 

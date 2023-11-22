@@ -1,8 +1,13 @@
 package use_case.browse;
 
+import entity.BrowseFilter;
+import entity.Filter;
+import entity.Recipe;
 import use_case.recommend.RecommendInputData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BrowseInteractor implements BrowseInputBoundary {
 
@@ -15,4 +20,31 @@ public class BrowseInteractor implements BrowseInputBoundary {
         this.browsePresenter = browseOutputBoundary;
     }
 
+    @Override
+    public void execute(BrowseInputData browseInputData) {
+        ArrayList<String> diet = browseInputData.getDiet();
+        ArrayList<String> intolerance = browseInputData.getIntolerance();
+        ArrayList<String> excludeIngredients = browseInputData.getExcludeIngredients();
+        Map<String, Float[]> nutrients = browseInputData.getNutrients();
+        String query = browseInputData.getQuery();
+        ArrayList<String> includeIngredients = browseInputData.getIncludeIngredients();
+
+        BrowseFilter browseFilter = new BrowseFilter(diet, intolerance, includeIngredients,excludeIngredients, nutrients, query);
+        ArrayList<Recipe> recipes = this.dataAccessObject.browse(browseFilter);
+        //if not Arrylist then handle failveiw.If yes, then give presenter a arrylist of recipes.
+        if (recipes instanceof ArrayList) {
+            Map<Integer, String> id_title = new HashMap<>();
+            for (int i = 0; i < recipes.size(); i++) {
+                Integer recipeID = recipes.get(i).getID();
+                String recipeName = recipes.get(i).getTitle();
+                id_title.put(recipeID, recipeName);
+            }
+            browsePresenter.prepareSuccessView(id_title);
+        }
+        else{
+            browsePresenter.prepareFailView("Oops! Something went wrong. Try again or try with other key words");
+        }
+
+
+    }
 }
