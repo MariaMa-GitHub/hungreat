@@ -1,6 +1,5 @@
 package use_case.recommend;
 
-import data_access.TemporaryRecipeDataAccessObject;
 import entity.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -8,6 +7,7 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.TemporaryRecipeDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,14 +17,14 @@ import java.util.Map;
 public class RecommendInteractor implements RecommendInputBoundary {
 
     final RecommendDataAccessInterface dataAccessObject;
-    final TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject;
+    final TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject;
     final RecommendOutputBoundary recommendPresenter;
     final RecipeFactory recipeFactory;
     final RecipeInfoFactory recipeInfoFactory;
     final NutritionDataFactory nutritionDataFactory;
 
     public RecommendInteractor(RecommendDataAccessInterface dataAccessInterface,
-                               TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject,
+                               TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject,
                                RecommendOutputBoundary recommendOutputBoundary,
                                RecipeFactory recipeFactory,
                                RecipeInfoFactory recipeInfoFactory,
