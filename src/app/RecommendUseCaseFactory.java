@@ -1,12 +1,12 @@
 package app;
 
-import data_access.TemporaryRecipeDataAccessObject;
 import entity.NutritionDataFactory;
 import entity.RecipeFactory;
 import entity.RecipeInfoFactory;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.recommend.RecommendController;
 import interface_adapter.recommend.RecommendPresenter;
+import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.recommend.RecommendDataAccessInterface;
 import use_case.recommend.RecommendInputBoundary;
 import use_case.recommend.RecommendInteractor;
@@ -19,7 +19,7 @@ public class RecommendUseCaseFactory {
 
     private RecommendUseCaseFactory() {}
 
-    public static RecommendController create(RecommendDataAccessInterface dataAccessObject, TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject, DisplayViewModel displayViewModel) {
+    public static RecommendController create(RecommendDataAccessInterface dataAccessObject, TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject, DisplayViewModel displayViewModel) {
 
         try {
             RecommendController recommendController = createRecommendUseCase(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
@@ -31,7 +31,7 @@ public class RecommendUseCaseFactory {
         return null;
     }
 
-    private static RecommendController createRecommendUseCase(RecommendDataAccessInterface dataAccessObject, TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject, DisplayViewModel displayViewModel) throws IOException {
+    private static RecommendController createRecommendUseCase(RecommendDataAccessInterface dataAccessObject, TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject, DisplayViewModel displayViewModel) throws IOException {
 
         RecommendOutputBoundary recommendOutputBoundary = new RecommendPresenter(displayViewModel);
 
