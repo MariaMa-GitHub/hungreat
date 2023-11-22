@@ -1,5 +1,6 @@
 package use_case.browse;
 
+import data_access.TemporaryRecipeDataAccessObject;
 import entity.BrowseFilter;
 import entity.Filter;
 import entity.Recipe;
@@ -13,11 +14,13 @@ public class BrowseInteractor implements BrowseInputBoundary {
 
     final BrowseDataAccessInterface dataAccessObject;
     final BrowseOutputBoundary browsePresenter;
+    final TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject;
 
     public BrowseInteractor(BrowseDataAccessInterface dataAccessInterface,
-                           BrowseOutputBoundary browseOutputBoundary) {
+                           BrowseOutputBoundary browseOutputBoundary,TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject) {
         this.dataAccessObject = dataAccessInterface;
         this.browsePresenter = browseOutputBoundary;
+        this.temporaryRecipeDataAccessObject = temporaryRecipeDataAccessObject;
     }
 
     @Override
@@ -32,15 +35,15 @@ public class BrowseInteractor implements BrowseInputBoundary {
         BrowseFilter browseFilter = new BrowseFilter(diet, intolerance, includeIngredients,excludeIngredients, nutrients, query);
         try{ArrayList<Recipe> recipes = this.dataAccessObject.browse(browseFilter);
         //if not Arrylist then handle failveiw.If yes, then give presenter an arrylist of recipes.
-
-            Map<Integer, String> id_title = new HashMap<>();
+            temporaryRecipeDataAccessObject.storeRecipes(recipes);
+            Map<Integer, String> idTitle = new HashMap<>();
             for (int i = 0; i < recipes.size(); i++) {
                 Integer recipeID = recipes.get(i).getID();
                 String recipeName = recipes.get(i).getTitle();
-                id_title.put(recipeID, recipeName);
+                idTitle.put(recipeID, recipeName);
             }
-
-            browsePresenter.prepareSuccessView(id_title);
+            BrowseOutputData browseOutputData = new BrowseOutputData(idTitle);
+            browsePresenter.prepareSuccessView(browseOutputData);
             }
             catch (Exception e){
                 String errorMessage = e.getMessage();
