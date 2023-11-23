@@ -59,9 +59,11 @@ public class RecipeView extends JFrame {
 
         recipeInfo = new JPanel(new GridLayout(0, 1));
 
-//        for (int i = 1; i < 21; i++) {
-//            JButton b = new JButton(String.format("Recipe %s", i));
-//            b.setPreferredSize(new Dimension(490, 100));
+//        for (int i = 1; i < 2; i++) {
+//            JTextArea b = new JTextArea("Hello\n\n\n\n\nHello");
+//            b.setEditable(false);
+//            b.setFocusable(false);
+////            b.setPreferredSize(new Dimension(490, 100));
 //            recipeInfo.add(b);
 //        }
 
