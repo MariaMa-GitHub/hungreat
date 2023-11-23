@@ -9,6 +9,8 @@ public interface TemporaryRecipeDataAccessInterface {
 
     Recipe getFromID(int id);
 
+    boolean existsByID(int id);
+
     void storeRecipes(ArrayList<Recipe> recipeList);
 
 }

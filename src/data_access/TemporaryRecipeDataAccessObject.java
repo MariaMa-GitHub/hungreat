@@ -22,6 +22,10 @@ public class TemporaryRecipeDataAccessObject implements TemporaryRecipeDataAcces
         return recipes.get(id);
     }
 
+    public boolean existsByID(int id) {
+        return (recipes.containsKey(id));
+    }
+
     public void storeRecipes(ArrayList<Recipe> recipeList) {
         recipes.clear();
         for (Recipe recipe : recipeList) {
