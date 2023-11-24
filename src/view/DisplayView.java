@@ -19,7 +19,7 @@ public class DisplayView extends JFrame {
         JPanel displayWindow = new JPanel();
         displayWindow.setLayout(new GridLayout(2,3));
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < Math.min(6, recipes.size()); i++) {
 
             JButton button = getjButton(new ArrayList<>(recipes.keySet()), recipes, i,displayController);
 
