@@ -49,7 +49,8 @@ public class Recipe {
         return similarRecipes;
     }
     //TODO Wright a toString method prepare for display.
+    @Override
     public String toString(){
-
+        return title + "\n" + info.toString();
     }
 }

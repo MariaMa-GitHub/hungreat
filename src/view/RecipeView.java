@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class RecipeView extends JFrame {
 
@@ -57,14 +59,16 @@ public class RecipeView extends JFrame {
         redirect = new JButton("View Online");
         recipeWindow.add(redirect, gbc);
 
+
         recipeInfo = new JPanel(new GridLayout(0, 1));
 
-//        for (int i = 1; i < 21; i++) {
-//            JButton b = new JButton(String.format("Recipe %s", i));
-//            b.setPreferredSize(new Dimension(490, 100));
-//            recipeInfo.add(b);
-//        }
-
+        for (int i = 1; i < 21; i++) {
+            JButton b = new JButton(String.format("Recipe %s", i));
+            b.setPreferredSize(new Dimension(490, 100));
+            recipeInfo.add(b);
+        }
+        //TODO put your text here, assign recipeinfor to recipe.toString
+        //recipeInfo
         JScrollPane scrPane = new JScrollPane(recipeInfo);
         scrPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //        scrPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -81,6 +85,19 @@ public class RecipeView extends JFrame {
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        analyze.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(analyze)) {
+
+                            // TODO chloe you need to pass in the nutrition data according to the corresponding id.
+                            //need a message box here
+                        }
+                    }
+                }
+        );
 
     }
 

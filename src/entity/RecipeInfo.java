@@ -44,4 +44,9 @@ public class RecipeInfo {
         return instructions;
     }
 
+    @Override
+    public String toString() {
+        return "Servings:"+ servings + "\n" + "ReadyInMinutes:"+ readyInMinutes + "HealthScore:" + healthScore +
+                "Ingredients" + ingredients + "Instructions" + instructions;
+    }
 }

@@ -35,7 +35,7 @@ public class DisplayView extends JFrame {
 
     }
 
-    @NotNull
+    @NotNull//getjButton is the process create and set a button this button will relate to the recipe id.
     private static JButton getjButton(ArrayList<Integer> recipeIDs, Map<Integer, String> recipes, int i, DisplayController displayController) {
         Integer recipeID = recipeIDs.get(i);
 
