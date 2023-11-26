@@ -48,9 +48,13 @@ public class Recipe {
     public Collection<Recipe> getSimilarRecipes() {
         return similarRecipes;
     }
-    //TODO Wright a toString method prepare for display.
+
     @Override
     public String toString(){
         return title + "\n" + info.toString();
+    }
+    // TODO Wright a toString method prepare for analysis.
+    public String nutritionToString(){
+       return null;
     }
 }
