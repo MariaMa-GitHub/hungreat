@@ -4,9 +4,8 @@ import java.sql.SQLOutput;
 
 public class RecipeViewModel{
     private String recipeString;
-    //因为在main create RecipeViewModel 时不知道 RecipeViewModel
-    // 里要pass in 什么variable 所以这里initialize为空，
-    // 用set method 去initialize.
+    //cause we do not know what variable we need to pass in while we create RecipeViewModel in main
+    // so here initializer is empty , we use set method to initialize RecipeViewModel.
     public RecipeViewModel() {
     }
 
