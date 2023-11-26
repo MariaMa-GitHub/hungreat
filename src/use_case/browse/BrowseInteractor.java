@@ -1,8 +1,10 @@
 package use_case.browse;
 
+import data_access.TemporaryRecipeDataAccessObject;
 import entity.BrowseFilter;
 import entity.Filter;
 import entity.Recipe;
+import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.recommend.RecommendInputData;
 
 import java.util.ArrayList;
@@ -13,11 +15,13 @@ public class BrowseInteractor implements BrowseInputBoundary {
 
     final BrowseDataAccessInterface dataAccessObject;
     final BrowseOutputBoundary browsePresenter;
+    final TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject;
 
     public BrowseInteractor(BrowseDataAccessInterface dataAccessInterface,
-                           BrowseOutputBoundary browseOutputBoundary) {
+                           BrowseOutputBoundary browseOutputBoundary,TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject) {
         this.dataAccessObject = dataAccessInterface;
         this.browsePresenter = browseOutputBoundary;
+        this.temporaryRecipeDataAccessObject = temporaryRecipeDataAccessObject;
     }
 
     @Override
@@ -30,21 +34,25 @@ public class BrowseInteractor implements BrowseInputBoundary {
         ArrayList<String> includeIngredients = browseInputData.getIncludeIngredients();
 
         BrowseFilter browseFilter = new BrowseFilter(diet, intolerance, includeIngredients,excludeIngredients, nutrients, query);
-        ArrayList<Recipe> recipes = this.dataAccessObject.browse(browseFilter);
-        //if not Arrylist then handle failveiw.If yes, then give presenter a arrylist of recipes.
-        if (recipes instanceof ArrayList) {
-            Map<Integer, String> id_title = new HashMap<>();
+        try{ArrayList<Recipe> recipes = this.dataAccessObject.browse(browseFilter);
+        //if not Arrylist then handle failveiw.If yes, then give presenter an arrylist of recipes.
+            temporaryRecipeDataAccessObject.storeRecipes(recipes);
+            Map<Integer, String> idTitle = new HashMap<>();
             for (int i = 0; i < recipes.size(); i++) {
                 Integer recipeID = recipes.get(i).getID();
                 String recipeName = recipes.get(i).getTitle();
-                id_title.put(recipeID, recipeName);
+                idTitle.put(recipeID, recipeName);
             }
-            browsePresenter.prepareSuccessView(id_title);
-        }
-        else{
-            browsePresenter.prepareFailView("Oops! Something went wrong. Try again or try with other key words");
+            BrowseOutputData browseOutputData = new BrowseOutputData(idTitle);
+            browsePresenter.prepareSuccessView(browseOutputData);
+            }
+            catch (Exception e){
+                String errorMessage = e.getMessage();
+                browsePresenter.prepareFailView(errorMessage);
+            }
+
         }
 
 
-    }
 }
+
