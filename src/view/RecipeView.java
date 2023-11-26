@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.RecipeViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,10 +16,13 @@ public class RecipeView extends JFrame {
     final JPanel recipeInfo;
 
     final private Integer recipeID;
+    final RecipeViewModel recipeViewModel;
 
-    public RecipeView(Integer recipeID, String recipeTitle) {
+
+    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel) {
 
         this.recipeID = recipeID;
+        this.recipeViewModel = recipeViewModel;
         this.setTitle(recipeTitle);
 
         JPanel recipeWindow = new JPanel();
@@ -62,13 +67,17 @@ public class RecipeView extends JFrame {
 
         recipeInfo = new JPanel(new GridLayout(0, 1));
 
-        for (int i = 1; i < 21; i++) {
-            JButton b = new JButton(String.format("Recipe %s", i));
+//        System.out.println(recipeViewModel);
+//        System.out.println(recipeViewModel.getRecipeString());
+            JTextArea b = new JTextArea(recipeViewModel.getRecipeString());
+            b.setFocusable(false);
+            b.setEditable(false);
+            b.setLineWrap(true);
             b.setPreferredSize(new Dimension(490, 100));
             recipeInfo.add(b);
-        }
+
         //TODO put your text here, assign recipeinfor to recipe.toString
-        //recipeInfo
+//        String recipeInfo = recipeViewModel.getRecipeString();
         JScrollPane scrPane = new JScrollPane(recipeInfo);
         scrPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //        scrPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

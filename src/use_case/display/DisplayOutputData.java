@@ -3,11 +3,11 @@ package use_case.display;
 import entity.Recipe;
 
 public class DisplayOutputData {
-    private final Recipe recipe;
-    public DisplayOutputData(Recipe recipe) {
-        this.recipe = recipe;
+    private final String recipeString;
+    public DisplayOutputData(String recipeString) {
+        this.recipeString = recipeString;
     }
-    public Recipe getRecipe(){
-        return recipe;
+    public String getRecipeString(){
+        return recipeString;
     }
 }

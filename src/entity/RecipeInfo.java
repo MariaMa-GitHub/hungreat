@@ -44,9 +44,18 @@ public class RecipeInfo {
         return instructions;
     }
 
+    public  String ingredientsToString() {
+        String ingredientString = null;
+        for (String item : ingredients) {
+            ingredientString += item +"\n";
+        }
+        return ingredientString;
+    }
+
+
     @Override
     public String toString() {
-        return "Servings:"+ servings + "\n" + "ReadyInMinutes:"+ readyInMinutes + "HealthScore:" + healthScore +
-                "Ingredients" + ingredients + "Instructions" + instructions;
+        return "Servings:"+ servings + "\n" + "ReadyInMinutes:" + readyInMinutes + "\n" + "HealthScore:" + healthScore
+                + "\n" + "Ingredients:" + "\n" + ingredientsToString() + "\n" + "Instructions:" + instructions;
     }
 }
