@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class BrowsePresenter implements BrowseOutputBoundary {
     @Override
-    public void prepareSuccessView(Map<Integer, String> id_title) {
+    public void prepareSuccessView(BrowseOutputData idTitle) {
 
     }
 
