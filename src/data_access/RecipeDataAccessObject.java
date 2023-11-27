@@ -63,10 +63,10 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                     String imageUrl = rawRecipe.getString("image");
                     String recipeURL = rawRecipe.getString("sourceUrl");
 
-                    //get the recipeInfo information TODO
+                    //get the recipeInfo information
                     RecipeInfo recipeInfo = getRecipeInfo(id, rawRecipe);
 
-                    // get the nutritionData information TODO: test
+                    // get the nutritionData information
                     Map<String, String> nutrients = new HashMap<>();
                     JSONArray rawNutrients = rawRecipe.getJSONObject("nutrition").getJSONArray("nutrients");
                     for (int j = 0; j < rawNutrients.length(); j++) {
@@ -137,8 +137,25 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
             ingredients.add(ingredient);    //name (description1, description2): amount unit; name: amount unit
         }
 
-        //get the instructions TODO next step
+        //get the instructions
         ArrayList<String> instructions = new ArrayList<>();
+        JSONArray rawInstructions = rawRecipe.getJSONArray("analyzedInstructions");
+        for (int i = 0; i < rawInstructions.length(); i++) {
+            JSONObject rawInstruction = rawInstructions.getJSONObject(i);
+            //The api sometimes accidentally put steps of the instructions as name. Otherwise, name will be an empty string.
+            String name = rawInstruction.getString("name");
+            if (!name.isEmpty()) {
+                instructions.add(name);
+            }
+            //get the steps of the instructions
+            JSONArray rawSteps = rawInstruction.getJSONArray("steps");
+            for (int j = 0; j < rawSteps.length(); j++) {
+                JSONObject rawStep = rawSteps.getJSONObject(j);
+                String step = rawStep.getString("step");
+                instructions.add(step);
+            }
+
+        }
 
         //create the recipeInfo
         RecipeInfo recipeInfo = recipeInfoFactory.create(
@@ -153,7 +170,6 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     private String getBrowseUrl(BrowseFilter browseFilter) {
-        //TODO return 6 recipes each call
         //Accessing query parameters from the browse filter
         String query = browseFilter.getQuery();
         String diet = browseFilter.getDiet();
@@ -189,7 +205,6 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     private String getRecommendUrl(RecommendFilter recommendFilter) {
-        //TODO return 6 recipes each call
         //Accessing query parameters from the browse filter
         String diet = recommendFilter.getDiet();
         String includeIngredients = recommendFilter.getIncludeIngredients();
