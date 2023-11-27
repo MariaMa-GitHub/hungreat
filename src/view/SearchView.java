@@ -4,6 +4,7 @@ import interface_adapter.RecipeViewModel;
 import interface_adapter.SearchController;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.display.DisplayController;
+import interface_adapter.browse.BrowseController;
 import interface_adapter.recommend.RecommendController;
 
 import javax.swing.*;
@@ -308,6 +309,26 @@ public class SearchView extends JFrame {
                                 );
 
                                 DisplayView displayView = new DisplayView(displayController,displayViewModel.getRecipes(), recipeViewModel);
+
+                                JComponent comp = (JComponent) evt.getSource();
+                                Window win = SwingUtilities.getWindowAncestor(comp);
+                                win.dispose();
+
+                            }
+
+                            if (function.equals("browse")) {
+
+                                BrowseController browseController = (BrowseController) controller;
+                                browseController.execute(
+                                        getDietInput(),
+                                        getIntolerancesInput(),
+                                        getIngredientsInput(),
+                                        getExcludeIngredientsInput(),
+                                        getNutrientsInput(),
+                                        "cauliflower" // TODO: getQueryInput() implement getQuery in Views
+                                );
+
+                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);

@@ -64,17 +64,14 @@ public class RecipeView extends JFrame {
         redirect = new JButton("View Online");
         recipeWindow.add(redirect, gbc);
 
-
         recipeInfo = new JPanel(new GridLayout(0, 1));
 
-//        System.out.println(recipeViewModel);
-//        System.out.println(recipeViewModel.getRecipeString());
-            JTextArea b = new JTextArea(recipeViewModel.getRecipeString());
-            b.setFocusable(false);
-            b.setEditable(false);
-            b.setLineWrap(true);
-            b.setPreferredSize(new Dimension(490, 100));
-            recipeInfo.add(b);
+        JTextArea b = new JTextArea(recipeViewModel.getRecipeString());
+        b.setFocusable(false);
+        b.setEditable(false);
+        b.setLineWrap(true);
+        b.setPreferredSize(new Dimension(490, 100));
+        recipeInfo.add(b);
 
         //TODO put your text here, assign recipeinfor to recipe.toString
 //        String recipeInfo = recipeViewModel.getRecipeString();
