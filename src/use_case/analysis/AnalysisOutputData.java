@@ -1,6 +1,11 @@
 package use_case.analysis;
 
 public class AnalysisOutputData {
-    public AnalysisOutputData(String string) {
+    private final String nutritionToString;
+    public AnalysisOutputData(String nutritionToString) {
+        this.nutritionToString = nutritionToString;
+    }
+    public String getNutritionToString(){
+        return nutritionToString;
     }
 }

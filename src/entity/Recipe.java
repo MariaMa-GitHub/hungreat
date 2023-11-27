@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.Collection;
+import java.util.Map;
 
 public class Recipe {
 
@@ -55,6 +56,12 @@ public class Recipe {
     }
     // TODO Wright a toString method prepare for analysis.
     public String nutritionToString(){
-       return null;
+        String nutritions = null;
+       for (Map.Entry<String, String> entry : nutrition.getNutrients().entrySet()){
+           String key = entry.getKey();
+           String value = entry.getValue();
+           nutritions = key + ":" + value;
+       }
+        return nutritions;
     }
 }

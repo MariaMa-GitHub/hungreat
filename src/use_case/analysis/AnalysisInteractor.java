@@ -22,7 +22,7 @@ public class AnalysisInteractor implements AnalysisInputBoundary {
     public void execute(AnalysisInputData analysisInputData) {
         Integer recipeID =  analysisInputData.getRecipeID();
         Recipe recipe = temporaryRecipeDataAccessObject.getFromID(recipeID);
-        AnalysisOutputData analysisOutputData = new AnalysisOutputData(recipe.toString());
+        AnalysisOutputData analysisOutputData = new AnalysisOutputData(recipe.nutritionToString());
         analysisPresenter.prepareView(analysisOutputData);
     }
 }
