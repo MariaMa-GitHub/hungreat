@@ -1,19 +1,22 @@
 package interface_adapter.browse;
 
 import java.util.Map;
+
+import interface_adapter.DisplayViewModel;
 import use_case.browse.BrowseOutputBoundary;
 import use_case.browse.BrowseOutputData;
 
 public class BrowsePresenter implements BrowseOutputBoundary {
 
+    private final DisplayViewModel displayViewModel;
+
+    public BrowsePresenter(DisplayViewModel displayViewModel) {
+        this.displayViewModel = displayViewModel;
+    }
+
     @Override
-    public void prepareSuccessView(BrowseOutputData idTitleData) {
-        // Process BrowseOutputData and display success view accordingly
-        Map<Integer, String> idTitleMap = idTitleData.getID_title();
-        for (Map.Entry<Integer, String> entry : idTitleMap.entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-        System.out.println("Successful view prepared");
+    public void prepareSuccessView(BrowseOutputData response) {
+        displayViewModel.setRecipeIDs(response.getRecipes());
     }
 
     @Override

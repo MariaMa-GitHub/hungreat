@@ -1,17 +1,24 @@
 package interface_adapter.browse;
 
+import interface_adapter.SearchController;
 import use_case.browse.BrowseInputBoundary;
 import use_case.browse.BrowseInputData;
+import use_case.recommend.RecommendInputData;
 
-public class BrowseController implements BrowseInputBoundary {
+import java.util.ArrayList;
+import java.util.Map;
+
+public class BrowseController implements SearchController {
     private final use_case.browse.BrowseInputBoundary browseInteractor;
 
     public BrowseController(use_case.browse.BrowseInputBoundary browseInteractor) {
         this.browseInteractor = browseInteractor;
     }
 
-    @Override
-    public void execute(BrowseInputData browseInputData) {
+    public void execute(ArrayList<String> diet, ArrayList<String> intolerance, ArrayList<String> includeIngredients,ArrayList<String> excludeIngredients, Map<String, Float[]> nutrients, String query) {
+
+        BrowseInputData browseInputData = new BrowseInputData(diet, intolerance, includeIngredients,excludeIngredients, nutrients, query);
+
         browseInteractor.execute(browseInputData);
     }
 }

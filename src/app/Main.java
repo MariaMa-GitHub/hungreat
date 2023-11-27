@@ -29,17 +29,15 @@ public class Main {
 
         DisplayViewModel displayViewModel = new DisplayViewModel();
 
-        RecipeDataAccessObject dataAccessObject;
-        TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject;
+        RecipeDataAccessObject dataAccessObject = new RecipeDataAccessObject();
+        TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject();
 //        try {
-            dataAccessObject = new RecipeDataAccessObject();
-            temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject();
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
 
 
-        BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject);
+        BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
 
         RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
         HomeView homeView = new HomeView(browseController, recommendController, displayViewModel);
