@@ -39,7 +39,7 @@ public class Main {
 //        }
 
 
-        BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject);
+        BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject);
 
         RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
         HomeView homeView = new HomeView(browseController, recommendController, displayViewModel);
