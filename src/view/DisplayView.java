@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.RecipeViewModel;
+import interface_adapter.display.DisplayController;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -11,7 +13,7 @@ import java.util.Map;
 
 public class DisplayView extends JFrame {
 
-    public DisplayView(Map<Integer, String> recipes) {
+    public DisplayView(DisplayController displayController, Map<Integer, String> recipes, RecipeViewModel recipeViewModel) {
 
         this.setTitle("View Recommendations");
 
@@ -20,7 +22,7 @@ public class DisplayView extends JFrame {
 
         for (int i = 0; i < Math.min(6, recipes.size()); i++) {
 
-            JButton button = getjButton(new ArrayList<>(recipes.keySet()), recipes, i);
+            JButton button = getjButton(new ArrayList<>(recipes.keySet()), recipes, i,displayController,recipeViewModel);
 
             displayWindow.add(button);
 
@@ -34,8 +36,8 @@ public class DisplayView extends JFrame {
 
     }
 
-    @NotNull
-    private static JButton getjButton(ArrayList<Integer> recipeIDs, Map<Integer, String> recipes, int i) {
+    @NotNull//getjButton is the process create and set a button this button will relate to the recipe id.
+    private static JButton getjButton(ArrayList<Integer> recipeIDs, Map<Integer, String> recipes, int i, DisplayController displayController,RecipeViewModel recipeViewModel) {
         Integer recipeID = recipeIDs.get(i);
 
         JButton button = new JButton(recipes.get(recipeID));
@@ -46,7 +48,9 @@ public class DisplayView extends JFrame {
                         if (evt.getSource().equals(button)) {
 
                             // TODO (Everyone and Maria)
-                            RecipeView recipeView = new RecipeView(recipeID, recipes.get(recipeID));
+                            displayController.execute(recipeID);
+                            RecipeView recipeView = new RecipeView(recipeID, recipes.get(recipeID), recipeViewModel);
+                      
 
                         }
                     }

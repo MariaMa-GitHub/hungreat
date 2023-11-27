@@ -13,5 +13,4 @@ public class BrowseOutputData {
     public Map<Integer, String> getRecipes(){
         return idTitle;
     }
-
 }
