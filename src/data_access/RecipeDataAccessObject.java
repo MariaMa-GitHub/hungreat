@@ -268,36 +268,36 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
     private JSONArray makeGetSimilarRecipesApiCall (String url) {
         //make API call using the url we build to get a list of recipes
-        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
-
-        //creating the request for searching recipes
-        Request request = new Request.Builder()
+        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests
+        Request request = new Request.Builder()     //creating the request for searching recipes
                 .url(url)
                 .addHeader("Content-Type", "application/json")
                 .build();
 
+        //handle the response of the api call
         try {
-            //handling data in the returned json-format recipes
             Response response = client.newCall(request).execute();  //make the request and get response from the api
-            JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
 
-            //Handle different status code. consult documentation (RecipesApi.md) to see response details.
-            //For our api, responseBody does not contain object "code" when success, but response always contains code.
-            //For failed status, responseBody contains "code" object.
-            if (response.code() == 200) {
-
-            } else if (responseBody.getInt("code") == 401) {    //unauthorized.
+            // Handle different status code. consult documentation (RecipesApi.md) to see response details. For this api
+            // call, the body of the response are in different format for depends on teh successful or failed status,
+            // but response itself always contains code. Therefore, we break up into cases based on response.code.
+            if (response.code() == 200) {   //success
+                JSONArray responseBody = new JSONArray(response.body().string());     //get the response body in json format
+                return responseBody;
+            } else if (response.code() == 401) {    //unauthorized.
+                JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
                 throw new RuntimeException(responseBody.getString("message"));
-            } else if (responseBody.getInt("code") == 403) {    //forbidden
+            } else if (response.code() == 403) {    //forbidden
+                JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
                 throw new RuntimeException(responseBody.getString("message"));
-            } else if (responseBody.getInt("code") == 404) {    //not found
+            } else if (response.code() == 404) {    //not found
+                JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
                 throw new RuntimeException(responseBody.getString("message"));
             }
 
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
-
         return null;
     }
 
