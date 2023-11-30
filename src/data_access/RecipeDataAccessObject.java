@@ -27,12 +27,12 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
         String url = getBrowseUrl(browseFilter);
-        return searchRecipes(url);
+        return complexSearch(url);
     }
 
     public ArrayList<Recipe> recommend(RecommendFilter recommendFilter) {
         String url = getRecommendUrl(recommendFilter);
-        return searchRecipes(url);
+        return complexSearch(url);
     }
 
     public ArrayList<Recipe> getSimilarRecipes(int id) {
@@ -65,7 +65,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     @Nullable
-    private ArrayList<Recipe> searchRecipes(String url) {
+    private ArrayList<Recipe> complexSearch(String url) {
         ArrayList<Recipe> recipes = new ArrayList<>();  //creating the list to store returned recipes later
         OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
 
@@ -103,7 +103,70 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
+        return null;
+    }
 
+    private JSONArray makeGetSimilarRecipesApiCall (int id) {
+        //build the url request of getting similar recipe from the API
+        StringBuilder urlBuilder
+                = new StringBuilder("https://api.spoonacular.com/recipes/" + id + "/similar");
+        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+        urlBuilder.append("&number=6");     //make sure the response will return at most 6 recipes
+        String url = urlBuilder.toString();
+
+        //make API call using the url we build to get a list of recipes
+        return getJsonArrayRecipesFromApi(url);
+    }
+
+    private JSONArray makeGetRecipeInformationBulkApiCall (ArrayList<String> ids) {
+        //build the url request of getting recipe information bulk from the API
+        StringBuilder urlBuilder
+                = new StringBuilder("https://api.spoonacular.com/recipes/informationBulk");
+        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+        urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
+                .append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
+
+        //add the recipe ids we want to search for to the link
+        String stringOfIds = "&ids=" + String.join(",", ids);
+        urlBuilder.append(stringOfIds);
+        String url = urlBuilder.toString();
+
+        //make API call using the url we build to get a list of recipes
+        return getJsonArrayRecipesFromApi(url);
+    }
+
+    @Nullable
+    private JSONArray getJsonArrayRecipesFromApi(String url) {
+        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests
+        Request request = new Request.Builder()     //creating the request for searching recipes
+                .url(url)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        //handle the response of the api call
+        try {
+            Response response = client.newCall(request).execute();  //make the request and get response from the api
+
+            // Handle different status code. consult documentation (RecipesApi.md) to see response details. For this api
+            // call, the body of the response are in different format for depends on teh successful or failed status,
+            // but response itself always contains code. Therefore, we break up into cases based on response.code.
+            if (response.code() == 200) {   //success
+                JSONArray responseBody = new JSONArray(response.body().string());     //get the response body in json format
+                return responseBody;
+            } else if (response.code() == 401) {    //unauthorized.
+                JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
+                throw new RuntimeException(responseBody.getString("message"));
+            } else if (response.code() == 403) {    //forbidden
+                JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
+                throw new RuntimeException(responseBody.getString("message"));
+            } else if (response.code() == 404) {    //not found
+                JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
+                throw new RuntimeException(responseBody.getString("message"));
+            }
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -114,7 +177,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         String recipeURL = rawRecipe.getString("sourceUrl");
 
         //get the recipeInfo information
-        RecipeInfo recipeInfo = getRecipeInfo(id, rawRecipe);
+        RecipeInfo recipeInfo = getRecipeInfoFromJsonRecipe(id, rawRecipe);
 
         // get the nutritionData information
         Map<String, String> nutrients = new HashMap<>();
@@ -141,7 +204,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return recipe;
     }
 
-    private RecipeInfo getRecipeInfo(int id, JSONObject rawRecipe){
+    private RecipeInfo getRecipeInfoFromJsonRecipe(int id, JSONObject rawRecipe){
         int servings = rawRecipe.getInt("servings");
         int readyInMinutes = rawRecipe.getInt("readyInMinutes");
         int healthScore = (int) rawRecipe.getFloat("healthScore");
@@ -274,70 +337,6 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
         //return the url we built as a string
         return urlBuilder.toString();
-    }
-
-    private JSONArray makeGetSimilarRecipesApiCall (int id) {
-        //build the url request of getting similar recipe from the API
-        StringBuilder urlBuilder
-                = new StringBuilder("https://api.spoonacular.com/recipes/" + id + "/similar");
-        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
-        urlBuilder.append("&number=6");     //make sure the response will return at most 6 recipes
-        String url = urlBuilder.toString();
-
-        //make API call using the url we build to get a list of recipes
-        return getJsonArrayRecipesFromApi(url);
-    }
-
-    private JSONArray makeGetRecipeInformationBulkApiCall (ArrayList<String> ids) {
-        //build the url request of getting recipe information bulk from the API
-        StringBuilder urlBuilder
-                = new StringBuilder("https://api.spoonacular.com/recipes/informationBulk");
-        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
-        urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
-                .append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
-
-        //add the recipe ids we want to search for to the link
-        String stringOfIds = "&ids=" + String.join(",", ids);
-        urlBuilder.append(stringOfIds);
-        String url = urlBuilder.toString();
-
-        //make API call using the url we build to get a list of recipes
-        return getJsonArrayRecipesFromApi(url);
-    }
-
-    @Nullable
-    private JSONArray getJsonArrayRecipesFromApi(String url) {
-        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests
-        Request request = new Request.Builder()     //creating the request for searching recipes
-                .url(url)
-                .addHeader("Content-Type", "application/json")
-                .build();
-
-        //handle the response of the api call
-        try {
-            Response response = client.newCall(request).execute();  //make the request and get response from the api
-
-            // Handle different status code. consult documentation (RecipesApi.md) to see response details. For this api
-            // call, the body of the response are in different format for depends on teh successful or failed status,
-            // but response itself always contains code. Therefore, we break up into cases based on response.code.
-            if (response.code() == 200) {   //success
-                JSONArray responseBody = new JSONArray(response.body().string());     //get the response body in json format
-                return responseBody;
-            } else if (response.code() == 401) {    //unauthorized.
-                JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
-                throw new RuntimeException(responseBody.getString("message"));
-            } else if (response.code() == 403) {    //forbidden
-                JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
-                throw new RuntimeException(responseBody.getString("message"));
-            } else if (response.code() == 404) {    //not found
-                JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
-                throw new RuntimeException(responseBody.getString("message"));
-            }
-
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
     }
 
 }
