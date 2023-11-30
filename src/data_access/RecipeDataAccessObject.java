@@ -36,7 +36,23 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     public ArrayList<Recipe> getSimilarRecipes(int id) {
-        String getSimilarRecipesUrl = getSimilarRecipesUrl(id);
+        //get ids of the similar recipes using the getSimilarRecipes API call
+        ArrayList<String> ids = new ArrayList<>();
+        JSONArray rawSimpleSimilarRecipes = makeGetSimilarRecipesApiCall(id);
+        try {
+            for (int i = 0; i < rawSimpleSimilarRecipes.length(); i++) {    // loop over each json recipe to get its id
+                JSONObject rawSimpleSimilarRecipe = rawSimpleSimilarRecipes.getJSONObject(i);
+                int similarId = rawSimpleSimilarRecipe.getInt("id");
+                ids.add(String.valueOf(similarId));
+            }
+
+            //use the ids of the similar recipes to get detailed recipe information using the getRecipeInformationBulk API call
+            //TODO
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
         return null;
     }
 
@@ -247,7 +263,20 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return urlBuilder.toString();
     }
 
-    private String getSerchRecipesInfoBulkUrl(ArrayList<String> ids) {
+    private JSONArray makeGetSimilarRecipesApiCall (int id) {
+        //build the url request of getting similar recipe from the API
+        StringBuilder urlBuilder
+                = new StringBuilder("https://api.spoonacular.com/recipes/" + id + "/similar");
+        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+        urlBuilder.append("&number=6");     //make sure the response will return at most 6 recipes
+        String url = urlBuilder.toString();
+
+        //make API call using the url we build to get a list of recipes
+        return getJsonArrayRecipesFromApi(url);
+    }
+
+    private JSONArray makeGetRecipeInformationBulkApiCall (ArrayList<String> ids) {
+        //build the url request of getting recipe information bulk from the API
         StringBuilder urlBuilder
                 = new StringBuilder("https://api.spoonacular.com/recipes/informationBulk");
         urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
@@ -257,17 +286,14 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         //add the recipe ids we want to search for to the link
         String stringOfIds = "&ids=" + String.join(",", ids);
         urlBuilder.append(stringOfIds);
+        String url = urlBuilder.toString();
 
-        //return the url we built as a string
-        return urlBuilder.toString();
-    }
-
-    private JSONArray makeGetRecipeInfoBulkApiCall (String url) {
-        return null;
-    }
-
-    private JSONArray makeGetSimilarRecipesApiCall (String url) {
         //make API call using the url we build to get a list of recipes
+        return getJsonArrayRecipesFromApi(url);
+    }
+
+    @Nullable
+    private JSONArray getJsonArrayRecipesFromApi(String url) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests
         Request request = new Request.Builder()     //creating the request for searching recipes
                 .url(url)
@@ -300,18 +326,5 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         }
         return null;
     }
-
-    @NotNull
-    private String getSimilarRecipesUrl(int id) {
-        //build the url request of getting similar recipe from the API
-        StringBuilder urlBuilder
-                = new StringBuilder("https://api.spoonacular.com/recipes/" + id + "/similar");
-        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
-        urlBuilder.append("&number=6");     //make sure the response will return at most 6 recipes
-
-        //return the url we built as a string
-        return urlBuilder.toString();
-    }
-
 
 }
