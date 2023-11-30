@@ -36,24 +36,32 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     public ArrayList<Recipe> getSimilarRecipes(int id) {
+        ArrayList<Recipe> similarRecipes = new ArrayList<>();
+
         //get ids of the similar recipes using the getSimilarRecipes API call
         ArrayList<String> ids = new ArrayList<>();
-        JSONArray rawSimpleSimilarRecipes = makeGetSimilarRecipesApiCall(id);
         try {
+            JSONArray rawSimpleSimilarRecipes = makeGetSimilarRecipesApiCall(id);
             for (int i = 0; i < rawSimpleSimilarRecipes.length(); i++) {    // loop over each json recipe to get its id
                 JSONObject rawSimpleSimilarRecipe = rawSimpleSimilarRecipes.getJSONObject(i);
                 int similarId = rawSimpleSimilarRecipe.getInt("id");
                 ids.add(String.valueOf(similarId));
             }
 
-            //use the ids of the similar recipes to get detailed recipe information using the getRecipeInformationBulk API call
-            //TODO
+            //use the ids of the similar recipes to get recipes with detailed information using the getRecipeInformationBulk API call
+            JSONArray rawDetailedSimilarRecipes = makeGetRecipeInformationBulkApiCall(ids);
+            for (int i = 0; i < rawDetailedSimilarRecipes.length(); i++) {    // loop over each json recipe to convert it into the Recipe entity
+                JSONObject rawDetailedSimilarRecipe = rawDetailedSimilarRecipes.getJSONObject(i);
+                Recipe similarRecipe = convertJsonRecipeToRecipeEntity(rawDetailedSimilarRecipe);
+                similarRecipes.add(similarRecipe);
+            }
+
+            //return the similar recipes we get
+            return similarRecipes;
 
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 
     @Nullable
@@ -79,36 +87,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                 JSONArray results = responseBody.getJSONArray("results");   //get the returned recipes
                 for (int i = 0; i < results.length(); i++) {    //loop over each recipe object in results
                     JSONObject rawRecipe = results.getJSONObject(i);
-                    int id = rawRecipe.getInt("id");
-                    String title = rawRecipe.getString("title");
-                    String imageUrl = rawRecipe.getString("image");
-                    String recipeURL = rawRecipe.getString("sourceUrl");
-
-                    //get the recipeInfo information
-                    RecipeInfo recipeInfo = getRecipeInfo(id, rawRecipe);
-
-                    // get the nutritionData information
-                    Map<String, String> nutrients = new HashMap<>();
-                    JSONArray rawNutrients = rawRecipe.getJSONObject("nutrition").getJSONArray("nutrients");
-                    for (int j = 0; j < rawNutrients.length(); j++) {
-                        JSONObject rawNutrient = rawNutrients.getJSONObject(j);
-                        String nutrientName = rawNutrient.getString("name");
-                        String nutrientUnit = rawNutrient.getString("unit");
-                        Float nutrientAmount = Float.valueOf(rawNutrient.getFloat("amount"));
-                        String amountAndUnit = nutrientAmount + nutrientUnit;
-                        nutrients.put(nutrientName, amountAndUnit);
-                    }
-                    NutritionData nutritionData = nutritionDataFactory.create(id, nutrients);
-
-                    // create a recipe and put into the recipes list
-                    Recipe recipe = recipeFactory.create(
-                            id,
-                            title,
-                            recipeURL,
-                            imageUrl,
-                            recipeInfo,
-                            nutritionData
-                    );
+                    Recipe recipe = convertJsonRecipeToRecipeEntity(rawRecipe);
                     recipes.add(recipe);
                 }
                 //return the searched recipes
@@ -126,6 +105,40 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         }
 
         return null;
+    }
+
+    private Recipe convertJsonRecipeToRecipeEntity(JSONObject rawRecipe) {
+        int id = rawRecipe.getInt("id");
+        String title = rawRecipe.getString("title");
+        String imageUrl = rawRecipe.getString("image");
+        String recipeURL = rawRecipe.getString("sourceUrl");
+
+        //get the recipeInfo information
+        RecipeInfo recipeInfo = getRecipeInfo(id, rawRecipe);
+
+        // get the nutritionData information
+        Map<String, String> nutrients = new HashMap<>();
+        JSONArray rawNutrients = rawRecipe.getJSONObject("nutrition").getJSONArray("nutrients");
+        for (int j = 0; j < rawNutrients.length(); j++) {
+            JSONObject rawNutrient = rawNutrients.getJSONObject(j);
+            String nutrientName = rawNutrient.getString("name");
+            String nutrientUnit = rawNutrient.getString("unit");
+            Float nutrientAmount = Float.valueOf(rawNutrient.getFloat("amount"));
+            String amountAndUnit = nutrientAmount + nutrientUnit;
+            nutrients.put(nutrientName, amountAndUnit);
+        }
+        NutritionData nutritionData = nutritionDataFactory.create(id, nutrients);
+
+        // create a recipe and put into the recipes list
+        Recipe recipe = recipeFactory.create(
+                id,
+                title,
+                recipeURL,
+                imageUrl,
+                recipeInfo,
+                nutritionData
+        );
+        return recipe;
     }
 
     private RecipeInfo getRecipeInfo(int id, JSONObject rawRecipe){
