@@ -4,6 +4,7 @@ import entity.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +23,6 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     private final RecipeFactory recipeFactory = new RecipeFactory();
     private final RecipeInfoFactory recipeInfoFactory = new RecipeInfoFactory();
     private final NutritionDataFactory nutritionDataFactory = new NutritionDataFactory();
-    private final Map<String, Recipe> savedRecipes = new HashMap<>();
 
 
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
@@ -35,6 +35,11 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return searchRecipes(url);
     }
 
+    public ArrayList<Recipe> getSimilarRecipes(int id) {
+        String getSimilarRecipesUrl = getSimilarRecipesUrl(id);
+        return null;
+    }
+
     @Nullable
     private ArrayList<Recipe> searchRecipes(String url) {
         ArrayList<Recipe> recipes = new ArrayList<>();  //creating the list to store returned recipes later
@@ -43,7 +48,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         //creating the request for searching recipes
         Request request = new Request.Builder()
                 .url(url)
-                .addHeader("Content-Type", "application/json")  //TODO:[Q] delete? what is the purpose of headers?
+                .addHeader("Content-Type", "application/json")
                 .build();
 
         try{
@@ -92,12 +97,11 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                 }
                 //return the searched recipes
                 return recipes;
-            //TODO[recall exception]: do I need to write new exceptions?
-            } else if (responseBody.getInt("code") == 401) {    //unauthorized.
+            } else if (response.code() == 401) {    //unauthorized.
                 throw new RuntimeException(responseBody.getString("message"));
-            } else if (responseBody.getInt("code") == 403) {    //forbidden
+            } else if (response.code() == 403) {    //forbidden
                 throw new RuntimeException(responseBody.getString("message"));
-            } else if (responseBody.getInt("code") == 404) {    //not found
+            } else if (response.code() == 404) {    //not found
                 throw new RuntimeException(responseBody.getString("message"));
             }
 
@@ -108,7 +112,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return null;
     }
 
-    public RecipeInfo getRecipeInfo(int id, JSONObject rawRecipe){
+    private RecipeInfo getRecipeInfo(int id, JSONObject rawRecipe){
         int servings = rawRecipe.getInt("servings");
         int readyInMinutes = rawRecipe.getInt("readyInMinutes");
         int healthScore = (int) rawRecipe.getFloat("healthScore");
@@ -220,7 +224,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                 = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");
         urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
         urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
-                .append("&addRecipeNutrition=true").append("number=6"); //make sure the response will contain ingredients, recipeInfo, and nutrition
+                .append("&addRecipeNutrition=true").append("&number=6"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
 //        add all user-defined query parameters to the request url
 //        checking for empty because the absence of some parameter values will cause 404 error
@@ -242,5 +246,72 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         //return the url we built as a string
         return urlBuilder.toString();
     }
+
+    private String getSerchRecipesInfoBulkUrl(ArrayList<String> ids) {
+        StringBuilder urlBuilder
+                = new StringBuilder("https://api.spoonacular.com/recipes/informationBulk");
+        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+        urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
+                .append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
+
+        //add the recipe ids we want to search for to the link
+        String stringOfIds = "&ids=" + String.join(",", ids);
+        urlBuilder.append(stringOfIds);
+
+        //return the url we built as a string
+        return urlBuilder.toString();
+    }
+
+    private JSONArray makeGetRecipeInfoBulkApiCall (String url) {
+        return null;
+    }
+
+    private JSONArray makeGetSimilarRecipesApiCall (String url) {
+        //make API call using the url we build to get a list of recipes
+        OkHttpClient client = new OkHttpClient().newBuilder().build();  //creating an HTTP client to make requests later
+
+        //creating the request for searching recipes
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        try {
+            //handling data in the returned json-format recipes
+            Response response = client.newCall(request).execute();  //make the request and get response from the api
+            JSONObject responseBody = new JSONObject(response.body().string());     //get the response body in json format
+
+            //Handle different status code. consult documentation (RecipesApi.md) to see response details.
+            //For our api, responseBody does not contain object "code" when success, but response always contains code.
+            //For failed status, responseBody contains "code" object.
+            if (response.code() == 200) {
+
+            } else if (responseBody.getInt("code") == 401) {    //unauthorized.
+                throw new RuntimeException(responseBody.getString("message"));
+            } else if (responseBody.getInt("code") == 403) {    //forbidden
+                throw new RuntimeException(responseBody.getString("message"));
+            } else if (responseBody.getInt("code") == 404) {    //not found
+                throw new RuntimeException(responseBody.getString("message"));
+            }
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+    @NotNull
+    private String getSimilarRecipesUrl(int id) {
+        //build the url request of getting similar recipe from the API
+        StringBuilder urlBuilder
+                = new StringBuilder("https://api.spoonacular.com/recipes/" + id + "/similar");
+        urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
+        urlBuilder.append("&number=6");     //make sure the response will return at most 6 recipes
+
+        //return the url we built as a string
+        return urlBuilder.toString();
+    }
+
 
 }
