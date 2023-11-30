@@ -1,14 +1,20 @@
 package interface_adapter;
 
-import entity.Recipe;
+import java.sql.SQLOutput;
 
-import java.util.ArrayList;
-
-public class RecipeViewModel {
-    private ArrayList<Recipe> recipe = new ArrayList<>();
+public class RecipeViewModel{
+    private String recipeString;
+    //cause we do not know what variable we need to pass in while we create RecipeViewModel in main
+    // so here initializer is empty , we use set method to initialize RecipeViewModel.
     public RecipeViewModel() {
     }
 
+    public void setRecipeString(String recipeString) {
+        this.recipeString = recipeString;
+    }
 
-
+    public String getRecipeString() {
+//        System.out.println(recipeString);
+            return recipeString;
+    }
 }

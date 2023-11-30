@@ -3,7 +3,6 @@ package data_access;
 import entity.NutritionDataFactory;
 import entity.Recipe;
 import entity.RecipeFactory;
-import entity.RecipeInfoFactory;
 import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.browse.BrowseInputData;
 
@@ -20,6 +19,10 @@ public class TemporaryRecipeDataAccessObject implements TemporaryRecipeDataAcces
 
     public Recipe getFromID(int id) {
         return recipes.get(id);
+    }
+
+    public boolean existsByID(int id) {
+        return (recipes.containsKey(id));
     }
 
     public void storeRecipes(ArrayList<Recipe> recipeList) {

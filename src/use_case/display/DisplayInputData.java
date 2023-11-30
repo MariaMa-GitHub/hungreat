@@ -3,12 +3,12 @@ package use_case.display;
 import entity.Recipe;
 
 public class DisplayInputData {
-    final private Recipe recipe;
+    final private Integer recipeID;
 
-    public DisplayInputData(Recipe recipe){
-        this.recipe = recipe;
+    public DisplayInputData(Integer recipeID){
+        this.recipeID = recipeID;
     }
-    public Recipe getRecipe(){
-        return recipe;
+    public Integer getRecipeID(){
+        return recipeID;
     }
 }
