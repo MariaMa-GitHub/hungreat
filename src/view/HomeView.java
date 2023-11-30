@@ -105,7 +105,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Everyone)
 //                            browseController.execute();
-                            SearchView searchView = new SearchView("browse", browseController, displayViewModel);
+                            SearchView searchView = new SearchView("browse", browseController, displayViewModel, displayController, recipeViewModel);
 
                         }
                     }

@@ -328,7 +328,7 @@ public class SearchView extends JFrame {
                                         "cauliflower" // TODO: getQueryInput() implement getQuery in Views
                                 );
 
-                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
+                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel);
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);
