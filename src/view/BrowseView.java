@@ -1,19 +1,19 @@
-//package view;
-//
-//import interface_adapter.SearchController;
-//import interface_adapter.DisplayViewModel;
-//import interface_adapter.browse.BrowseController;
-//import interface_adapter.recommend.RecommendController;
-//
-//import javax.swing.*;
-//import java.awt.*;
-//import java.awt.event.*;
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//public class BrowseView extends JFrame {
+package view;
+
+import interface_adapter.SearchController;
+import interface_adapter.DisplayViewModel;
+import interface_adapter.browse.BrowseController;
+import interface_adapter.recommend.RecommendController;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+public class BrowseView extends JFrame {
 //
 //    final JTextField cuisineInput;
 //    final JTextField excludeCuisineInput;
@@ -27,7 +27,7 @@
 //    private final SearchController controller;
 //    private final DisplayViewModel displayViewModel;
 //
-//    public BrowseView(String function, SearchController controller, DisplayViewModel displayViewModel) {
+    public BrowseView(SearchController controller, DisplayViewModel displayViewModel) {
 //
 //        this.controller = controller;
 //        this.displayViewModel = displayViewModel;
@@ -385,7 +385,7 @@
 ////
 ////        this.addWindowListener(listener);
 //
-//    }
+    }
 //
 //    public ArrayList<String> getCuisineInput() {
 //        String text = cuisineInput.getText().strip();
@@ -450,5 +450,5 @@
 //
 //        return query.keySet().toString();
 //    }
-//}
-//
+}
+

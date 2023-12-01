@@ -1,6 +1,5 @@
 package view;
 
-import interface_adapter.SearchController;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.recommend.RecommendController;
@@ -22,17 +21,16 @@ public class RecommendView extends JFrame {
     final JTextField ingredientsInput;
     final JTextField excludeIngredientsInput;
     final JTextField nutrientsInput;
-    final JTextField queryInput;
 
-    private final SearchController controller;
+    private final RecommendController recommendController;
     private final DisplayViewModel displayViewModel;
 
-    public RecommendView(String function, SearchController controller, DisplayViewModel displayViewModel) {
+    public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel) {
 
-        this.controller = controller;
+        this.recommendController = recommendController;
         this.displayViewModel = displayViewModel;
 
-        this.setTitle("Search Recipes");
+        this.setTitle("Search Recipes");    //TODO
 
         JPanel searchWindow = new JPanel();
         searchWindow.setLayout(new GridBagLayout());
@@ -48,7 +46,7 @@ public class RecommendView extends JFrame {
         gbc.gridwidth = 2;
         gbc.ipady = 50;
 
-        JLabel title = new JLabel("Apply Search Filters", SwingConstants.CENTER);
+        JLabel title = new JLabel("Apply Recommend Filters", SwingConstants.CENTER);
         title.setFont(new Font("Helvetica", Font.BOLD, 24));
         searchWindow.add(title, gbc);
 
@@ -271,100 +269,41 @@ public class RecommendView extends JFrame {
         );
         searchWindow.add(nutrientsInput, gbc);
 
-        // query
-        gbc.gridx = 0;
-        gbc.gridy = 8;
-        gbc.ipadx = 20;
-
-        JLabel query = new JLabel("Query", SwingConstants.CENTER);
-        query.setFont(new Font("Arial", Font.PLAIN, 18));
-        searchWindow.add(query, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 8;
-        gbc.ipadx = 350;
-
-        queryInput = new PTextField("Separate fields (nutrient : range) by comma");
-        queryInput.setFont(new Font("Arial", Font.PLAIN, 18));
-        queryInput.setForeground(Color.DARK_GRAY);
-        queryInput.setOpaque(false);
-        queryInput.setBorder(
-                javax.swing.BorderFactory.createCompoundBorder(
-                        javax.swing.BorderFactory.createTitledBorder(
-                                null, "",
-                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                                new Font("Arial", Font.PLAIN, 18)
-                        ),
-                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
-                )
-        );
-        searchWindow.add(queryInput, gbc);
-
         // search
-
         gbc.gridx = 0;
         gbc.gridy = 9;
         gbc.gridwidth = 2;
         gbc.insets = new Insets(30, 0, 30, 0);
 
-        JButton search = new JButton("Search Recipe");
+        JButton search = new JButton("Get Recommendations");
         search.setFont(new Font("Arial", Font.PLAIN, 18));
         search.setPreferredSize(new Dimension(50, 10));
         searchWindow.add(search, gbc);
 
         search.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(search)) {
+            new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    if (evt.getSource().equals(search)) {
+                        recommendController.execute(
+                                getCuisineInput(),
+                                getExcludeCuisineInput(),
+                                getDietInput(),
+                                getIntolerancesInput(),
+                                getIngredientsInput(),
+                                getExcludeIngredientsInput(),
+                                getNutrientsInput()
+                        );
 
-                            // TODO (Everyone and Maria)
+                        DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
 
-                            if (function.equals("recommend")) {
+                        JComponent comp = (JComponent) evt.getSource();
+                        Window win = SwingUtilities.getWindowAncestor(comp);
+                        win.dispose();
 
-                                RecommendController recommendController = (RecommendController) controller;
-                                recommendController.execute(
-                                        getCuisineInput(),
-                                        getExcludeCuisineInput(),
-                                        getDietInput(),
-                                        getIntolerancesInput(),
-                                        getIngredientsInput(),
-                                        getExcludeIngredientsInput(),
-                                        getNutrientsInput()
-                                );
-
-                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
-
-                                JComponent comp = (JComponent) evt.getSource();
-                                Window win = SwingUtilities.getWindowAncestor(comp);
-                                win.dispose();
-
-                            }
-
-                            if (function.equals("browse")) {
-
-                                BrowseController browseController = (BrowseController) controller;
-                                browseController.execute(
-                                        getDietInput(),
-                                        getIntolerancesInput(),
-                                        getIngredientsInput(),
-                                        getExcludeIngredientsInput(),
-                                        getNutrientsInput(),
-                                        getQueryInput()  // TODO: getQueryInput() implement getQuery in Views
-                                );
-
-                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
-
-                                JComponent comp = (JComponent) evt.getSource();
-                                Window win = SwingUtilities.getWindowAncestor(comp);
-                                win.dispose();
-
-                            }
-
-
-                        }
                     }
+
                 }
+            }
         );
 
 
@@ -435,19 +374,5 @@ public class RecommendView extends JFrame {
         }
 
         return nutrients;
-    }
-
-    public String getQueryInput() {
-        String text = nutrientsInput.getText().strip();
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        Map<String, Float[]> query = new HashMap<>();
-        for (String input : inputs) {
-            ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
-            ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
-            Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
-            query.put(nutrient.get(0), values);
-        }
-
-        return query.keySet().toString();
     }
 }
