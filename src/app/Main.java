@@ -1,6 +1,7 @@
 package app;
 
 import data_access.RecipeDataAccessObject;
+import data_access.SavedRecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
@@ -29,8 +30,17 @@ public class Main {
 
         DisplayViewModel displayViewModel = new DisplayViewModel();
 
-        RecipeDataAccessObject dataAccessObject = new RecipeDataAccessObject();
-        TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject();
+        RecipeDataAccessObject dataAccessObject = null;
+        TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject = null;
+        try {
+            SavedRecipeDataAccessObject savedRecipeDataAccessObject = new SavedRecipeDataAccessObject();
+            dataAccessObject = new RecipeDataAccessObject();
+            temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(savedRecipeDataAccessObject.getSavedRecipes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 //        try {
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);

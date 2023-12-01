@@ -1,5 +1,8 @@
 package entity;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 
 public class Recipe {
@@ -48,4 +51,10 @@ public class Recipe {
     public Collection<Recipe> getSimilarRecipes() {
         return similarRecipes;
     }
+
+    // InputSteam and OutputStream
+    public void saveToFile() {
+//        ObjectOutputStream out = new ObjectOutputStream;
+    }
+
 }
