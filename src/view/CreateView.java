@@ -25,7 +25,7 @@ public class CreateView extends JFrame{
     private final DisplayController displayController;
     private final RecipeViewModel recipeViewModel;
 
-    public CreateView(String function, CreateController createController, DisplayViewModel displayViewModel, DisplayController displayController,RecipeViewModel recipeViewModel) {
+    public CreateView(CreateController createController, DisplayViewModel displayViewModel, DisplayController displayController,RecipeViewModel recipeViewModel) {
 
         this.createController = createController;
         this.displayViewModel = displayViewModel;
@@ -203,29 +203,23 @@ public class CreateView extends JFrame{
         );
         createWindow.add(instructionsInput, gbc);
 
-//        // search
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 8;
-//        gbc.gridwidth = 2;
-//        gbc.insets = new Insets(30, 0, 30, 0);
-//
-//        JButton search = new JButton("Search Recipe");
-//        search.setFont(new Font("Arial", Font.PLAIN, 18));
-//        search.setPreferredSize(new Dimension(50, 10));
-//        searchWindow.add(search, gbc);
-//
-//        search.addActionListener(
-//                new ActionListener() {
-//                    public void actionPerformed(ActionEvent evt) {
-//                        if (evt.getSource().equals(search)) {
-//
-//                            // TODO (Everyone and Maria)
-//
-//                            if (function.equals("recommend")) {
-//
-//                                RecommendController recommendController = (RecommendController) controller;
-//                                recommendController.execute(
+        // save button
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridwidth = 2;
+        gbc.insets = new Insets(30, 0, 30, 0);
+
+        JButton save = new JButton("Save");
+        save.setFont(new Font("Arial", Font.PLAIN, 18));
+        save.setPreferredSize(new Dimension(50, 10));
+        createWindow.add(save, gbc);
+
+        save.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    if (evt.getSource().equals(save)) {
+                        //TODO
+                        createController.execute(
 //                                        getCuisineInput(),
 //                                        getExcludeCuisineInput(),
 //                                        getDietInput(),
@@ -233,41 +227,16 @@ public class CreateView extends JFrame{
 //                                        getIngredientsInput(),
 //                                        getExcludeIngredientsInput(),
 //                                        getNutrientsInput()
-//                                );
-//
-//                                DisplayView displayView = new DisplayView(displayController,displayViewModel.getRecipes(), recipeViewModel);
-//
-//                                JComponent comp = (JComponent) evt.getSource();
-//                                Window win = SwingUtilities.getWindowAncestor(comp);
-//                                win.dispose();
-//
-//                            }
-//
-//                            if (function.equals("browse")) {
-//
-//                                BrowseController browseController = (BrowseController) controller;
-//                                browseController.execute(
-//                                        getDietInput(),
-//                                        getIntolerancesInput(),
-//                                        getIngredientsInput(),
-//                                        getExcludeIngredientsInput(),
-//                                        getNutrientsInput(),
-//                                        "cauliflower" // TODO: getQueryInput() implement getQuery in Views
-//                                );
-//
-//                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel);
-//
-//                                JComponent comp = (JComponent) evt.getSource();
-//                                Window win = SwingUtilities.getWindowAncestor(comp);
-//                                win.dispose();
-//
-//                            }
-//
-//
-//                        }
-//                    }
-//                }
-//        );
+                        );
+
+                        DisplayView displayView = new DisplayView(displayController,displayViewModel.getRecipes(), recipeViewModel);
+                        JComponent comp = (JComponent) evt.getSource();
+                        Window win = SwingUtilities.getWindowAncestor(comp);
+                        win.dispose();
+                    }
+                }
+            }
+        );
 //
 //
 //        this.add(searchWindow);
