@@ -3,7 +3,6 @@ package data_access;
 import entity.NutritionDataFactory;
 import entity.Recipe;
 import entity.RecipeFactory;
-import entity.RecipeInfoFactory;
 import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.browse.BrowseInputData;
 
