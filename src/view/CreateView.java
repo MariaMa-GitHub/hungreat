@@ -14,13 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateView extends JFrame{
-//    final JTextField cuisineInput;
-//    final JTextField excludeCuisineInput;
-//    final JTextField dietInput;
-//    final JTextField intolerancesInput;
+//    final JTextField titleInput;
+//    final JTextField servingsInput;
+//    final JTextField readyInMinutesInput;
 //    final JTextField ingredientsInput;
-//    final JTextField excludeIngredientsInput;
-//    final JTextField nutrientsInput;
+//    final JTextField instructionsInput;
 
     private final CreateController createController;
     private final DisplayViewModel displayViewModel;
@@ -36,24 +34,23 @@ public class CreateView extends JFrame{
 
         this.setTitle("Create");
 
-//        JPanel searchWindow = new JPanel();
-//        searchWindow.setLayout(new GridBagLayout());
-//
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.fill = GridBagConstraints.HORIZONTAL;
-//        gbc.insets = new Insets(5,5,5,5);
-//
-//        // title
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
-//        gbc.gridwidth = 2;
-//        gbc.ipady = 50;
-//
-//        JLabel title = new JLabel("Apply Search Filters", SwingConstants.CENTER);
-//        title.setFont(new Font("Helvetica", Font.BOLD, 24));
-//        searchWindow.add(title, gbc);
-//
+        JPanel createWindow = new JPanel();
+        createWindow.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5,5,5,5);
+
+        // title of the creating recipe page
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.ipady = 50;
+
+        JLabel title = new JLabel("Create a Customizable Recipe", SwingConstants.CENTER);
+        title.setFont(new Font("Helvetica", Font.BOLD, 24));
+        createWindow.add(title, gbc);
+
 //        // cuisine
 //
 //        gbc.gridwidth = 1;
