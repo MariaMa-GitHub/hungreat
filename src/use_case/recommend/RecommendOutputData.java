@@ -1,19 +1,16 @@
 package use_case.recommend;
 
-import entity.Recipe;
-
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Map;
 
 public class RecommendOutputData {
 
-    private final ArrayList<Recipe> recipes;
+    private final Map<Integer, String> recipes;
 
-    public RecommendOutputData(ArrayList<Recipe> recipes) {
+    public RecommendOutputData(Map<Integer, String> recipes) {
         this.recipes = recipes;
     }
 
-    public ArrayList<Recipe> getRecipes() {
+    public Map<Integer, String> getRecipes() {
         return recipes;
     }
 

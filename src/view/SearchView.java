@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.SearchController;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.browse.BrowseController;
 import interface_adapter.recommend.RecommendController;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SearchView extends JFrame {
 
@@ -308,6 +310,26 @@ public class SearchView extends JFrame {
 
                             }
 
+                            if (function.equals("browse")) {
+
+                                BrowseController browseController = (BrowseController) controller;
+                                browseController.execute(
+                                        getDietInput(),
+                                        getIntolerancesInput(),
+                                        getIngredientsInput(),
+                                        getExcludeIngredientsInput(),
+                                        getNutrientsInput(),
+                                        "cauliflower" // TODO: getQueryInput() implement getQuery in Views
+                                );
+
+                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
+
+                                JComponent comp = (JComponent) evt.getSource();
+                                Window win = SwingUtilities.getWindowAncestor(comp);
+                                win.dispose();
+
+                            }
+
 
                         }
                     }
@@ -370,11 +392,11 @@ public class SearchView extends JFrame {
         return inputs;
     }
 
-    public HashMap<String, Float[]> getNutrientsInput() {
+    public Map<String, Float[]> getNutrientsInput() {
 
         String text = nutrientsInput.getText().strip();
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        HashMap<String, Float[]> nutrients = new HashMap<>();
+        Map<String, Float[]> nutrients = new HashMap<>();
         for (String input : inputs) {
             ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
             ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
