@@ -17,8 +17,8 @@ public class CreateView extends JFrame{
     final JTextField titleInput;
     final JTextField servingsInput;
     final JTextField readyInMinutesInput;
-    final JTextField ingredientsInput;
-    final JTextField instructionsInput;
+    final JTextArea ingredientsInput;
+    final JTextArea instructionsInput;
 
     private final CreateController createController;
     private final DisplayViewModel displayViewModel;
@@ -47,7 +47,7 @@ public class CreateView extends JFrame{
         gbc.gridwidth = 2;
         gbc.ipady = 50;
 
-        JLabel pageTitle = new JLabel("Create a Customizable Recipe", SwingConstants.CENTER);
+        JLabel pageTitle = new JLabel("Create a Customized Recipe", SwingConstants.CENTER);
         pageTitle.setFont(new Font("Helvetica", Font.BOLD, 24));
         createWindow.add(pageTitle, gbc);
 
@@ -58,13 +58,13 @@ public class CreateView extends JFrame{
         gbc.ipadx = 20;
         gbc.ipady = 10;
 
-        JLabel title = new JLabel("title", SwingConstants.CENTER);
+        JLabel title = new JLabel("Recipe Title", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.PLAIN, 18));
         createWindow.add(title, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.ipadx = 350;
+        gbc.ipadx = 600;
 
         titleInput = new JTextField("");
         titleInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -94,7 +94,7 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.ipadx = 350;
+        gbc.ipadx = 600;
 
         servingsInput = new JTextField("");
         servingsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -124,7 +124,7 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 3;
-        gbc.ipadx = 350;
+        gbc.ipadx = 600;
 
         readyInMinutesInput = new JTextField("");
         readyInMinutesInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -154,9 +154,10 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 4;
-        gbc.ipadx = 350;
+        gbc.ipadx = 600;
+        gbc.ipady = 200;
 
-        ingredientsInput = new PTextField("");
+        ingredientsInput = new JTextArea("");
         ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
         ingredientsInput.setForeground(Color.DARK_GRAY);
         ingredientsInput.setOpaque(false);
@@ -177,6 +178,7 @@ public class CreateView extends JFrame{
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.ipadx = 20;
+        gbc.ipady = 10;
 
         JLabel instructions = new JLabel("Instructions", SwingConstants.CENTER);
         instructions.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -184,12 +186,16 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.ipadx = 350;
+        gbc.ipadx = 600;
+        gbc.ipady = 500;
 
-        instructionsInput = new PTextField("");
+        instructionsInput = new JTextArea("");
         instructionsInput.setFont(new Font("Arial", Font.PLAIN, 18));
         instructionsInput.setForeground(Color.DARK_GRAY);
         instructionsInput.setOpaque(false);
+//        instructionsInput.setDragEnabled(false);
+//        instructionsInput.setAutoscrolls(true);
+//        instructionsInput.set     //TODO
         instructionsInput.setBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createTitledBorder(
@@ -206,8 +212,10 @@ public class CreateView extends JFrame{
         // save button
         gbc.gridx = 0;
         gbc.gridy = 8;
+        gbc.ipady = 30;
+        gbc.ipadx = 50;
         gbc.gridwidth = 2;
-        gbc.insets = new Insets(30, 0, 30, 0);
+        gbc.insets = new Insets(30, 400, 30, 400);
 
         JButton save = new JButton("Save");
         save.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -241,7 +249,7 @@ public class CreateView extends JFrame{
 
         this.add(createWindow);
 
-        this.setSize(600, 600);
+        this.setSize(1000, 1100);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
