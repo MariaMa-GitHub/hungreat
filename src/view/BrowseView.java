@@ -21,10 +21,10 @@ public class BrowseView extends JFrame {
     final JTextField nutrientsInput;
     final JTextField queryInput;
 
-    private final SearchController controller;
+    private final BrowseController controller;
     private final DisplayViewModel displayViewModel;
 
-    public BrowseView(String function, SearchController controller, DisplayViewModel displayViewModel) {
+    public BrowseView(BrowseController controller, DisplayViewModel displayViewModel) {
 
         this.controller = controller;
         this.displayViewModel = displayViewModel;
@@ -219,7 +219,7 @@ public class BrowseView extends JFrame {
         gbc.gridy = 8;
         gbc.ipadx = 350;
 
-        queryInput = new PTextField("Separate fields (nutrient : range) by comma");
+        queryInput = new PTextField("Enter a keyword");
         queryInput.setFont(new Font("Arial", Font.PLAIN, 18));
         queryInput.setForeground(Color.DARK_GRAY);
         queryInput.setOpaque(false);
@@ -253,8 +253,7 @@ public class BrowseView extends JFrame {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
                             // for the browse one, we need to get the input from the text fields
-                                BrowseController browseController = (BrowseController) controller;
-                                browseController.execute(
+                                controller.execute(
                                         getDietInput(),
                                         getIntolerancesInput(),
                                         getIngredientsInput(),
@@ -286,54 +285,64 @@ public class BrowseView extends JFrame {
 
     public ArrayList<String> getDietInput() {
         String text = dietInput.getText().strip();
+        if (text.equals("Separate fields by comma")) {
+            text = "";
+        }
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
         return inputs;
     }
 
     public ArrayList<String> getIntolerancesInput() {
         String text = intolerancesInput.getText().strip();
+        if (text.equals("Separate fields by comma")) {
+            text = "";
+        }
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
         return inputs;
     }
 
     public ArrayList<String> getIngredientsInput() {
         String text = ingredientsInput.getText().strip();
+        if (text.equals("Separate fields by comma")) {
+            text = "";
+        }
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
         return inputs;
     }
 
     public ArrayList<String> getExcludeIngredientsInput() {
         String text = excludeIngredientsInput.getText().strip();
+        if (text.equals("Separate fields by comma")) {
+            text = "";
+        }
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
         return inputs;
     }
 
     public Map<String, Float[]> getNutrientsInput() {
         String text = nutrientsInput.getText().strip();
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        Map<String, Float[]> nutrients = new HashMap<>();
-        for (String input : inputs) {
-            ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
-            ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
-            Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
-            nutrients.put(nutrient.get(0), values);
+        if (text.equals("Separate fields (nutrient : range) by comma")) {
+            Map<String, Float[]> nutrients = Map.of("Calories" , new Float[]{0f, 1000000f});
+            return nutrients;
+        } else {
+            ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+            Map<String, Float[]> nutrients = new HashMap<>();
+            for (String input : inputs) {
+                ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
+                ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
+                Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
+                nutrients.put(nutrient.get(0), values);
+            }
+            return nutrients;
         }
-
-        return nutrients;
     }
 
     public String getQueryInput() {
-        String text = nutrientsInput.getText().strip();
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        Map<String, Float[]> query = new HashMap<>();
-        for (String input : inputs) {
-            ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
-            ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
-            Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
-            query.put(nutrient.get(0), values);
+        String text = queryInput.getText().strip();
+        if (text.equals("Enter a keyword")) {
+            text = "";
         }
-
-        return query.keySet().toString();
+        return text;
     }
 }
 
