@@ -1,13 +1,13 @@
-# Ignore the files inside the 'out' directory
+# Ignore the files in 'out' directory
 out/
 
-# Ignore the files inside the '.idea' directory
+# Ignore the files in '.idea' directory
 .idea/
 
-# Ignore the files ending with .xml
+# Ignore the files ending with '.xml'
 *.xml
 
-# Ignore the files ending with .gitignore
+# Ignore the files ending with '.gitignore'
 *.gitignore
 
 # Ignore the files in 'target' directory
