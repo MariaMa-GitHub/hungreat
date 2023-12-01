@@ -14,7 +14,6 @@ public class AnalysisPresenter implements AnalysisOutputBoundary {
     @Override
     public void prepareView(AnalysisOutputData nutritionToString) {
         //change data type from AnalysisOutputData to string when pass in to analysisViewModel's method
-        System.out.println(analysisViewModel.getNutritionToString());
         analysisViewModel.setNutritionToString(nutritionToString.getNutritionToString());
     }
 

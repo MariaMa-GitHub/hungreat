@@ -4,7 +4,7 @@ import java.sql.SQLOutput;
 
 public class RecipeViewModel{
     private String recipeString;
-    //cause we do not know what variable we need to pass in while we create RecipeViewModel in main
+    // cause we do not know what variable we need to pass in while we create RecipeViewModel in main
     // so here initializer is empty , we use set method to initialize RecipeViewModel.
     public RecipeViewModel() {
     }
@@ -14,7 +14,6 @@ public class RecipeViewModel{
     }
 
     public String getRecipeString() {
-//        System.out.println(recipeString);
             return recipeString;
     }
 }
