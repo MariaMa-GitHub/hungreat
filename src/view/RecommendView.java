@@ -1,10 +1,8 @@
 package view;
 
 import interface_adapter.RecipeViewModel;
-import interface_adapter.SearchController;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.display.DisplayController;
-import interface_adapter.browse.BrowseController;
 import interface_adapter.recommend.RecommendController;
 
 import javax.swing.*;
@@ -30,7 +28,7 @@ public class RecommendView extends JFrame {
     private final DisplayController displayController;
     private final RecipeViewModel recipeViewModel;
 
-    public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel) {
+    public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel) {
 
         this.recommendController = recommendController;
         this.displayViewModel = displayViewModel;
@@ -302,7 +300,7 @@ public class RecommendView extends JFrame {
                                 getNutrientsInput()
                         );
 
-                        DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
+                        DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel);
 
                         JComponent comp = (JComponent) evt.getSource();
                         Window win = SwingUtilities.getWindowAncestor(comp);
@@ -320,18 +318,6 @@ public class RecommendView extends JFrame {
         this.setSize(600, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
-
-//        WindowListener listener = new WindowAdapter() {
-//            public void windowClosing(WindowEvent evt) {
-////                JFrame frame = (JFrame) evt.getSource();
-//                JOptionPane.showMessageDialog(null, "Window Closing");
-//            }
-//        };
-//
-//
-//        this.addWindowListener(listener);
-
     }
 
     public ArrayList<String> getCuisineInput() {
@@ -348,39 +334,55 @@ public class RecommendView extends JFrame {
 
     public ArrayList<String> getDietInput() {
         String text = dietInput.getText().strip();
+        if (text.equals("Separate fields by comma")) {
+            text = "";
+        }
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
         return inputs;
     }
 
     public ArrayList<String> getIntolerancesInput() {
         String text = intolerancesInput.getText().strip();
+        if (text.equals("Separate fields by comma")) {
+            text = "";
+        }
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
         return inputs;
     }
 
     public ArrayList<String> getIngredientsInput() {
         String text = ingredientsInput.getText().strip();
+        if (text.equals("Separate fields by comma")) {
+            text = "";
+        }
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
         return inputs;
     }
 
     public ArrayList<String> getExcludeIngredientsInput() {
         String text = excludeIngredientsInput.getText().strip();
+        if (text.equals("Separate fields by comma")) {
+            text = "";
+        }
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
         return inputs;
     }
 
     public Map<String, Float[]> getNutrientsInput() {
         String text = nutrientsInput.getText().strip();
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        Map<String, Float[]> nutrients = new HashMap<>();
-        for (String input : inputs) {
-            ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
-            ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
-            Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
-            nutrients.put(nutrient.get(0), values);
+        if (text.equals("Separate fields (nutrient : range) by comma")) {
+            Map<String, Float[]> nutrients = Map.of("Calories" , new Float[]{0f, 1000000f});
+            return nutrients;
+        } else {
+            ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+            Map<String, Float[]> nutrients = new HashMap<>();
+            for (String input : inputs) {
+                ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
+                ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
+                Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
+                nutrients.put(nutrient.get(0), values);
+            }
+            return nutrients;
         }
-
-        return nutrients;
     }
 }

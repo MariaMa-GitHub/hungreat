@@ -43,7 +43,6 @@ public class SavedRecipeDataAccessObject {
             // closing streams
             ois.close();
         } catch (IOException e) {
-            System.out.println("No saved recipes found.");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

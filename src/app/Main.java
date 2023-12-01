@@ -8,16 +8,10 @@ import interface_adapter.RecipeViewModel;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import use_case.TemporaryRecipeDataAccessInterface;
 import view.HomeView;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class Main {
 
@@ -28,6 +22,7 @@ public class Main {
 
 
         DisplayViewModel displayViewModel = new DisplayViewModel();
+        RecipeViewModel recipeViewModel = new RecipeViewModel();
 
         RecipeDataAccessObject dataAccessObject = null;
         TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject = null;
@@ -40,10 +35,6 @@ public class Main {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-//        try {
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
 
 
         BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);

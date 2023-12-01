@@ -1,9 +1,9 @@
 package view;
 
-import interface_adapter.SearchController;
+import interface_adapter.RecipeViewModel;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.browse.BrowseController;
-import interface_adapter.recommend.RecommendController;
+import interface_adapter.display.DisplayController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +24,7 @@ public class BrowseView extends JFrame {
     private final BrowseController controller;
     private final DisplayViewModel displayViewModel;
 
-    public BrowseView(BrowseController controller, DisplayViewModel displayViewModel) {
+    public BrowseView(BrowseController controller, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel) {
 
         this.controller = controller;
         this.displayViewModel = displayViewModel;
@@ -252,7 +252,7 @@ public class BrowseView extends JFrame {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(search)) {
-                            // for the browse one, we need to get the input from the text fields
+                                // for the browse one, we need to get the input from the text fields
                                 controller.execute(
                                         getDietInput(),
                                         getIntolerancesInput(),
@@ -262,7 +262,7 @@ public class BrowseView extends JFrame {
                                         getQueryInput()
                                 );
 
-                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
+                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel);
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);
@@ -273,14 +273,11 @@ public class BrowseView extends JFrame {
                 }
         );
 
-
         this.add(searchWindow);
 
         this.setSize(600, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
-
     }
 
     public ArrayList<String> getDietInput() {
