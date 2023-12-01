@@ -3,6 +3,7 @@ package view;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
 
@@ -20,7 +21,14 @@ public class HomeView extends JPanel {
     final JPanel savedRecipesList;
     final DisplayController displayController;
 
-    public HomeView(BrowseController browseController, RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel) {
+    public HomeView(
+            BrowseController browseController,
+            RecommendController recommendController,
+            CreateController createController,
+            DisplayViewModel displayViewModel,
+            DisplayController displayController,
+            RecipeViewModel recipeViewModel)
+    {
 
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(800, 600));
@@ -89,9 +97,8 @@ public class HomeView extends JPanel {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(create)) {
-
                             // TODO (Michelle)
-
+                            CreateView createView = new CreateView(createController, displayViewModel, displayController, recipeViewModel);
                         }
                     }
                 }

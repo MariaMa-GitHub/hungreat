@@ -237,25 +237,13 @@ public class CreateView extends JFrame{
                 }
             }
         );
-//
-//
-//        this.add(searchWindow);
-//
-//        this.setSize(600, 600);
-//        this.setLocationRelativeTo(null);
-//        this.setVisible(true);
-//
-//
-////        WindowListener listener = new WindowAdapter() {
-////            public void windowClosing(WindowEvent evt) {
-//////                JFrame frame = (JFrame) evt.getSource();
-////                JOptionPane.showMessageDialog(null, "Window Closing");
-////            }
-////        };
-////
-////
-////        this.addWindowListener(listener);
-//TODO: constructor ends here
+
+
+        this.add(createWindow);
+
+        this.setSize(600, 600);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 //
 //    public ArrayList<String> getCuisineInput() {

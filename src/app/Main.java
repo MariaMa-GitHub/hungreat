@@ -5,6 +5,7 @@ import data_access.TemporaryRecipeDataAccessObject;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
 import okhttp3.OkHttpClient;
@@ -47,7 +48,16 @@ public class Main {
         RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
 
         DisplayController displayController = DisplayUseCaseFactory.create(temporaryRecipeDataAccessObject, recipeViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel);
+
+        CreateController createController = new CreateController();     //TODO: write createFactory
+
+        HomeView homeView = new HomeView(
+                browseController,
+                recommendController,
+                createController,
+                displayViewModel,
+                displayController,
+                recipeViewModel);
 
 
         application.add(homeView);
