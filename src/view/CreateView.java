@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateView extends JFrame{
-//    final JTextField titleInput;
+    final JTextField titleInput;
 //    final JTextField servingsInput;
 //    final JTextField readyInMinutesInput;
 //    final JTextField ingredientsInput;
@@ -47,47 +47,46 @@ public class CreateView extends JFrame{
         gbc.gridwidth = 2;
         gbc.ipady = 50;
 
-        JLabel title = new JLabel("Create a Customizable Recipe", SwingConstants.CENTER);
-        title.setFont(new Font("Helvetica", Font.BOLD, 24));
+        JLabel pageTitle = new JLabel("Create a Customizable Recipe", SwingConstants.CENTER);
+        pageTitle.setFont(new Font("Helvetica", Font.BOLD, 24));
+        createWindow.add(pageTitle, gbc);
+
+        // title (input field)
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.ipadx = 20;
+        gbc.ipady = 10;
+
+        JLabel title = new JLabel("title", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.PLAIN, 18));
         createWindow.add(title, gbc);
 
-//        // cuisine
-//
-//        gbc.gridwidth = 1;
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        gbc.ipadx = 20;
-//        gbc.ipady = 10;
-//
-//        JLabel cuisine = new JLabel("Include Cuisine", SwingConstants.CENTER);
-//        cuisine.setFont(new Font("Arial", Font.PLAIN, 18));
-//        searchWindow.add(cuisine, gbc);
-//
-//        gbc.gridx = 1;
-//        gbc.gridy = 1;
-//        gbc.ipadx = 350;
-//
-//        cuisineInput = new PTextField("Separate fields by comma");
-//        cuisineInput.setFont(new Font("Arial", Font.PLAIN, 18));
-//        cuisineInput.setForeground(Color.DARK_GRAY);
-//        cuisineInput.setOpaque(false);
-//        cuisineInput.setBorder(
-//                javax.swing.BorderFactory.createCompoundBorder(
-//                        javax.swing.BorderFactory.createTitledBorder(
-//                                null, "",
-//                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-//                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-//                                new Font("Arial", Font.PLAIN, 18)
-//                        ),
-//                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
-//                )
-//        );
-//        searchWindow.add(cuisineInput, gbc);
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 2;
-//        gbc.ipadx = 20;
-//
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.ipadx = 350;
+
+        titleInput = new PTextField("Title of Your Recipe");
+        titleInput.setFont(new Font("Arial", Font.PLAIN, 18));
+        titleInput.setForeground(Color.DARK_GRAY);
+        titleInput.setOpaque(false);
+        titleInput.setBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                        javax.swing.BorderFactory.createTitledBorder(
+                                null, "",
+                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                                new Font("Arial", Font.PLAIN, 18)
+                        ),
+                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
+                )
+        );
+        createWindow.add(titleInput, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.ipadx = 20;
+
 //        // excludeCuisine
 //
 //        JLabel excludeCuisine = new JLabel("Exclude Cuisine", SwingConstants.CENTER);
