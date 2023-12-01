@@ -252,7 +252,8 @@ public class CreateView extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-//
+
+    //TODO
 //    public ArrayList<String> getCuisineInput() {
 //        String text = cuisineInput.getText().strip();
 //        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
