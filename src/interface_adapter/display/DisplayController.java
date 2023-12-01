@@ -11,8 +11,8 @@ public class DisplayController {
         this.displayInteractor = displayInteractor;
     }
 
-    public void execute(Recipe recipe) {
-        DisplayInputData displayInputData= new DisplayInputData(recipe);
+    public void execute(Integer recipeID) {
+        DisplayInputData displayInputData= new DisplayInputData(recipeID);
         displayInteractor.execute(displayInputData);
     }
 }

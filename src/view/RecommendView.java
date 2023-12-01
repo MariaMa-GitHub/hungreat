@@ -1,6 +1,9 @@
 package view;
 
+import interface_adapter.RecipeViewModel;
+import interface_adapter.SearchController;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.display.DisplayController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.recommend.RecommendController;
 
@@ -24,13 +27,17 @@ public class RecommendView extends JFrame {
 
     private final RecommendController recommendController;
     private final DisplayViewModel displayViewModel;
+    private final DisplayController displayController;
+    private final RecipeViewModel recipeViewModel;
 
     public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel) {
 
         this.recommendController = recommendController;
         this.displayViewModel = displayViewModel;
+        this.displayController = displayController;
+        this.recipeViewModel = recipeViewModel;
 
-        this.setTitle("Search Recipes");    //TODO
+        this.setTitle("Search Recipes");
 
         JPanel searchWindow = new JPanel();
         searchWindow.setLayout(new GridBagLayout());
@@ -270,8 +277,9 @@ public class RecommendView extends JFrame {
         searchWindow.add(nutrientsInput, gbc);
 
         // search
+
         gbc.gridx = 0;
-        gbc.gridy = 9;
+        gbc.gridy = 8;
         gbc.gridwidth = 2;
         gbc.insets = new Insets(30, 0, 30, 0);
 

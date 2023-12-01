@@ -1,14 +1,13 @@
-package use_case.display;
+package use_case.analysis;
 
-import entity.Recipe;
-
-public class DisplayInputData {
+public class AnalysisInputData {
     final private Integer recipeID;
 
-    public DisplayInputData(Integer recipeID){
+    public AnalysisInputData(Integer recipeID){
         this.recipeID = recipeID;
     }
     public Integer getRecipeID(){
         return recipeID;
     }
 }
+
