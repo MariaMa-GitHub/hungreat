@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class HomeView extends JPanel {
 
     final JButton create;
@@ -107,8 +106,7 @@ public class HomeView extends JPanel {
                         if (evt.getSource().equals(browse)) {
 
                             // TODO (Everyone)
-//                            browseController.execute();
-
+                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel);
                         }
                     }
                 }
@@ -122,7 +120,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Maria)
 
-                            SearchView searchView = new SearchView("recommend", recommendController, displayViewModel, displayController,recipeViewModel, analysisViewModel, analysisController);
+                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController);
 
                         }
                     }

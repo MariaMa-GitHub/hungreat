@@ -22,7 +22,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     private final RecipeFactory recipeFactory = new RecipeFactory();
     private final RecipeInfoFactory recipeInfoFactory = new RecipeInfoFactory();
     private final NutritionDataFactory nutritionDataFactory = new NutritionDataFactory();
-    private final Map<String, Recipe> savedRecipes = new HashMap<>();
+    private final Map<String, Recipe> savedRecipes = new HashMap<>(); //TODO: [Q] do I need to save recipes?
 
 
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
