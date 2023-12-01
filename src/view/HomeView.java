@@ -100,9 +100,7 @@ public class HomeView extends JPanel {
                         if (evt.getSource().equals(browse)) {
 
                             // TODO (Everyone)
-//                            browseController.execute();
-                            RecommendView recommendView = new RecommendView("browse", browseController, displayViewModel);
-
+                            BrowseView browseView = new BrowseView("browse", browseController, displayViewModel);
                         }
                     }
                 }
