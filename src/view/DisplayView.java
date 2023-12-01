@@ -24,7 +24,7 @@ public class DisplayView extends JFrame {
 
         for (int i = 0; i < Math.min(6, recipes.size()); i++) {
 
-            JButton button = getjButton(new ArrayList<>(recipes.keySet()), recipes, i,displayController,recipeViewModel, analysisViewModel, analysisController);
+            JButton button = getjButton(new ArrayList<>(recipes.keySet()), recipes, i, displayController, recipeViewModel, analysisViewModel, analysisController);
 
             displayWindow.add(button);
 

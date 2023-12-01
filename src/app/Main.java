@@ -14,6 +14,7 @@ import use_case.TemporaryRecipeDataAccessInterface;
 import view.HomeView;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class Main {
 
