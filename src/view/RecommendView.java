@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SearchView extends JFrame {
+public class RecommendView extends JFrame {
 
     final JTextField cuisineInput;
     final JTextField excludeCuisineInput;
@@ -22,11 +22,12 @@ public class SearchView extends JFrame {
     final JTextField ingredientsInput;
     final JTextField excludeIngredientsInput;
     final JTextField nutrientsInput;
+    final JTextField queryInput;
 
     private final SearchController controller;
     private final DisplayViewModel displayViewModel;
 
-    public SearchView(String function, SearchController controller, DisplayViewModel displayViewModel) {
+    public RecommendView(String function, SearchController controller, DisplayViewModel displayViewModel) {
 
         this.controller = controller;
         this.displayViewModel = displayViewModel;
@@ -270,10 +271,40 @@ public class SearchView extends JFrame {
         );
         searchWindow.add(nutrientsInput, gbc);
 
+        // query
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.ipadx = 20;
+
+        JLabel query = new JLabel("Query", SwingConstants.CENTER);
+        query.setFont(new Font("Arial", Font.PLAIN, 18));
+        searchWindow.add(query, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        gbc.ipadx = 350;
+
+        queryInput = new PTextField("Separate fields (nutrient : range) by comma");
+        queryInput.setFont(new Font("Arial", Font.PLAIN, 18));
+        queryInput.setForeground(Color.DARK_GRAY);
+        queryInput.setOpaque(false);
+        queryInput.setBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                        javax.swing.BorderFactory.createTitledBorder(
+                                null, "",
+                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                                new Font("Arial", Font.PLAIN, 18)
+                        ),
+                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
+                )
+        );
+        searchWindow.add(queryInput, gbc);
+
         // search
 
         gbc.gridx = 0;
-        gbc.gridy = 8;
+        gbc.gridy = 9;
         gbc.gridwidth = 2;
         gbc.insets = new Insets(30, 0, 30, 0);
 
@@ -319,7 +350,7 @@ public class SearchView extends JFrame {
                                         getIngredientsInput(),
                                         getExcludeIngredientsInput(),
                                         getNutrientsInput(),
-                                        "cauliflower" // TODO: getQueryInput() implement getQuery in Views
+                                        getQueryInput()  // TODO: getQueryInput() implement getQuery in Views
                                 );
 
                                 DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
@@ -393,7 +424,6 @@ public class SearchView extends JFrame {
     }
 
     public Map<String, Float[]> getNutrientsInput() {
-
         String text = nutrientsInput.getText().strip();
         ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
         Map<String, Float[]> nutrients = new HashMap<>();
@@ -405,5 +435,19 @@ public class SearchView extends JFrame {
         }
 
         return nutrients;
+    }
+
+    public String getQueryInput() {
+        String text = nutrientsInput.getText().strip();
+        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        Map<String, Float[]> query = new HashMap<>();
+        for (String input : inputs) {
+            ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
+            ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
+            Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
+            query.put(nutrient.get(0), values);
+        }
+
+        return query.keySet().toString();
     }
 }

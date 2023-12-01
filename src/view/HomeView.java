@@ -101,7 +101,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Everyone)
 //                            browseController.execute();
-                            SearchView searchView = new SearchView("browse", browseController, displayViewModel);
+                            RecommendView recommendView = new RecommendView("browse", browseController, displayViewModel);
 
                         }
                     }
@@ -116,7 +116,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Maria)
 
-                            SearchView searchView = new SearchView("recommend", recommendController, displayViewModel);
+                            RecommendView recommendView = new RecommendView("recommend", recommendController, displayViewModel);
 
                         }
                     }
