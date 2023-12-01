@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class CreateView extends JFrame{
     final JTextField titleInput;
-//    final JTextField servingsInput;
-//    final JTextField readyInMinutesInput;
+    final JTextField servingsInput;
+    final JTextField readyInMinutesInput;
 //    final JTextField ingredientsInput;
 //    final JTextField instructionsInput;
 
@@ -66,7 +66,7 @@ public class CreateView extends JFrame{
         gbc.gridy = 1;
         gbc.ipadx = 350;
 
-        titleInput = new PTextField("Title of Your Recipe");
+        titleInput = new JTextField("");
         titleInput.setFont(new Font("Arial", Font.PLAIN, 18));
         titleInput.setForeground(Color.DARK_GRAY);
         titleInput.setOpaque(false);
@@ -87,63 +87,61 @@ public class CreateView extends JFrame{
         gbc.gridy = 2;
         gbc.ipadx = 20;
 
-//        // excludeCuisine
-//
-//        JLabel excludeCuisine = new JLabel("Exclude Cuisine", SwingConstants.CENTER);
-//        excludeCuisine.setFont(new Font("Arial", Font.PLAIN, 18));
-//        searchWindow.add(excludeCuisine, gbc);
-//
-//        gbc.gridx = 1;
-//        gbc.gridy = 2;
-//        gbc.ipadx = 350;
-//
-//        excludeCuisineInput = new PTextField("Separate fields by comma");
-//        excludeCuisineInput.setFont(new Font("Arial", Font.PLAIN, 18));
-//        excludeCuisineInput.setForeground(Color.DARK_GRAY);
-//        excludeCuisineInput.setOpaque(false);
-//        excludeCuisineInput.setBorder(
-//                javax.swing.BorderFactory.createCompoundBorder(
-//                        javax.swing.BorderFactory.createTitledBorder(
-//                                null, "",
-//                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-//                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-//                                new Font("Arial", Font.PLAIN, 18)
-//                        ),
-//                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
-//                )
-//        );
-//        searchWindow.add(excludeCuisineInput, gbc);
-//
-//        // diet
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 3;
-//        gbc.ipadx = 20;
-//
-//        JLabel diet = new JLabel("Preferred Diet", SwingConstants.CENTER);
-//        diet.setFont(new Font("Arial", Font.PLAIN, 18));
-//        searchWindow.add(diet, gbc);
-//
-//        gbc.gridx = 1;
-//        gbc.gridy = 3;
-//        gbc.ipadx = 350;
-//
-//        dietInput = new PTextField("Separate fields by comma");
-//        dietInput.setFont(new Font("Arial", Font.PLAIN, 18));
-//        dietInput.setForeground(Color.DARK_GRAY);
-//        dietInput.setOpaque(false);
-//        dietInput.setBorder(
-//                javax.swing.BorderFactory.createCompoundBorder(
-//                        javax.swing.BorderFactory.createTitledBorder(
-//                                null, "",
-//                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-//                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-//                                new Font("Arial", Font.PLAIN, 18)
-//                        ),
-//                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
-//                )
-//        );
-//        searchWindow.add(dietInput, gbc);
+        // servings (input field)
+        JLabel servings = new JLabel("Servings", SwingConstants.CENTER);
+        servings.setFont(new Font("Arial", Font.PLAIN, 18));
+        createWindow.add(servings, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.ipadx = 350;
+
+        servingsInput = new JTextField("");
+        servingsInput.setFont(new Font("Arial", Font.PLAIN, 18));
+        servingsInput.setForeground(Color.DARK_GRAY);
+        servingsInput.setOpaque(false);
+        servingsInput.setBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                        javax.swing.BorderFactory.createTitledBorder(
+                                null, "",
+                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                                new Font("Arial", Font.PLAIN, 18)
+                        ),
+                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
+                )
+        );
+        createWindow.add(servingsInput, gbc);
+
+        // ready in minutes (input field)
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.ipadx = 20;
+
+        JLabel readyInMinutes = new JLabel("Cooking Time", SwingConstants.CENTER);
+        readyInMinutes.setFont(new Font("Arial", Font.PLAIN, 18));
+        createWindow.add(readyInMinutes, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.ipadx = 350;
+
+        readyInMinutesInput = new JTextField("");
+        readyInMinutesInput.setFont(new Font("Arial", Font.PLAIN, 18));
+        readyInMinutesInput.setForeground(Color.DARK_GRAY);
+        readyInMinutesInput.setOpaque(false);
+        readyInMinutesInput.setBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                        javax.swing.BorderFactory.createTitledBorder(
+                                null, "",
+                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                                new Font("Arial", Font.PLAIN, 18)
+                        ),
+                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
+                )
+        );
+        createWindow.add(readyInMinutesInput, gbc);
 //
 //        // intolerances
 //
