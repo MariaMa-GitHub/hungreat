@@ -17,7 +17,7 @@ public class CreateView extends JFrame{
     final JTextField titleInput;
     final JTextField servingsInput;
     final JTextField readyInMinutesInput;
-//    final JTextField ingredientsInput;
+    final JTextField ingredientsInput;
 //    final JTextField instructionsInput;
 
     private final CreateController createController;
@@ -142,37 +142,36 @@ public class CreateView extends JFrame{
                 )
         );
         createWindow.add(readyInMinutesInput, gbc);
-//
-//        // intolerances
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 4;
-//        gbc.ipadx = 20;
-//
-//        JLabel intolerances = new JLabel("Intolerances", SwingConstants.CENTER);
-//        intolerances.setFont(new Font("Arial", Font.PLAIN, 18));
-//        searchWindow.add(intolerances, gbc);
-//
-//        gbc.gridx = 1;
-//        gbc.gridy = 4;
-//        gbc.ipadx = 350;
-//
-//        intolerancesInput = new PTextField("Separate fields by comma");
-//        intolerancesInput.setFont(new Font("Arial", Font.PLAIN, 18));
-//        intolerancesInput.setForeground(Color.DARK_GRAY);
-//        intolerancesInput.setOpaque(false);
-//        intolerancesInput.setBorder(
-//                javax.swing.BorderFactory.createCompoundBorder(
-//                        javax.swing.BorderFactory.createTitledBorder(
-//                                null, "",
-//                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-//                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-//                                new Font("Arial", Font.PLAIN, 18)
-//                        ),
-//                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
-//                )
-//        );
-//        searchWindow.add(intolerancesInput, gbc);
+
+        // ingredients (input field)
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.ipadx = 20;
+
+        JLabel ingredients = new JLabel("Ingredients", SwingConstants.CENTER);
+        ingredients.setFont(new Font("Arial", Font.PLAIN, 18));
+        createWindow.add(ingredients, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.ipadx = 350;
+
+        ingredientsInput = new PTextField("");
+        ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
+        ingredientsInput.setForeground(Color.DARK_GRAY);
+        ingredientsInput.setOpaque(false);
+        ingredientsInput.setBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                        javax.swing.BorderFactory.createTitledBorder(
+                                null, "",
+                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                                new Font("Arial", Font.PLAIN, 18)
+                        ),
+                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
+                )
+        );
+        createWindow.add(ingredientsInput, gbc);
 //
 //        // ingredients
 //
