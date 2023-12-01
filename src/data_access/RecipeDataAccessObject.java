@@ -74,7 +74,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                         String nutrientName = rawNutrient.getString("name");
                         String nutrientUnit = rawNutrient.getString("unit");
                         Float nutrientAmount = Float.valueOf(rawNutrient.getFloat("amount"));
-                        String amountAndUnit = nutrientAmount + nutrientUnit;
+                        String amountAndUnit = nutrientAmount + " " + nutrientUnit;
                         nutrients.put(nutrientName, amountAndUnit);
                     }
                     NutritionData nutritionData = nutritionDataFactory.create(id, nutrients);

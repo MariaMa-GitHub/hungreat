@@ -4,7 +4,9 @@ import data_access.RecipeDataAccessObject;
 import data_access.SavedRecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.RecipeViewModel;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -12,6 +14,7 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.TemporaryRecipeDataAccessInterface;
 import view.HomeView;
 import view.RecipeView;
 
@@ -47,10 +50,13 @@ public class Main {
 //        }
 
 
+
         BrowseController browseController = BrowseUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
 
         RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel);
+
+        DisplayController displayController = DisplayUseCaseFactory.create(temporaryRecipeDataAccessObject, recipeViewModel);
+        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel);
 
 
         application.add(homeView);

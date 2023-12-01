@@ -13,8 +13,9 @@ public class DisplayPresenter implements DisplayOutputBoundary {
     }
 
     @Override
-    public void prepareView(DisplayOutputData recipe) {
-
+    public void prepareView(DisplayOutputData recipeString) {
+        //change data type from DisplayOutputData to string when pass in to recipeViewModel's method
+        recipeViewModel.setRecipeString(recipeString.getRecipeString());
     }
 
 }

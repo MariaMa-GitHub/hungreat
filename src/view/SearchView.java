@@ -1,7 +1,9 @@
 package view;
 
+import interface_adapter.RecipeViewModel;
 import interface_adapter.SearchController;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.display.DisplayController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.recommend.RecommendController;
 
@@ -25,11 +27,15 @@ public class SearchView extends JFrame {
 
     private final SearchController controller;
     private final DisplayViewModel displayViewModel;
+    private final DisplayController displayController;
+    private final RecipeViewModel recipeViewModel;
 
-    public SearchView(String function, SearchController controller, DisplayViewModel displayViewModel) {
+    public SearchView(String function, SearchController controller, DisplayViewModel displayViewModel, DisplayController displayController,RecipeViewModel recipeViewModel) {
 
         this.controller = controller;
         this.displayViewModel = displayViewModel;
+        this.displayController = displayController;
+        this.recipeViewModel = recipeViewModel;
 
         this.setTitle("Search Recipes");
 
@@ -302,7 +308,7 @@ public class SearchView extends JFrame {
                                         getNutrientsInput()
                                 );
 
-                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
+                                DisplayView displayView = new DisplayView(displayController,displayViewModel.getRecipes(), recipeViewModel);
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);
@@ -322,7 +328,7 @@ public class SearchView extends JFrame {
                                         "cauliflower" // TODO: getQueryInput() implement getQuery in Views
                                 );
 
-                                DisplayView displayView = new DisplayView(displayViewModel.getRecipes());
+                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel);
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);
