@@ -18,9 +18,17 @@ public class DisplayInteractor implements DisplayInputBoundary{
 
     @Override
     public void execute(DisplayInputData displayInputData) {
-        Integer recipeID =  displayInputData.getRecipeID();
-        Recipe recipe = temporaryRecipeDataAccessObject.getFromID(recipeID);
-        DisplayOutputData displayOutputData = new DisplayOutputData(recipe.toString());
-        displayPresenter.prepareView(displayOutputData);
+        Recipe recipe = null;
+        try {
+            Integer recipeID =  displayInputData.getRecipeID();
+            recipe = temporaryRecipeDataAccessObject.getFromID(recipeID);
+            DisplayOutputData displayOutputData = new DisplayOutputData(recipe.toString());
+            displayPresenter.prepareView(displayOutputData);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+            //String errorMessage = e.getMessage();
+            //displayPresenter.prepareFailView()
+        }
     }
 }
