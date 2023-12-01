@@ -1,8 +1,10 @@
 package view;
 
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.SearchController;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.analysis.AnalysisController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
 
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class SearchView extends JFrame {
 
@@ -29,7 +32,7 @@ public class SearchView extends JFrame {
     private final DisplayController displayController;
     private final RecipeViewModel recipeViewModel;
 
-    public SearchView(String function, SearchController controller, DisplayViewModel displayViewModel, DisplayController displayController,RecipeViewModel recipeViewModel) {
+    public SearchView(String function, SearchController controller, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController) {
 
         this.controller = controller;
         this.displayViewModel = displayViewModel;
@@ -307,7 +310,7 @@ public class SearchView extends JFrame {
                                         getNutrientsInput()
                                 );
 
-                                DisplayView displayView = new DisplayView(displayController,displayViewModel.getRecipes(), recipeViewModel);
+                                DisplayView displayView = new DisplayView(displayController,displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController);
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);

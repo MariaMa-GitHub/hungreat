@@ -2,25 +2,16 @@ package app;
 
 import data_access.RecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import use_case.TemporaryRecipeDataAccessInterface;
 import view.HomeView;
-import view.RecipeView;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
 
@@ -31,6 +22,7 @@ public class Main {
 
 
         DisplayViewModel displayViewModel = new DisplayViewModel();
+        AnalysisViewModel analysisViewModel = new AnalysisViewModel();
 
         RecipeDataAccessObject dataAccessObject;
         TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject;
@@ -48,8 +40,10 @@ public class Main {
 
         RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
 
+        AnalysisController analysisController = AnalysisUseCaseFactory.create(temporaryRecipeDataAccessObject,analysisViewModel);
+
         DisplayController displayController = DisplayUseCaseFactory.create(temporaryRecipeDataAccessObject, recipeViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel);
+        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel, analysisViewModel, analysisController);
 
 
         application.add(homeView);
