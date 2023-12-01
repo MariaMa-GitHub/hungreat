@@ -63,7 +63,7 @@ public class Recipe {
        for (Map.Entry<String, String> entry : nutrition.getNutrients().entrySet()){
            String key = entry.getKey();
            String value = entry.getValue();
-           nutritions = key + ":" + value;
+           nutritions = key + ": " + value;
        }
         return nutritions;
     }

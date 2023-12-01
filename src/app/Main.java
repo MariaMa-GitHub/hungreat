@@ -3,11 +3,14 @@ package app;
 import data_access.RecipeDataAccessObject;
 import data_access.SavedRecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
+import use_case.TemporaryRecipeDataAccessInterface;
 import view.HomeView;
 
 import javax.swing.*;
@@ -23,6 +26,7 @@ public class Main {
 
         DisplayViewModel displayViewModel = new DisplayViewModel();
         RecipeViewModel recipeViewModel = new RecipeViewModel();
+        AnalysisViewModel analysisViewModel = new AnalysisViewModel();
 
         RecipeDataAccessObject dataAccessObject = null;
         TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject = null;
@@ -41,8 +45,10 @@ public class Main {
 
         RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
 
+        AnalysisController analysisController = AnalysisUseCaseFactory.create(temporaryRecipeDataAccessObject,analysisViewModel);
+
         DisplayController displayController = DisplayUseCaseFactory.create(temporaryRecipeDataAccessObject, recipeViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel);
+        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel, analysisViewModel, analysisController);
 
 
         application.add(homeView);

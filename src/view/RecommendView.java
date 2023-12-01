@@ -1,7 +1,9 @@
 package view;
 
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.analysis.AnalysisController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
 
@@ -28,7 +30,7 @@ public class RecommendView extends JFrame {
     private final DisplayController displayController;
     private final RecipeViewModel recipeViewModel;
 
-    public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel) {
+    public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController) {
 
         this.recommendController = recommendController;
         this.displayViewModel = displayViewModel;
@@ -300,7 +302,7 @@ public class RecommendView extends JFrame {
                                 getNutrientsInput()
                         );
 
-                        DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel);
+                        DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController);
 
                         JComponent comp = (JComponent) evt.getSource();
                         Window win = SwingUtilities.getWindowAncestor(comp);
