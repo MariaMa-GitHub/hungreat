@@ -3,6 +3,7 @@ package view;
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.analysis.AnalysisController;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,15 +22,18 @@ public class RecipeView extends JFrame {
 
     final private Integer recipeID;
     final RecipeViewModel recipeViewModel;
-    private final AnalysisViewModel analysisViewModel;
+    final AnalysisViewModel analysisViewModel;
+
+    final GetSimilarRecipesController getSimilarRecipesController;
 
 
-    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController) {
+    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController) {
 
         this.recipeID = recipeID;
         this.recipeViewModel = recipeViewModel;
         this.setTitle(recipeTitle);
         this.analysisViewModel = analysisViewModel;
+        this.getSimilarRecipesController = getSimilarRecipesController;
 
         JPanel recipeWindow = new JPanel();
         recipeWindow.setLayout(new GridBagLayout());
@@ -128,7 +132,7 @@ public class RecipeView extends JFrame {
 
                             // TODO chloe you need to pass in the nutrition data according to the corresponding id.
                             //need a message box here
-                            similarController.execute(recipeID);
+                            getSimilarRecipesController.execute(recipeID);
                             JOptionPane.showMessageDialog(analyze, analysisViewModel.getNutritionToString());
                         }
                     }
