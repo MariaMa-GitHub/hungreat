@@ -172,7 +172,8 @@ public class CreateView extends JFrame{
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
-        createWindow.add(ingredientsInput, gbc);
+        JScrollPane ingredientsScrollPane = new JScrollPane(ingredientsInput);
+        createWindow.add(ingredientsScrollPane, gbc);
 
         // instructions (input field)
         gbc.gridx = 0;
@@ -193,9 +194,6 @@ public class CreateView extends JFrame{
         instructionsInput.setFont(new Font("Arial", Font.PLAIN, 18));
         instructionsInput.setForeground(Color.DARK_GRAY);
         instructionsInput.setOpaque(false);
-//        instructionsInput.setDragEnabled(false);
-//        instructionsInput.setAutoscrolls(true);
-//        instructionsInput.set     //TODO
         instructionsInput.setBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createTitledBorder(
@@ -207,7 +205,8 @@ public class CreateView extends JFrame{
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
-        createWindow.add(instructionsInput, gbc);
+        JScrollPane instructionsScrollPane = new JScrollPane(instructionsInput);
+        createWindow.add(instructionsScrollPane, gbc);
 
         // save button
         gbc.gridx = 0;
