@@ -18,7 +18,7 @@ public class CreateView extends JFrame{
     final JTextField servingsInput;
     final JTextField readyInMinutesInput;
     final JTextField ingredientsInput;
-//    final JTextField instructionsInput;
+    final JTextField instructionsInput;
 
     private final CreateController createController;
     private final DisplayViewModel displayViewModel;
@@ -172,100 +172,37 @@ public class CreateView extends JFrame{
                 )
         );
         createWindow.add(ingredientsInput, gbc);
-//
-//        // ingredients
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 5;
-//        gbc.ipadx = 20;
-//
-//        JLabel ingredients = new JLabel("Include Ingredients", SwingConstants.CENTER);
-//        ingredients.setFont(new Font("Arial", Font.PLAIN, 18));
-//        searchWindow.add(ingredients, gbc);
-//
-//        gbc.gridx = 1;
-//        gbc.gridy = 5;
-//        gbc.ipadx = 350;
-//
-//        ingredientsInput = new PTextField("Separate fields by comma");
-//        ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
-//        ingredientsInput.setForeground(Color.DARK_GRAY);
-//        ingredientsInput.setOpaque(false);
-//        ingredientsInput.setBorder(
-//                javax.swing.BorderFactory.createCompoundBorder(
-//                        javax.swing.BorderFactory.createTitledBorder(
-//                                null, "",
-//                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-//                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-//                                new Font("Arial", Font.PLAIN, 18)
-//                        ),
-//                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
-//                )
-//        );
-//        searchWindow.add(ingredientsInput, gbc);
-//
-//        // excludeIngredients
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 6;
-//        gbc.ipadx = 20;
-//
-//        JLabel excludeIngredients = new JLabel("Exclude Ingredients", SwingConstants.CENTER);
-//        excludeIngredients.setFont(new Font("Arial", Font.PLAIN, 18));
-//        searchWindow.add(excludeIngredients, gbc);
-//
-//        gbc.gridx = 1;
-//        gbc.gridy = 6;
-//        gbc.ipadx = 350;
-//
-//        excludeIngredientsInput = new PTextField("Separate fields by comma");
-//        excludeIngredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
-//        excludeIngredientsInput.setForeground(Color.DARK_GRAY);
-//        excludeIngredientsInput.setOpaque(false);
-//        excludeIngredientsInput.setBorder(
-//                javax.swing.BorderFactory.createCompoundBorder(
-//                        javax.swing.BorderFactory.createTitledBorder(
-//                                null, "",
-//                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-//                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-//                                new Font("Arial", Font.PLAIN, 18)
-//                        ),
-//                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
-//                )
-//        );
-//        searchWindow.add(excludeIngredientsInput, gbc);
-//
-//        // nutrients
-//
-//        gbc.gridx = 0;
-//        gbc.gridy = 7;
-//        gbc.ipadx = 20;
-//
-//        JLabel nutrients = new JLabel("Nutrients", SwingConstants.CENTER);
-//        nutrients.setFont(new Font("Arial", Font.PLAIN, 18));
-//        searchWindow.add(nutrients, gbc);
-//
-//        gbc.gridx = 1;
-//        gbc.gridy = 7;
-//        gbc.ipadx = 350;
-//
-//        nutrientsInput = new PTextField("Separate fields (nutrient : range) by comma");
-//        nutrientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
-//        nutrientsInput.setForeground(Color.DARK_GRAY);
-//        nutrientsInput.setOpaque(false);
-//        nutrientsInput.setBorder(
-//                javax.swing.BorderFactory.createCompoundBorder(
-//                        javax.swing.BorderFactory.createTitledBorder(
-//                                null, "",
-//                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-//                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
-//                                new Font("Arial", Font.PLAIN, 18)
-//                        ),
-//                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
-//                )
-//        );
-//        searchWindow.add(nutrientsInput, gbc);
-//
+
+        // instructions (input field)
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.ipadx = 20;
+
+        JLabel instructions = new JLabel("Instructions", SwingConstants.CENTER);
+        instructions.setFont(new Font("Arial", Font.PLAIN, 18));
+        createWindow.add(instructions, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        gbc.ipadx = 350;
+
+        instructionsInput = new PTextField("");
+        instructionsInput.setFont(new Font("Arial", Font.PLAIN, 18));
+        instructionsInput.setForeground(Color.DARK_GRAY);
+        instructionsInput.setOpaque(false);
+        instructionsInput.setBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                        javax.swing.BorderFactory.createTitledBorder(
+                                null, "",
+                                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                                javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                                new Font("Arial", Font.PLAIN, 18)
+                        ),
+                        javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
+                )
+        );
+        createWindow.add(instructionsInput, gbc);
+
 //        // search
 //
 //        gbc.gridx = 0;
