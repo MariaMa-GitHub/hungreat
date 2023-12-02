@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
-public class Recipe {
+public class Recipe{
 
     private int ID;
     private String title;

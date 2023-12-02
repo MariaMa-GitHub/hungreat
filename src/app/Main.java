@@ -8,6 +8,7 @@ import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.recommend.RecommendController;
 import use_case.TemporaryRecipeDataAccessInterface;
@@ -48,7 +49,18 @@ public class Main {
         AnalysisController analysisController = AnalysisUseCaseFactory.create(temporaryRecipeDataAccessObject,analysisViewModel);
 
         DisplayController displayController = DisplayUseCaseFactory.create(temporaryRecipeDataAccessObject, recipeViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel, analysisViewModel, analysisController);
+
+        CreateController createController = new CreateController();     //TODO: write createFactory and update Main for create usecase
+
+        HomeView homeView = new HomeView(
+                browseController,
+                recommendController,
+                createController,
+                analysisViewModel,
+                analysisController,
+                displayViewModel,
+                displayController,
+                recipeViewModel);
 
 
         application.add(homeView);
