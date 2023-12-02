@@ -127,7 +127,7 @@ public class RecipeView extends JFrame {
                             // TODO chloe you need to pass in the nutrition data according to the corresponding id.
                             //need a message box here
                             getSimilarRecipesController.execute(recipeID);
-                            JOptionPane.showMessageDialog(similar,recipeViewModel.getIdTittle());
+                            JOptionPane.showMessageDialog(similar,recipeViewModel.getTittle());
                         }
                     }
                 }

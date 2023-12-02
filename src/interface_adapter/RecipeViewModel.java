@@ -24,7 +24,7 @@ public class RecipeViewModel{
             return recipeString;
     }
 
-    public Map<Integer, String> getIdTittle() {
-        return idTittle;
+    public String getTittle() {
+        return idTittle.values().toString();
     }
 }
