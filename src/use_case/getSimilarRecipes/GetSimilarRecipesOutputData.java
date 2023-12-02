@@ -10,4 +10,6 @@ public class GetSimilarRecipesOutputData {
     public Map<Integer, String> getRecipes(){
         return idTitle;
     }
+
+
 }

@@ -10,8 +10,10 @@ import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
 import use_case.TemporaryRecipeDataAccessInterface;
+import use_case.getSimilarRecipes.GetSimilarRecipesDataAccessInterface;
 import view.HomeView;
 
 import javax.swing.*;
@@ -31,6 +33,7 @@ public class Main {
 
         RecipeDataAccessObject dataAccessObject = null;
         TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject = null;
+        GetSimilarRecipesDataAccessInterface recipeDataAccessObject = null;
         try {
             SavedRecipeDataAccessObject savedRecipeDataAccessObject = new SavedRecipeDataAccessObject();
             dataAccessObject = new RecipeDataAccessObject();
@@ -49,6 +52,7 @@ public class Main {
         AnalysisController analysisController = AnalysisUseCaseFactory.create(temporaryRecipeDataAccessObject,analysisViewModel);
 
         DisplayController displayController = DisplayUseCaseFactory.create(temporaryRecipeDataAccessObject, recipeViewModel);
+        GetSimilarRecipesController getSimilarRecipesController = GetSimilarRecipesUseCaseFactory.create(recipeDataAccessObject, recipeViewModel);
 
         CreateController createController = new CreateController();     //TODO: write createFactory and update Main for create usecase
 
@@ -60,7 +64,8 @@ public class Main {
                 analysisController,
                 displayViewModel,
                 displayController,
-                recipeViewModel);
+                recipeViewModel,
+                getSimilarRecipesController);
 
 
         application.add(homeView);

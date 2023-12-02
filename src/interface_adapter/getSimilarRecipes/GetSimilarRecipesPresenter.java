@@ -18,7 +18,7 @@ public class GetSimilarRecipesPresenter implements GetSimilarRecipesOutputBounda
 
     @Override
     public void prepareSuccessView(GetSimilarRecipesOutputData response) {
-        recipeViewModel.setRecipeIDs(response.getRecipes());
+        recipeViewModel.setIdTittle(response.getRecipes());
     }
 
     @Override

@@ -16,7 +16,6 @@ public class RecipeView extends JFrame {
     final JButton save;
     final JButton export;
     final JButton analyze;
-    final JButton redirect;
     final JPanel recipeInfo;
     final JButton similar;
 
@@ -71,12 +70,7 @@ public class RecipeView extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        redirect = new JButton("View Online");
-        recipeWindow.add(redirect, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        similar = new JButton("Similar Receips");
+        similar = new JButton("Similar Receipes");
         recipeWindow.add(similar, gbc);
 
 
@@ -133,7 +127,7 @@ public class RecipeView extends JFrame {
                             // TODO chloe you need to pass in the nutrition data according to the corresponding id.
                             //need a message box here
                             getSimilarRecipesController.execute(recipeID);
-                            JOptionPane.showMessageDialog(analyze, analysisViewModel.getNutritionToString());
+                            JOptionPane.showMessageDialog(similar,recipeViewModel.getIdTittle());
                         }
                     }
                 }
