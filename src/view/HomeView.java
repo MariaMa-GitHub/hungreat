@@ -1,7 +1,9 @@
 package view;
 
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
@@ -25,6 +27,8 @@ public class HomeView extends JPanel {
             BrowseController browseController,
             RecommendController recommendController,
             CreateController createController,
+            AnalysisViewModel analysisViewModel,
+            AnalysisController analysisController,
             DisplayViewModel displayViewModel,
             DisplayController displayController,
             RecipeViewModel recipeViewModel)
@@ -111,9 +115,7 @@ public class HomeView extends JPanel {
                         if (evt.getSource().equals(browse)) {
 
                             // TODO (Everyone)
-//                            browseController.execute();
-                            SearchView searchView = new SearchView("browse", browseController, displayViewModel, displayController, recipeViewModel);
-
+                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController);
                         }
                     }
                 }
@@ -127,7 +129,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Maria)
 
-                            SearchView searchView = new SearchView("recommend", recommendController, displayViewModel, displayController,recipeViewModel);
+                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController);
 
                         }
                     }

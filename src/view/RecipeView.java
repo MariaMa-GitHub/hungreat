@@ -1,11 +1,14 @@
 package view;
 
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.analysis.AnalysisController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class RecipeView extends JFrame {
 
@@ -17,13 +20,15 @@ public class RecipeView extends JFrame {
 
     final private Integer recipeID;
     final RecipeViewModel recipeViewModel;
+    private final AnalysisViewModel analysisViewModel;
 
 
-    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel) {
+    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController) {
 
         this.recipeID = recipeID;
         this.recipeViewModel = recipeViewModel;
         this.setTitle(recipeTitle);
+        this.analysisViewModel = analysisViewModel;
 
         JPanel recipeWindow = new JPanel();
         recipeWindow.setLayout(new GridBagLayout());
@@ -100,7 +105,8 @@ public class RecipeView extends JFrame {
 
                             // TODO chloe you need to pass in the nutrition data according to the corresponding id.
                             //need a message box here
-                            JOptionPane.showMessageDialog(analyze, "Button Clicked!");
+                            analysisController.execute(recipeID);
+                            JOptionPane.showMessageDialog(analyze, analysisViewModel.getNutritionToString());
                         }
                     }
                 }
