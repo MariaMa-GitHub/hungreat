@@ -3,30 +3,43 @@ package use_case.getSimilarRecipes;
 
 import entity.Recipe;
 import use_case.TemporaryRecipeDataAccessInterface;
+import use_case.getSimilarRecipes.GetSimilarRecipesOutputData;
 import use_case.recommend.RecommendDataAccessInterface;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class GetSimilarRecipesInteractor implements GetSimilarRecipesInputBoundary {
     final GetSimilarRecipesOutputBoundary getSimilarRecipesPresenter;
-    final TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject;
+    final GetSimilarRecipesDataAccessInterface recipeDataAccessObject;
 
 
-    public GetSimilarRecipesInteractor(RecommendDataAccessInterface temporaryRecipeDataAccessObject,
-                                       GetSimilarRecipesOutputBoundary getSimilarRecipesOutputBoundary){
-        this.getSimilarRecipesPresenter = getSimilarRecipesOutputBoundary;
-        this.temporaryRecipeDataAccessObject = temporaryRecipeDataAccessObject;
+    public GetSimilarRecipesInteractor(GetSimilarRecipesDataAccessInterface recipeDataAccessObject,
+                                       GetSimilarRecipesOutputBoundary getSimilarRecipesInputData){
+        this.getSimilarRecipesPresenter = getSimilarRecipesInputData;
+        this.recipeDataAccessObject = recipeDataAccessObject;
     }
 
     @Override
     public void execute(GetSimilarRecipesInputData getSimilarRecipesInputData) {
         Recipe recipe = null;
-        try {
-            Integer recipeID =  getSimilarRecipesInputData.getRecipeID();
-            recipe = temporaryRecipeDataAccessObject.getFromID(recipeID);
-            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData(recipe.toString());
-            getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        try{
+            ArrayList<Recipe> recipes = this.recipeDataAccessObject.getSimilarRecipes(getSimilarRecipesInputData.getRecipeID());
+            //if not Arrylist then handle failveiw.If yes, then give presenter an arrylist of recipes.
+            Map<Integer, String> idTitle = new HashMap<>();
+            for (int i = 0; i < recipes.size(); i++) {
+                Integer recipeID = recipes.get(i).getID();
+                String recipeName = recipes.get(i).getTitle();
+                idTitle.put(recipeID, recipeName);
+            }
+            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData(idTitle);
+            getSimilarRecipesPresenter.prepareSuccessView(getSimilarRecipesOutputData);
+        }
+        catch (Exception e){
+            String errorMessage = e.getMessage();
+            getSimilarRecipesPresenter.prepareFailView(errorMessage);
         }
     }
 }

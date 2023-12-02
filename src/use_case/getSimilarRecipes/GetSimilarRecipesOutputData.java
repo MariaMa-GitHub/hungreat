@@ -1,11 +1,13 @@
 package use_case.getSimilarRecipes;
 
+import java.util.Map;
+
 public class GetSimilarRecipesOutputData {
-    private final String recipeString;
-    public GetSimilarRecipesOutputData(String recipeString) {
-        this.recipeString = recipeString;
+    private final Map<Integer, String> idTitle;
+    public GetSimilarRecipesOutputData(Map<Integer, String> idTitle){
+        this.idTitle = idTitle;
     }
-    public String getRecipeString(){
-        return recipeString;
+    public Map<Integer, String> getRecipes(){
+        return idTitle;
     }
 }
