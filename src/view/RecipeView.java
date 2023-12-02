@@ -3,6 +3,7 @@ package view;
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.analysis.AnalysisController;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,18 +18,22 @@ public class RecipeView extends JFrame {
     final JButton analyze;
     final JButton redirect;
     final JPanel recipeInfo;
+    final JButton similar;
 
     final private Integer recipeID;
     final RecipeViewModel recipeViewModel;
-    private final AnalysisViewModel analysisViewModel;
+    final AnalysisViewModel analysisViewModel;
+
+    final GetSimilarRecipesController getSimilarRecipesController;
 
 
-    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController) {
+    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController) {
 
         this.recipeID = recipeID;
         this.recipeViewModel = recipeViewModel;
         this.setTitle(recipeTitle);
         this.analysisViewModel = analysisViewModel;
+        this.getSimilarRecipesController = getSimilarRecipesController;
 
         JPanel recipeWindow = new JPanel();
         recipeWindow.setLayout(new GridBagLayout());
@@ -69,14 +74,22 @@ public class RecipeView extends JFrame {
         redirect = new JButton("View Online");
         recipeWindow.add(redirect, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        similar = new JButton("Similar Receips");
+        recipeWindow.add(similar, gbc);
+
+
         recipeInfo = new JPanel(new GridLayout(0, 1));
 
-        JTextArea b = new JTextArea(recipeViewModel.getRecipeString());
-        b.setFocusable(false);
-        b.setEditable(false);
-        b.setLineWrap(true);
-        b.setPreferredSize(new Dimension(490, 100));
-        recipeInfo.add(b);
+//        System.out.println(recipeViewModel);
+//        System.out.println(recipeViewModel.getRecipeString());
+            JTextArea b = new JTextArea(recipeViewModel.getRecipeString());
+            b.setFocusable(false);
+            b.setEditable(false);
+            b.setLineWrap(true);
+            b.setPreferredSize(new Dimension(490, 100));
+            recipeInfo.add(b);
 
         //TODO put your text here, assign recipeinfor to recipe.toString
 //        String recipeInfo = recipeViewModel.getRecipeString();
@@ -106,6 +119,20 @@ public class RecipeView extends JFrame {
                             // TODO chloe you need to pass in the nutrition data according to the corresponding id.
                             //need a message box here
                             analysisController.execute(recipeID);
+                            JOptionPane.showMessageDialog(analyze, analysisViewModel.getNutritionToString());
+                        }
+                    }
+                }
+        );
+        similar.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(similar)) {
+
+                            // TODO chloe you need to pass in the nutrition data according to the corresponding id.
+                            //need a message box here
+                            getSimilarRecipesController.execute(recipeID);
                             JOptionPane.showMessageDialog(analyze, analysisViewModel.getNutritionToString());
                         }
                     }
