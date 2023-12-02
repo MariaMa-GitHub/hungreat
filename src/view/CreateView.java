@@ -239,13 +239,11 @@ public class CreateView extends JFrame{
                     if (evt.getSource().equals(save)) {
                         //TODO
                         createController.execute(
-//                                        getCuisineInput(),
-//                                        getExcludeCuisineInput(),
-//                                        getDietInput(),
-//                                        getIntolerancesInput(),
-//                                        getIngredientsInput(),
-//                                        getExcludeIngredientsInput(),
-//                                        getNutrientsInput()
+                                getTitleInput(),
+                                getServingsInput(),
+                                getReadyInMinutesInput(),
+                                getIngredientsInput(),
+                                getInstructionsInput()
                         );
 
                         DisplayView displayView = new DisplayView(
@@ -297,13 +295,13 @@ public class CreateView extends JFrame{
 
     public ArrayList<String> getIngredientsInput() {
         String text = ingredientsInput.getText().strip();
-        ArrayList<String> ingredients = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        ArrayList<String> ingredients = new ArrayList<>(Arrays.asList(text.split("\\s*\\n\\s*")));  //TODO need to test regex
         return ingredients;
     }
 
     public ArrayList<String> getInstructionsInput() {
         String text = instructionsInput.getText().strip();
-        ArrayList<String> instructions = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        ArrayList<String> instructions = new ArrayList<>(Arrays.asList(text.split("\\s*\\n\\s*")));   //TODO need to test regex
         return instructions;
     }
 }
