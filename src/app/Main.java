@@ -50,7 +50,7 @@ public class Main {
 
         DisplayController displayController = DisplayUseCaseFactory.create(temporaryRecipeDataAccessObject, recipeViewModel);
 
-        CreateController createController = new CreateController();     //TODO: write createFactory
+        CreateController createController = new CreateController();     //TODO: write createFactory and update Main for create usecase
 
         HomeView homeView = new HomeView(
                 browseController,

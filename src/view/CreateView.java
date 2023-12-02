@@ -270,55 +270,40 @@ public class CreateView extends JFrame{
         this.setVisible(true);
     }
 
-    //TODO
-//    public ArrayList<String> getCuisineInput() {
-//        String text = cuisineInput.getText().strip();
-//        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-//        return inputs;
-//    }
-//
-//    public ArrayList<String> getExcludeCuisineInput() {
-//        String text = excludeCuisineInput.getText().strip();
-//        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-//        return inputs;
-//    }
-//
-//    public ArrayList<String> getDietInput() {
-//        String text = dietInput.getText().strip();
-//        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-//        return inputs;
-//    }
-//
-//    public ArrayList<String> getIntolerancesInput() {
-//        String text = intolerancesInput.getText().strip();
-//        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-//        return inputs;
-//    }
-//
-//    public ArrayList<String> getIngredientsInput() {
-//        String text = ingredientsInput.getText().strip();
-//        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-//        return inputs;
-//    }
-//
-//    public ArrayList<String> getExcludeIngredientsInput() {
-//        String text = excludeIngredientsInput.getText().strip();
-//        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-//        return inputs;
-//    }
-//
-//    public Map<String, Float[]> getNutrientsInput() {
-//
-//        String text = nutrientsInput.getText().strip();
-//        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-//        Map<String, Float[]> nutrients = new HashMap<>();
-//        for (String input : inputs) {
-//            ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
-//            ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
-//            Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
-//            nutrients.put(nutrient.get(0), values);
-//        }
-//
-//        return nutrients;
-//    }
+    public String getTitleInput() {
+        String text = titleInput.getText().strip();
+        return text;
+    }
+
+    public int getServingsInput() {
+        try{
+            String text = servingsInput.getText().strip();
+            int servings = Integer.parseInt(text);
+            return servings;
+        } catch (NumberFormatException e) {
+            return -1;    //TODO handle exception
+        }
+    }
+
+    public int getReadyInMinutesInput() {
+        try{
+            String text = servingsInput.getText().strip();
+            int cookingTime = Integer.parseInt(text);
+            return cookingTime;
+        } catch (NumberFormatException e) {
+            return -1;    //TODO handle exception
+        }
+    }
+
+    public ArrayList<String> getIngredientsInput() {
+        String text = ingredientsInput.getText().strip();
+        ArrayList<String> ingredients = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        return ingredients;
+    }
+
+    public ArrayList<String> getInstructionsInput() {
+        String text = instructionsInput.getText().strip();
+        ArrayList<String> instructions = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        return instructions;
+    }
 }
