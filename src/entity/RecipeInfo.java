@@ -11,6 +11,7 @@ public class RecipeInfo {
     private int healthScore;
     private Collection<String> ingredients;
     private Collection<String> instructions;
+    private boolean isUserCreatedRecipe;
 
     public RecipeInfo(int recipeID, int servings, int readyInMinutes, int healthScore, Collection<String> ingredients, Collection<String> instructions) {
         this.recipeID = recipeID;
@@ -19,6 +20,20 @@ public class RecipeInfo {
         this.healthScore = healthScore;
         this.ingredients = ingredients;
         this.instructions = instructions;
+        this.isUserCreatedRecipe = false;
+    }
+
+    public RecipeInfo(int recipeID, int servings, int readyInMinutes,
+                      Collection<String> ingredients, Collection<String> instructions) {
+
+        // //This constructor is only for user-created recipes
+        this.recipeID = recipeID;
+        this.servings = servings;
+        this.readyInMinutes = readyInMinutes;
+        this.ingredients = ingredients;
+        this.instructions = instructions;
+        this.healthScore = -1;
+        this.isUserCreatedRecipe = true;
     }
 
     public int getRecipeID() {
@@ -56,6 +71,7 @@ public class RecipeInfo {
 
     @Override
     public String toString() {
+        //TODO update to string for user-created recipes (Michelle)
         return "Servings:"+ servings + "\n" + "ReadyInMinutes:" + readyInMinutes + "\n" + "HealthScore:" + healthScore
                 + "\n" + "Ingredients:" + "\n" + ingredientsToString() + "\n" + "Instructions:" + instructionsToString();
     }

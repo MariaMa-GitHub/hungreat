@@ -75,7 +75,7 @@ public class Recipe{
         return title + "\n" + info.toString();
     }
     // TODO Wright a toString method prepare for analysis.
-    // TODO: update toString for user-created recipes
+    // TODO: update toString for user-created recipes (Michelle)
     public String nutritionToString(){
         StringBuilder nutritions = new StringBuilder();
        for (Map.Entry<String, String> entry : nutrition.getNutrients().entrySet()){
