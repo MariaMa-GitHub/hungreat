@@ -23,11 +23,11 @@ public class RecipeInfo {
         this.isUserCreatedRecipe = false;
     }
 
-    public RecipeInfo(int recipeID, int servings, int readyInMinutes,
+    public RecipeInfo(int servings, int readyInMinutes,
                       Collection<String> ingredients, Collection<String> instructions) {
 
         // //This constructor is only for user-created recipes
-        this.recipeID = recipeID;
+        this.recipeID = -1;     //TODO: how to handle this ID? has the ID in RecipeInfo ever been used? (Michelle)
         this.servings = servings;
         this.readyInMinutes = readyInMinutes;
         this.ingredients = ingredients;

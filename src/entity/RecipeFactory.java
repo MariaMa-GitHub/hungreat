@@ -8,4 +8,10 @@ public class RecipeFactory {
 
     }
 
+    public Recipe create(String title, RecipeInfo info) {
+        //This is only for user-created recipes
+        return new Recipe(title, info);
+
+    }
+
 }
