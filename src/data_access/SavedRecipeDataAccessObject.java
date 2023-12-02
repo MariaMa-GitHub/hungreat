@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.Recipe;
+import use_case.create.CreateDataAccessInterface;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * Utilizing serialization to save recipes to a file
  */
 
-public class SavedRecipeDataAccessObject {
+public class SavedRecipeDataAccessObject implements CreateDataAccessInterface {
     private ArrayList<Recipe> savedRecipes = new ArrayList<>();
 
     public SavedRecipeDataAccessObject() throws IOException, ClassNotFoundException {
@@ -20,7 +21,7 @@ public class SavedRecipeDataAccessObject {
         return savedRecipes;
     }
 
-    public void save(Recipe recipe) throws IOException, ClassNotFoundException {
+    public void save(Recipe recipe) throws IOException, ClassNotFoundException { //TODO: handle exception
         savedRecipes.add(recipe);
 
         // Serializing 'a'
