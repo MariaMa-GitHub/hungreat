@@ -102,7 +102,13 @@ public class HomeView extends JPanel {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(create)) {
                             // TODO (Michelle)
-                            CreateView createView = new CreateView(createController, displayViewModel, displayController, recipeViewModel);
+                            CreateView createView = new CreateView(
+                                    createController,
+                                    displayViewModel,
+                                    displayController,
+                                    recipeViewModel,
+                                    analysisController,
+                                    analysisViewModel);
                         }
                     }
                 }

@@ -1,6 +1,8 @@
 package view;
 
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.analysis.AnalysisController;
 import interface_adapter.create.CreateController;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.display.DisplayController;
@@ -24,13 +26,23 @@ public class CreateView extends JFrame{
     private final DisplayViewModel displayViewModel;
     private final DisplayController displayController;
     private final RecipeViewModel recipeViewModel;
+    private final AnalysisController analysisController;
+    private final AnalysisViewModel analysisViewModel;
 
-    public CreateView(CreateController createController, DisplayViewModel displayViewModel, DisplayController displayController,RecipeViewModel recipeViewModel) {
+    public CreateView(
+            CreateController createController,
+            DisplayViewModel displayViewModel,
+            DisplayController displayController,
+            RecipeViewModel recipeViewModel,
+            AnalysisController analysisController,
+            AnalysisViewModel analysisViewModel) {
 
         this.createController = createController;
         this.displayViewModel = displayViewModel;
         this.displayController = displayController;
         this.recipeViewModel = recipeViewModel;
+        this.analysisController = analysisController;
+        this.analysisViewModel = analysisViewModel;
 
         this.setTitle("Create");
 
@@ -236,7 +248,12 @@ public class CreateView extends JFrame{
 //                                        getNutrientsInput()
                         );
 
-                        DisplayView displayView = new DisplayView(displayController,displayViewModel.getRecipes(), recipeViewModel);
+                        DisplayView displayView = new DisplayView(
+                                displayController,
+                                displayViewModel.getRecipes(),
+                                recipeViewModel,
+                                analysisViewModel,
+                                analysisController);    //TODO: analysis for self created recipes (Chloe)
                         JComponent comp = (JComponent) evt.getSource();
                         Window win = SwingUtilities.getWindowAncestor(comp);
                         win.dispose();
