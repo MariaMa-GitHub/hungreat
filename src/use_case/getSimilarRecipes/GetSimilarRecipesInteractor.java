@@ -3,10 +3,7 @@ package use_case.getSimilarRecipes;
 
 import entity.Recipe;
 import use_case.TemporaryRecipeDataAccessInterface;
-import use_case.getSimilarRecipes.GetSimilarRecipesInputBoundary;
-import use_case.getSimilarRecipes.GetSimilarRecipesInputData;
-import use_case.getSimilarRecipes.GetSimilarRecipesOutputBoundary;
-import use_case.getSimilarRecipes.GetSimilarRecipesOutputData;
+import use_case.recommend.RecommendDataAccessInterface;
 
 
 public class GetSimilarRecipesInteractor implements GetSimilarRecipesInputBoundary {
@@ -14,8 +11,8 @@ public class GetSimilarRecipesInteractor implements GetSimilarRecipesInputBounda
     final TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject;
 
 
-    public GetSimilarRecipesInteractor(TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject,
-                                      GetSimilarRecipesOutputBoundary getSimilarRecipesOutputBoundary){
+    public GetSimilarRecipesInteractor(RecommendDataAccessInterface temporaryRecipeDataAccessObject,
+                                       GetSimilarRecipesOutputBoundary getSimilarRecipesOutputBoundary){
         this.getSimilarRecipesPresenter = getSimilarRecipesOutputBoundary;
         this.temporaryRecipeDataAccessObject = temporaryRecipeDataAccessObject;
     }

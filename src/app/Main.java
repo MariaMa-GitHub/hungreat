@@ -9,6 +9,7 @@ import interface_adapter.RecipeViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.display.DisplayController;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
 import use_case.TemporaryRecipeDataAccessInterface;
 import view.HomeView;
@@ -48,7 +49,10 @@ public class Main {
         AnalysisController analysisController = AnalysisUseCaseFactory.create(temporaryRecipeDataAccessObject,analysisViewModel);
 
         DisplayController displayController = DisplayUseCaseFactory.create(temporaryRecipeDataAccessObject, recipeViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel, analysisViewModel, analysisController);
+
+        GetSimilarRecipesController getSimilarRecipesController = GetSimilarRecipesUseCaseFactory.create(dataAccessObject, recipeViewModel);
+
+        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel, analysisViewModel, analysisController,getSimilarRecipesController);
 
 
         application.add(homeView);
