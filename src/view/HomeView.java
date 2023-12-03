@@ -7,6 +7,7 @@ import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
 
 import javax.swing.*;
@@ -31,7 +32,8 @@ public class HomeView extends JPanel {
             AnalysisController analysisController,
             DisplayViewModel displayViewModel,
             DisplayController displayController,
-            RecipeViewModel recipeViewModel)
+            RecipeViewModel recipeViewModel,
+            GetSimilarRecipesController getSimilarRecipesController)
     {
 
         this.setLayout(new GridBagLayout());
@@ -108,7 +110,8 @@ public class HomeView extends JPanel {
                                     displayController,
                                     recipeViewModel,
                                     analysisController,
-                                    analysisViewModel);
+                                    analysisViewModel,
+                                    getSimilarRecipesController);
                         }
                     }
                 }
@@ -121,7 +124,7 @@ public class HomeView extends JPanel {
                         if (evt.getSource().equals(browse)) {
 
                             // TODO (Everyone)
-                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController);
+                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
                         }
                     }
                 }
@@ -135,7 +138,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Maria)
 
-                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController);
+                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
 
                         }
                     }
