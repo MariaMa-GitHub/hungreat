@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import use_case.browse.BrowseDataAccessInterface;
+import use_case.getSimilarRecipes.GetSimilarRecipesDataAccessInterface;
 import use_case.recommend.RecommendDataAccessInterface;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RecipeDataAccessObject implements BrowseDataAccessInterface, RecommendDataAccessInterface {
+public class RecipeDataAccessObject implements BrowseDataAccessInterface, RecommendDataAccessInterface, GetSimilarRecipesDataAccessInterface {
 
     private static final String API_KEY = System.getenv("API_KEY");     //load API key from environment variable
     private final RecipeFactory recipeFactory = new RecipeFactory();
@@ -35,6 +36,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return complexSearch(url);
     }
 
+    @Override
     public ArrayList<Recipe> getSimilarRecipes(int id) {    //TODO fix json bug
         ArrayList<Recipe> similarRecipes = new ArrayList<>();
 
