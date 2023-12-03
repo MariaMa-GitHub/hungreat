@@ -70,7 +70,7 @@ public class RecipeView extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        similar = new JButton("Similar Receipes");
+        similar = new JButton("Similar Recipes");
         recipeWindow.add(similar, gbc);
 
 
