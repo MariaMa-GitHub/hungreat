@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class RecipeViewModel{
     private String recipeString;
-    private Map<Integer, String> idTittle;
+    private String tittle;
 
-    // cause we do not know what variable we need to pass in while we create RecipeViewModel in main
+    // because we do not know what variable we need to pass in while we create RecipeViewModel in main
     // so here initializer is empty , we use set method to initialize RecipeViewModel.
     public RecipeViewModel() {
     }
@@ -16,8 +16,8 @@ public class RecipeViewModel{
         this.recipeString = recipeString;
     }
 
-    public void setIdTittle(Map<Integer, String> idTittle) {
-        this.idTittle = idTittle;
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
     }
 
     public String getRecipeString() {
@@ -25,6 +25,6 @@ public class RecipeViewModel{
     }
 
     public String getTittle() {
-        return idTittle.values().toString();
+        return tittle;
     }
 }

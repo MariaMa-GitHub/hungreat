@@ -1,7 +1,7 @@
 package use_case.getSimilarRecipes;
 
 public interface GetSimilarRecipesOutputBoundary {
-    void prepareSuccessView(GetSimilarRecipesOutputData idTitle);
+    void prepareView(GetSimilarRecipesOutputData title);
 
-    void prepareFailView(String error);
+
 }

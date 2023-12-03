@@ -27,20 +27,21 @@ public class GetSimilarRecipesInteractor implements GetSimilarRecipesInputBounda
         Recipe recipe = null;
         try{
             ArrayList<Recipe> recipes = this.recipeDataAccessObject.getSimilarRecipes(getSimilarRecipesInputData.getRecipeID());
-            //if not Arrylist then handle failveiw.If yes, then give presenter an arrylist of recipes.
-            Map<Integer, String> idTitle = new HashMap<>();
+            StringBuilder title = new StringBuilder();
             for (int i = 0; i < recipes.size(); i++) {
-                Integer recipeID = recipes.get(i).getID();
                 String recipeName = recipes.get(i).getTitle();
-                idTitle.put(recipeID, recipeName);
+                System.out.println(recipeName);
+                title.append(recipeName).append("\n");
             }
-            System.out.println(idTitle.values());
-            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData(idTitle);
-            getSimilarRecipesPresenter.prepareSuccessView(getSimilarRecipesOutputData);
+            System.out.println(title.toString());
+            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData(title.toString());
+            getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
         }
         catch (Exception e){
             String errorMessage = e.getMessage();
-            getSimilarRecipesPresenter.prepareFailView(errorMessage);
+            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData(errorMessage);
+
+            getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
         }
     }
 }

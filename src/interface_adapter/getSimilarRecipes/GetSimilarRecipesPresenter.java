@@ -17,13 +17,8 @@ public class GetSimilarRecipesPresenter implements GetSimilarRecipesOutputBounda
     }
 
     @Override
-    public void prepareSuccessView(GetSimilarRecipesOutputData response) {
-        recipeViewModel.setIdTittle(response.getRecipes());
+    public void prepareView(GetSimilarRecipesOutputData title) {
+        recipeViewModel.setTittle(title.getTitle());
     }
 
-    @Override
-    public void prepareFailView(String error) {
-        // Recipe error view with the provided error message
-        System.err.println("Error occurred: " + error);
-    }
 }
