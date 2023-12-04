@@ -12,12 +12,14 @@ public class SavePresenter implements SaveOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(SaveOutputData Title) {
-        System.out.println("Recipe saved successfully!");
+    public void prepareSuccessView(SaveOutputData recipe) {
+        saveViewModel.add(recipe.getRecipeID(), recipe.getTitle());
+        saveViewModel.successFirePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        System.err.println("Error occurred: " + error);
+        saveViewModel.setError(error);
+        saveViewModel.failFirePropertyChanged();
     }
 }
