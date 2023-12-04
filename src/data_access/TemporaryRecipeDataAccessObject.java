@@ -3,7 +3,6 @@ package data_access;
 import entity.NutritionDataFactory;
 import entity.Recipe;
 import entity.RecipeFactory;
-import entity.RecipeInfoFactory;
 import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.browse.BrowseInputData;
 
@@ -15,7 +14,9 @@ public class TemporaryRecipeDataAccessObject implements TemporaryRecipeDataAcces
 
     private final Map<Integer, Recipe> recipes = new HashMap<>();
 
-    public TemporaryRecipeDataAccessObject() {
+    public TemporaryRecipeDataAccessObject(ArrayList<Recipe> savedRecipes) {
+        storeRecipes(savedRecipes);
+
     }
 
     public Recipe getFromID(int id) {
@@ -31,6 +32,10 @@ public class TemporaryRecipeDataAccessObject implements TemporaryRecipeDataAcces
         for (Recipe recipe : recipeList) {
             recipes.put(recipe.getID(), recipe);
         }
+    }
+
+    public void storeRecipe(Recipe recipe) {
+        recipes.put(recipe.getID(), recipe);
     }
 
 }

@@ -1,8 +1,12 @@
 package entity;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.Map;
 
-public class Recipe {
+public class Recipe{
 
     private int ID;
     private String title;
@@ -48,9 +52,19 @@ public class Recipe {
     public Collection<Recipe> getSimilarRecipes() {
         return similarRecipes;
     }
-    //TODO Wright a toString method prepare for display.
+
     @Override
     public String toString(){
         return title + "\n" + info.toString();
+    }
+    // TODO Wright a toString method prepare for analysis.
+    public String nutritionToString(){
+        StringBuilder nutritions = new StringBuilder();
+       for (Map.Entry<String, String> entry : nutrition.getNutrients().entrySet()){
+           String key = entry.getKey();
+           String value = entry.getValue();
+           nutritions.append(key).append(": ").append(value).append("\n");
+       }
+        return nutritions.toString();
     }
 }
