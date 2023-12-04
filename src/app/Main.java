@@ -6,6 +6,7 @@ import data_access.TemporaryRecipeDataAccessObject;
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.create.CreateController;
@@ -30,12 +31,15 @@ public class Main {
         DisplayViewModel displayViewModel = new DisplayViewModel();
         RecipeViewModel recipeViewModel = new RecipeViewModel();
         AnalysisViewModel analysisViewModel = new AnalysisViewModel();
+        SaveViewModel saveViewModel = new SaveViewModel();
+
 
         RecipeDataAccessObject dataAccessObject = null;
         TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject = null;
+        SavedRecipeDataAccessObject savedRecipeDataAccessObject = null;
         GetSimilarRecipesDataAccessInterface recipeDataAccessObject = null;
         try {
-            SavedRecipeDataAccessObject savedRecipeDataAccessObject = new SavedRecipeDataAccessObject();
+            savedRecipeDataAccessObject = new SavedRecipeDataAccessObject();
             dataAccessObject = new RecipeDataAccessObject();
             temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(savedRecipeDataAccessObject.getSavedRecipes());
             recipeDataAccessObject = new RecipeDataAccessObject();
@@ -56,7 +60,7 @@ public class Main {
 
         GetSimilarRecipesController getSimilarRecipesController = GetSimilarRecipesUseCaseFactory.create(recipeDataAccessObject, recipeViewModel);
 
-        CreateController createController = new CreateController();     //TODO: write createFactory and update Main for create usecase
+        CreateController createController = CreateUseCaseFactory.create(savedRecipeDataAccessObject, saveViewModel);
 
         HomeView homeView = new HomeView(
                 browseController,
