@@ -30,10 +30,8 @@ public class GetSimilarRecipesInteractor implements GetSimilarRecipesInputBounda
             StringBuilder title = new StringBuilder();
             for (int i = 0; i < recipes.size(); i++) {
                 String recipeName = recipes.get(i).getTitle();
-                System.out.println(recipeName);
                 title.append(recipeName).append("\n");
             }
-            System.out.println(title.toString());
             GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData(title.toString());
             getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
         }

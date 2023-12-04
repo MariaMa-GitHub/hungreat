@@ -12,5 +12,6 @@ public interface TemporaryRecipeDataAccessInterface {
     boolean existsByID(int id);
 
     void storeRecipes(ArrayList<Recipe> recipeList);
+    void storeRecipe(Recipe recipe) ;
 
 }

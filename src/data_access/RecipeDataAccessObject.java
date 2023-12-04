@@ -120,7 +120,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return getJsonArrayRecipesFromApi(url);
     }
 
-    private JSONArray makeGetRecipeInformationBulkApiCall (ArrayList<String> ids) {
+    private JSONArray makeGetRecipeInformationBulkApiCall(ArrayList<String> ids) {
         //build the url request of getting recipe information bulk from the API
         StringBuilder urlBuilder
                 = new StringBuilder("https://api.spoonacular.com/recipes/informationBulk");
