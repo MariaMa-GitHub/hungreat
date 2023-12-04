@@ -4,6 +4,7 @@ import data_access.TemporaryRecipeDataAccessObject;
 import entity.NutritionData;
 import entity.Recipe;
 import entity.RecipeInfo;
+import entity.RecipeInfoTest;
 import org.junit.jupiter.api.Test;
 import use_case.TemporaryRecipeDataAccessInterface;
 
