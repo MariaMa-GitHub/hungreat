@@ -35,8 +35,9 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         String url = getRecommendUrl(recommendFilter);
         return complexSearch(url);
     }
+
     @Override
-    public ArrayList<Recipe> getSimilarRecipes(int id) {
+    public ArrayList<Recipe> getSimilarRecipes(int id) {    //TODO fix json bug
         ArrayList<Recipe> similarRecipes = new ArrayList<>();
 
         //get ids of the similar recipes using the getSimilarRecipes API call
@@ -171,7 +172,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return null;
     }
 
-    private Recipe convertJsonRecipeToRecipeEntity(JSONObject rawRecipe) {
+    private Recipe convertJsonRecipeToRecipeEntity(JSONObject rawRecipe) {      //TODO: fix nutrition bug
         int id = rawRecipe.getInt("id");
         String title = rawRecipe.getString("title");
         String imageUrl = rawRecipe.getString("image");
@@ -280,7 +281,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                 = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");
         urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
         urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
-                .append("&addRecipeNutrition=true").append("number=6"); //make sure the response will contain ingredients, recipeInfo, and nutrition
+                .append("&addRecipeNutrition=true").append("&number=6"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
 //        add all user-defined query parameters to the request url
 //        checking for empty because the absence of some parameter values will cause 404 error

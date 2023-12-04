@@ -8,4 +8,9 @@ public class RecipeInfoFactory {
         return new RecipeInfo(recipeID, servings, readyInMinutes, healthScore, ingredients, instructions);
     }
 
+    public RecipeInfo create( int servings, int readyInMinutes, Collection<String> ingredients, Collection<String> instructions) {
+        //This is only for user-created recipes
+        return new RecipeInfo(servings, readyInMinutes, ingredients, instructions);
+    }
+
 }

@@ -15,6 +15,8 @@ public class Recipe{
     private RecipeInfo info;
     private NutritionData nutrition;
     private Collection<Recipe> similarRecipes;
+    private boolean isUserCreatedRecipe;
+
 
     public Recipe(int ID, String title, String url, String imageUrl, RecipeInfo info, NutritionData nutrition) {
         this.ID = ID;
@@ -23,6 +25,20 @@ public class Recipe{
         this.imageUrl = imageUrl;
         this.info = info;
         this.nutrition = nutrition;
+        this.isUserCreatedRecipe = false;
+    }
+
+    public Recipe(int id, String title, RecipeInfo info) {
+        //This constructor is only for user-created recipes
+        // TO Chloe: toString for user-created recipe should be the same as normal recipes,
+        // but it does not have nutrition so no analyze feature.
+        this.ID = id;
+        this.title = title;
+        this.info = info;
+        this.url = null;
+        this.imageUrl = null;
+        this.nutrition = null;
+        this.isUserCreatedRecipe = true;
     }
 
     public int getID() {
@@ -49,6 +65,8 @@ public class Recipe{
         return nutrition;
     }
 
+    public boolean isUserCreatedRecipe() {return isUserCreatedRecipe; }
+
     public Collection<Recipe> getSimilarRecipes() {
         return similarRecipes;
     }
@@ -58,6 +76,7 @@ public class Recipe{
         return title + "\n" + info.toString();
     }
     // TODO Wright a toString method prepare for analysis.
+    // TODO: update toString for user-created recipes (Michelle)
     public String nutritionToString(){
         StringBuilder nutritions = new StringBuilder();
        for (Map.Entry<String, String> entry : nutrition.getNutrients().entrySet()){
