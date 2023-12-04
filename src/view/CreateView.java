@@ -169,7 +169,7 @@ public class CreateView extends JFrame{
         gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.ipadx = 600;
-        gbc.ipady = 200;
+        gbc.ipady = 150;
 
         ingredientsInput = new JTextArea("");
         ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -202,7 +202,7 @@ public class CreateView extends JFrame{
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.ipadx = 600;
-        gbc.ipady = 500;
+        gbc.ipady = 350;
 
         instructionsInput = new JTextArea("");
         instructionsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -266,7 +266,7 @@ public class CreateView extends JFrame{
 
         this.add(createWindow);
 
-        this.setSize(1000, 1100);
+        this.setSize(900, 900);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
