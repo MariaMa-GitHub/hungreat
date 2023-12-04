@@ -1,10 +1,13 @@
 package interface_adapter;
 
 import java.sql.SQLOutput;
+import java.util.Map;
 
 public class RecipeViewModel{
     private String recipeString;
-    //cause we do not know what variable we need to pass in while we create RecipeViewModel in main
+    private String tittle;
+
+    // because we do not know what variable we need to pass in while we create RecipeViewModel in main
     // so here initializer is empty , we use set method to initialize RecipeViewModel.
     public RecipeViewModel() {
     }
@@ -13,8 +16,15 @@ public class RecipeViewModel{
         this.recipeString = recipeString;
     }
 
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
+    }
+
     public String getRecipeString() {
-//        System.out.println(recipeString);
             return recipeString;
+    }
+
+    public String getTittle() {
+        return tittle;
     }
 }

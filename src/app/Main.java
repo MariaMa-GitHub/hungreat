@@ -3,11 +3,17 @@ package app;
 import data_access.RecipeDataAccessObject;
 import data_access.SavedRecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
+import use_case.TemporaryRecipeDataAccessInterface;
+import use_case.getSimilarRecipes.GetSimilarRecipesDataAccessInterface;
 import view.HomeView;
 
 import javax.swing.*;
@@ -23,13 +29,16 @@ public class Main {
 
         DisplayViewModel displayViewModel = new DisplayViewModel();
         RecipeViewModel recipeViewModel = new RecipeViewModel();
+        AnalysisViewModel analysisViewModel = new AnalysisViewModel();
 
         RecipeDataAccessObject dataAccessObject = null;
         TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject = null;
+        GetSimilarRecipesDataAccessInterface recipeDataAccessObject = null;
         try {
             SavedRecipeDataAccessObject savedRecipeDataAccessObject = new SavedRecipeDataAccessObject();
             dataAccessObject = new RecipeDataAccessObject();
             temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(savedRecipeDataAccessObject.getSavedRecipes());
+            recipeDataAccessObject = new RecipeDataAccessObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -41,8 +50,24 @@ public class Main {
 
         RecommendController recommendController = RecommendUseCaseFactory.create(dataAccessObject, temporaryRecipeDataAccessObject, displayViewModel);
 
+        AnalysisController analysisController = AnalysisUseCaseFactory.create(temporaryRecipeDataAccessObject,analysisViewModel);
+
         DisplayController displayController = DisplayUseCaseFactory.create(temporaryRecipeDataAccessObject, recipeViewModel);
-        HomeView homeView = new HomeView(browseController, recommendController, displayViewModel, displayController,recipeViewModel);
+
+        GetSimilarRecipesController getSimilarRecipesController = GetSimilarRecipesUseCaseFactory.create(recipeDataAccessObject, recipeViewModel);
+
+        CreateController createController = new CreateController();     //TODO: write createFactory and update Main for create usecase
+
+        HomeView homeView = new HomeView(
+                browseController,
+                recommendController,
+                createController,
+                analysisViewModel,
+                analysisController,
+                displayViewModel,
+                displayController,
+                recipeViewModel,
+                getSimilarRecipesController);
 
 
         application.add(homeView);

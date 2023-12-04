@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class RecipeInfo {
@@ -45,9 +46,9 @@ public class RecipeInfo {
     }
 
     public  String ingredientsToString() {
-        String ingredientString = null;
+        String ingredientString = "";
         for (String item : ingredients) {
-            ingredientString += item +"\n";
+            ingredientString += item.substring(0, 1).toUpperCase() + item.substring(1) +"\n";
         }
         return ingredientString;
     }
@@ -56,6 +57,14 @@ public class RecipeInfo {
     @Override
     public String toString() {
         return "Servings:"+ servings + "\n" + "ReadyInMinutes:" + readyInMinutes + "\n" + "HealthScore:" + healthScore
-                + "\n" + "Ingredients:" + "\n" + ingredientsToString() + "\n" + "Instructions:" + instructions;
+                + "\n" + "Ingredients:" + "\n" + ingredientsToString() + "\n" + "Instructions:" + instructionsToString();
+    }
+
+    public String instructionsToString(){
+        String instructionsString = "\n";
+        for (int i = 0; i < instructions.size(); i++) {
+            instructionsString += i + 1 + ": " + new ArrayList<>(instructions).get(i) + "\n";
+        }
+        return instructionsString;
     }
 }

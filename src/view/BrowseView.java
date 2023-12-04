@@ -1,9 +1,12 @@
 package view;
 
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.display.DisplayController;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +27,7 @@ public class BrowseView extends JFrame {
     private final BrowseController controller;
     private final DisplayViewModel displayViewModel;
 
-    public BrowseView(BrowseController controller, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel) {
+    public BrowseView(BrowseController controller, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController) {
 
         this.controller = controller;
         this.displayViewModel = displayViewModel;
@@ -262,7 +265,7 @@ public class BrowseView extends JFrame {
                                         getQueryInput()
                                 );
 
-                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel);
+                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);

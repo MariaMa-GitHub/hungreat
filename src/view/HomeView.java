@@ -1,9 +1,13 @@
 package view;
 
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
 
 import javax.swing.*;
@@ -20,7 +24,17 @@ public class HomeView extends JPanel {
     final JPanel savedRecipesList;
     final DisplayController displayController;
 
-    public HomeView(BrowseController browseController, RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel) {
+    public HomeView(
+            BrowseController browseController,
+            RecommendController recommendController,
+            CreateController createController,
+            AnalysisViewModel analysisViewModel,
+            AnalysisController analysisController,
+            DisplayViewModel displayViewModel,
+            DisplayController displayController,
+            RecipeViewModel recipeViewModel,
+            GetSimilarRecipesController getSimilarRecipesController)
+    {
 
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(800, 600));
@@ -89,9 +103,15 @@ public class HomeView extends JPanel {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(create)) {
-
                             // TODO (Michelle)
-
+                            CreateView createView = new CreateView(
+                                    createController,
+                                    displayViewModel,
+                                    displayController,
+                                    recipeViewModel,
+                                    analysisController,
+                                    analysisViewModel,
+                                    getSimilarRecipesController);
                         }
                     }
                 }
@@ -104,7 +124,7 @@ public class HomeView extends JPanel {
                         if (evt.getSource().equals(browse)) {
 
                             // TODO (Everyone)
-                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel);
+                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
                         }
                     }
                 }
@@ -118,7 +138,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Maria)
 
-                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel);
+                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
 
                         }
                     }

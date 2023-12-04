@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
-public class Recipe {
+public class Recipe{
 
     private int ID;
     private String title;
@@ -59,12 +59,12 @@ public class Recipe {
     }
     // TODO Wright a toString method prepare for analysis.
     public String nutritionToString(){
-        String nutritions = null;
+        StringBuilder nutritions = new StringBuilder();
        for (Map.Entry<String, String> entry : nutrition.getNutrients().entrySet()){
            String key = entry.getKey();
            String value = entry.getValue();
-           nutritions = key + ":" + value;
+           nutritions.append(key).append(": ").append(value).append("\n");
        }
-        return nutritions;
+        return nutritions.toString();
     }
 }
