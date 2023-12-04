@@ -41,7 +41,6 @@ public class SavedRecipeDataAccessObject implements SaveDataAccessInterface, Cre
             ObjectInputStream ois = new ObjectInputStream(fis);
             ArrayList<Recipe> previouslySavedRecipes = (ArrayList<Recipe>) ois.readObject(); // down-casting object
             savedRecipes = previouslySavedRecipes;
-
             // closing streams
             ois.close();
         } catch (IOException e) {

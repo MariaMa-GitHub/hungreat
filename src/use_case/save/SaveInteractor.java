@@ -16,11 +16,14 @@ public class SaveInteractor implements SaveInputBoundary {
         this.savedRecipeDataAccessInterface = savedRecipeDataAccessInterface;
     }
 
-    // TODO: Call the storeRecipe method from TemporaryRecipeDataAccessObject
-    // TODO: Call the save method from SavedRecipeDataAccessObject
     @Override
     public void execute(SaveInputData saveInputData) {
         Integer recipeID = saveInputData.getRecipeID();
+        if (recipeID == null) {
+            ArrayList<Recipe> saveRecipes = savedRecipeDataAccessInterface.getSavedRecipes();
+            temporaryRecipeDataAccessInterface.storeRecipes(saveRecipes);
+        } else {
+
         Recipe saveRecipeTitle = temporaryRecipeDataAccessInterface.getFromID(recipeID);
         try{
             savedRecipeDataAccessInterface.save(saveRecipeTitle);
@@ -30,11 +33,6 @@ public class SaveInteractor implements SaveInputBoundary {
         catch (Exception e){
             String errorMessage = e.getMessage();
             saveOutputBoundary.prepareFailView(errorMessage);
-        }
+        } }
     }
-
-//    @Override
-//    public void execute() {
-//
-//    }
 }

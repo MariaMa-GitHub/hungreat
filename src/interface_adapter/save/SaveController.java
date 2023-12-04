@@ -18,9 +18,4 @@ public class SaveController implements SearchController {
         SaveInputData saveInputData = new SaveInputData(recipeID);
         saveInteractor.execute(saveInputData);
     }
-
-    // TODO: Make the empty execute method call the execute empty method from SavedInteraction which read inside the SavedRecipeDAO
-//    public void execute() {
-//        saveInteractor.execute();
-//    }
 }

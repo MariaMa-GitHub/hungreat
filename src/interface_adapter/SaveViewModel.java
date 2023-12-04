@@ -15,7 +15,7 @@ public class SaveViewModel {
         return savedRecipes;
     }
 
-    public void setSavedRecipes(Map<Integer, String> savedRecipes) {
+    public void setSavedRecipes(Map<Integer, String> savedRecipesg) {
         this.savedRecipes = savedRecipes;
     }
 
