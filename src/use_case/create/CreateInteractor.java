@@ -39,9 +39,8 @@ public class CreateInteractor implements CreateInputBoundary {
         } else if (readyInMinutes == -1) {
             createPresenter.prepareFailView("Please enter an Integer for cooking time.");
         } else {
-            //TODO: does the id in recipeInfo matters? if yes, should I directly set id for recipeInfo or through factory?
             RecipeInfo recipeInfo = recipeInfoFactory.create(servings, readyInMinutes, ingredients, instructions);
-            Recipe recipe = recipeFactory.create(title, recipeInfo);
+            Recipe recipe = recipeFactory.create(recipeInfo.getRecipeID(), title, recipeInfo);
             Integer id = recipe.getID();
 
             try {

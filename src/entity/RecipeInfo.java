@@ -12,6 +12,7 @@ public class RecipeInfo {
     private Collection<String> ingredients;
     private Collection<String> instructions;
     private boolean isUserCreatedRecipe;
+    private static int userCreatedRecipeID = -1;
 
     public RecipeInfo(int recipeID, int servings, int readyInMinutes, int healthScore, Collection<String> ingredients, Collection<String> instructions) {
         this.recipeID = recipeID;
@@ -26,8 +27,10 @@ public class RecipeInfo {
     public RecipeInfo(int servings, int readyInMinutes,
                       Collection<String> ingredients, Collection<String> instructions) {
 
-        // //This constructor is only for user-created recipes
-        this.recipeID = -1;     //TODO: how to handle this ID? has the ID in RecipeInfo ever been used? (Michelle)
+        //This constructor is only for user-created recipes
+        //TO Chloe: toString for user=-created recipe should NOT contain health score
+        this.recipeID = userCreatedRecipeID;
+        userCreatedRecipeID--;
         this.servings = servings;
         this.readyInMinutes = readyInMinutes;
         this.ingredients = ingredients;

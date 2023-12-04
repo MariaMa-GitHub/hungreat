@@ -16,7 +16,7 @@ public class Recipe{
     private NutritionData nutrition;
     private Collection<Recipe> similarRecipes;
     private boolean isUserCreatedRecipe;
-    private static int userCreatedRecipeID = -1;
+
 
     public Recipe(int ID, String title, String url, String imageUrl, RecipeInfo info, NutritionData nutrition) {
         this.ID = ID;
@@ -28,10 +28,11 @@ public class Recipe{
         this.isUserCreatedRecipe = false;
     }
 
-    public Recipe(String title, RecipeInfo info) {
+    public Recipe(int id, String title, RecipeInfo info) {
         //This constructor is only for user-created recipes
-        this.ID = userCreatedRecipeID;
-        userCreatedRecipeID--;
+        // TO Chloe: toString for user-created recipe should be the same as normal recipes,
+        // but it does not have nutrition so no analyze feature.
+        this.ID = id;
         this.title = title;
         this.info = info;
         this.url = null;

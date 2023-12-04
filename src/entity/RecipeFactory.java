@@ -8,9 +8,9 @@ public class RecipeFactory {
 
     }
 
-    public Recipe create(String title, RecipeInfo info) {
+    public Recipe create(int id, String title, RecipeInfo info) {
         //This is only for user-created recipes
-        return new Recipe(title, info);
+        return new Recipe(id, title, info);
 
     }
 
