@@ -2,11 +2,13 @@ package view;
 
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.create.CreateController;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
+import interface_adapter.save.SaveController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,8 +38,7 @@ public class CreateView extends JFrame{
             DisplayController displayController,
             RecipeViewModel recipeViewModel,
             AnalysisController analysisController,
-            AnalysisViewModel analysisViewModel,
-            GetSimilarRecipesController getSimilarRecipesController) {
+            AnalysisViewModel analysisViewModel) {
 
         this.createController = createController;
         this.displayViewModel = displayViewModel;
@@ -248,13 +249,6 @@ public class CreateView extends JFrame{
                                 getInstructionsInput()
                         );
 
-                        DisplayView displayView = new DisplayView(
-                                displayController,
-                                displayViewModel.getRecipes(),
-                                recipeViewModel,
-                                analysisViewModel,
-                                analysisController,
-                                getSimilarRecipesController);    //TODO: analysis for self created recipes (Chloe)
                         JComponent comp = (JComponent) evt.getSource();
                         Window win = SwingUtilities.getWindowAncestor(comp);
                         win.dispose();
