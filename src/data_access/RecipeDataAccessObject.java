@@ -126,7 +126,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                 = new StringBuilder("https://api.spoonacular.com/recipes/informationBulk");
         urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
         urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
-                .append("&addRecipeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
+                .append("&includeNutrition=true"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
         //add the recipe ids we want to search for to the link
         String stringOfIds = "&ids=" + String.join(",", ids);
@@ -281,7 +281,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
                 = new StringBuilder("https://api.spoonacular.com/recipes/complexSearch");
         urlBuilder.append("?apiKey=").append(API_KEY);       //add api key to the request url to get authentication
         urlBuilder.append("&fillIngredients=true").append("&addRecipeInformation=true")
-                .append("&addRecipeNutrition=true").append("number=6"); //make sure the response will contain ingredients, recipeInfo, and nutrition
+                .append("&addRecipeNutrition=true").append("&number=6"); //make sure the response will contain ingredients, recipeInfo, and nutrition
 
 //        add all user-defined query parameters to the request url
 //        checking for empty because the absence of some parameter values will cause 404 error
