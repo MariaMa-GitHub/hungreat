@@ -169,7 +169,7 @@ public class CreateView extends JFrame{
         gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.ipadx = 600;
-        gbc.ipady = 200;
+        gbc.ipady = 150;
 
         ingredientsInput = new JTextArea("");
         ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -202,7 +202,7 @@ public class CreateView extends JFrame{
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.ipadx = 600;
-        gbc.ipady = 500;
+        gbc.ipady = 350;
 
         instructionsInput = new JTextArea("");
         instructionsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -241,13 +241,11 @@ public class CreateView extends JFrame{
                     if (evt.getSource().equals(save)) {
                         //TODO
                         createController.execute(
-//                                        getCuisineInput(),
-//                                        getExcludeCuisineInput(),
-//                                        getDietInput(),
-//                                        getIntolerancesInput(),
-//                                        getIngredientsInput(),
-//                                        getExcludeIngredientsInput(),
-//                                        getNutrientsInput()
+                                getTitleInput(),
+                                getServingsInput(),
+                                getReadyInMinutesInput(),
+                                getIngredientsInput(),
+                                getInstructionsInput()
                         );
 
                         DisplayView displayView = new DisplayView(
@@ -268,7 +266,7 @@ public class CreateView extends JFrame{
 
         this.add(createWindow);
 
-        this.setSize(1000, 1100);
+        this.setSize(900, 900);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -300,13 +298,13 @@ public class CreateView extends JFrame{
 
     public ArrayList<String> getIngredientsInput() {
         String text = ingredientsInput.getText().strip();
-        ArrayList<String> ingredients = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        ArrayList<String> ingredients = new ArrayList<>(Arrays.asList(text.split("\\s*\\n\\s*")));  //TODO need to test regex
         return ingredients;
     }
 
     public ArrayList<String> getInstructionsInput() {
         String text = instructionsInput.getText().strip();
-        ArrayList<String> instructions = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+        ArrayList<String> instructions = new ArrayList<>(Arrays.asList(text.split("\\s*\\n\\s*")));   //TODO need to test regex
         return instructions;
     }
 }
