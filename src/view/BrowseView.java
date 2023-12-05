@@ -1,11 +1,9 @@
 package view;
 
-import interface_adapter.AnalysisViewModel;
-import interface_adapter.RecipeViewModel;
-import interface_adapter.DisplayViewModel;
-import interface_adapter.SaveViewModel;
+import interface_adapter.*;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
+import interface_adapter.delete.DeleteController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.save.SaveController;
@@ -34,7 +32,7 @@ public class BrowseView extends JFrame implements ActionListener {
     private final BrowseController controller;
     private final DisplayViewModel displayViewModel;
 
-    public BrowseView(BrowseController controller, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController) {
+    public BrowseView(BrowseController controller, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController, DeleteController deleteController) {
 
         this.controller = controller;
         this.displayViewModel = displayViewModel;
@@ -306,7 +304,7 @@ public class BrowseView extends JFrame implements ActionListener {
                                         getQueryInput()
                                 );
 
-                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
+                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);
