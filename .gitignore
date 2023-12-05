@@ -13,3 +13,6 @@ out/
 # Ignore the files in 'target' directory
 .target/
 
+/target/
+/target/classes/
+/target/classes/entity/
