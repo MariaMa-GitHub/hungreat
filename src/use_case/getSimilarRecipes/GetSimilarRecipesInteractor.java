@@ -36,7 +36,7 @@ public class GetSimilarRecipesInteractor implements GetSimilarRecipesInputBounda
             getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
         }
         else{
-            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData("No similar recipes found");
+            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData("No similar recipes found.");
                     getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
         }
     }
