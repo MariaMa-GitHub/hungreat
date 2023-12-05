@@ -61,8 +61,8 @@ public class RecipeTest {
 
     @Test
     void getInfoTest() {
-        assertEquals("Apple" + "\n", recipe.getInfo().ingredientsToString());
-        assertEquals("Apple" + "\n", recipeU.getInfo().ingredientsToString());
+        assertEquals("1:Apple" + "\n", recipe.getInfo().ingredientsToString());
+        assertEquals("1:Apple" + "\n", recipeU.getInfo().ingredientsToString());
     }
 
     @Test
@@ -78,14 +78,14 @@ public class RecipeTest {
                 "ReadyInMinutes:3" + "\n" +
                 "HealthScore:4" + "\n" +
                 "Ingredients:" + "\n" +
-                "Apple" + "\n" + "\n" +
+                "1:Apple" + "\n" + "\n" +
                 "Instructions:" + "\n" +
                 "1: fried in pan." + "\n", recipe.toString());
         assertEquals( "title" + "\n" +
                 "Servings:2" + "\n" +
                 "ReadyInMinutes:3" + "\n" +
                 "Ingredients:" + "\n" +
-                "Apple" + "\n" + "\n" +
+                "1:Apple" + "\n" + "\n" +
                 "Instructions:" + "\n" +
                 "1: fried in pan." + "\n", recipeU.toString());
     }
