@@ -3,26 +3,42 @@ package view;
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
+import interface_adapter.save.SaveController;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class HomeView extends JPanel {
+public class HomeView extends JPanel implements PropertyChangeListener {
 
+    private Map<Integer, String> savedRecipes;
     final JButton create;
     final JButton browse;
     final JButton recommend;
     final JButton export;
     final JPanel savedRecipesList;
     final DisplayController displayController;
+    private RecipeViewModel recipeViewModel;
+
+    private AnalysisViewModel analysisViewModel;
+
+    private AnalysisController analysisController;
+
+    private GetSimilarRecipesController getSimilarRecipesController;
 
     public HomeView(
             BrowseController browseController,
@@ -33,8 +49,17 @@ public class HomeView extends JPanel {
             DisplayViewModel displayViewModel,
             DisplayController displayController,
             RecipeViewModel recipeViewModel,
-            GetSimilarRecipesController getSimilarRecipesController)
+            GetSimilarRecipesController getSimilarRecipesController,
+            SaveController saveController,
+            SaveViewModel saveViewModel)
     {
+
+        this.recipeViewModel = recipeViewModel;
+        this.analysisViewModel = analysisViewModel;
+        this.analysisController = analysisController;
+        this.getSimilarRecipesController = getSimilarRecipesController;
+
+        this.savedRecipes = saveViewModel.getSavedRecipes();
 
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(800, 600));
@@ -81,12 +106,6 @@ public class HomeView extends JPanel {
 
         savedRecipesList = new JPanel(new GridLayout(0, 1));
 
-//        for (int i = 1; i < 21; i++) {
-//            JButton b = new JButton(String.format("Recipe %s", i));
-//            b.setPreferredSize(new Dimension(490, 100));
-//            savedRecipesList.add(b);
-//        }
-
         JScrollPane scrPane = new JScrollPane(savedRecipesList);
         scrPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //        scrPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -110,8 +129,7 @@ public class HomeView extends JPanel {
                                     displayController,
                                     recipeViewModel,
                                     analysisController,
-                                    analysisViewModel,
-                                    getSimilarRecipesController);
+                                    analysisViewModel);
                         }
                     }
                 }
@@ -124,7 +142,7 @@ public class HomeView extends JPanel {
                         if (evt.getSource().equals(browse)) {
 
                             // TODO (Everyone)
-                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
+                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
                         }
                     }
                 }
@@ -138,7 +156,7 @@ public class HomeView extends JPanel {
 
                             // TODO (Maria)
 
-                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
+                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
 
                         }
                     }
@@ -158,6 +176,61 @@ public class HomeView extends JPanel {
                 }
         );
 
+        saveViewModel.addPropertyChangeListener(this);
+        saveController.execute(null);
+
+    }
+
+    @NotNull
+    private static JButton getjButton(ArrayList<Integer> recipeIDs, Map<Integer, String> recipes, int i, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController) {
+        Integer recipeID = recipeIDs.get(i);
+
+        JButton button = new JButton(recipes.get(recipeID));
+        button.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(button)) {
+
+                            displayController.execute(recipeID);
+                            RecipeView recipeView = new RecipeView(recipeID, recipes.get(recipeID), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, null, null);
+
+
+                        }
+                    }
+                }
+        );
+        return button;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("savedRecipes")) {
+
+            this.savedRecipes = (Map<Integer, String>) evt.getNewValue();
+
+            this.savedRecipesList.removeAll();
+
+            if (this.savedRecipes.isEmpty()) {
+                JLabel noSavedRecipes = new JLabel("No Saved Recipes");
+                noSavedRecipes.setHorizontalAlignment(SwingConstants.CENTER);
+                noSavedRecipes.setVerticalAlignment(SwingConstants.CENTER);
+                savedRecipesList.add(noSavedRecipes);
+            } else {
+
+                for (int i = 0; i < this.savedRecipes.size(); i++) {
+
+                    JButton button = getjButton(new ArrayList<>(this.savedRecipes.keySet()), this.savedRecipes, i, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
+                    button.setPreferredSize(new Dimension(490, 100));
+                    savedRecipesList.add(button);
+
+                }
+            }
+
+            this.repaint();
+            this.revalidate();
+
+        }
     }
 
 }

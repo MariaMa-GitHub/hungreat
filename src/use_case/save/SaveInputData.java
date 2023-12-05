@@ -10,5 +10,4 @@ public class SaveInputData {
     public Integer getRecipeID() {
         return recipeID;
     }
-
 }

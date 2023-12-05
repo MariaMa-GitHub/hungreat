@@ -4,6 +4,8 @@ import interface_adapter.SaveViewModel;
 import use_case.save.SaveOutputBoundary;
 import use_case.save.SaveOutputData;
 
+import java.util.HashMap;
+
 public class SavePresenter implements SaveOutputBoundary {
     private final SaveViewModel saveViewModel;
 
@@ -12,9 +14,14 @@ public class SavePresenter implements SaveOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(SaveOutputData recipe) {
-        saveViewModel.add(recipe.getRecipeID(), recipe.getTitle());
-        saveViewModel.successFirePropertyChanged();
+    public void prepareSuccessView(SaveOutputData response) {
+        if (response.getSavedRecipes() != null) {
+            saveViewModel.setSavedRecipes(response.getSavedRecipes());
+            saveViewModel.successFirePropertyChanged();
+        } else {
+            saveViewModel.add(response.getRecipeID(), response.getTitle());
+            saveViewModel.successFirePropertyChanged();
+        }
     }
 
     @Override

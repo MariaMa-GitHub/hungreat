@@ -1,7 +1,9 @@
 package interface_adapter;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SaveViewModel {
@@ -9,6 +11,7 @@ public class SaveViewModel {
     private String error;
 
     public SaveViewModel() {
+        this.savedRecipes = new HashMap<>();
     }
 
     public Map<Integer, String> getSavedRecipes() {
@@ -46,4 +49,5 @@ public class SaveViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
+
 }

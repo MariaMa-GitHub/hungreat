@@ -3,10 +3,12 @@ package view;
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
+import interface_adapter.save.SaveController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +29,7 @@ public class BrowseView extends JFrame {
     private final BrowseController controller;
     private final DisplayViewModel displayViewModel;
 
-    public BrowseView(BrowseController controller, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController) {
+    public BrowseView(BrowseController controller, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController) {
 
         this.controller = controller;
         this.displayViewModel = displayViewModel;
@@ -265,7 +267,7 @@ public class BrowseView extends JFrame {
                                         getQueryInput()
                                 );
 
-                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
+                                DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
 
                                 JComponent comp = (JComponent) evt.getSource();
                                 Window win = SwingUtilities.getWindowAncestor(comp);

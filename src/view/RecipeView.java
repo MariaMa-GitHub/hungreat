@@ -2,8 +2,10 @@ package view;
 
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
+import interface_adapter.save.SaveController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +28,7 @@ public class RecipeView extends JFrame {
     final GetSimilarRecipesController getSimilarRecipesController;
 
 
-    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController) {
+    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController) {
 
         this.recipeID = recipeID;
         this.recipeViewModel = recipeViewModel;
@@ -130,6 +132,20 @@ public class RecipeView extends JFrame {
                     }
                 }
         );
+
+        save.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(save)) {
+                            //need a message box here
+                            saveController.execute(recipeID);
+                            JOptionPane.showMessageDialog(null, saveViewModel.getSavedRecipes().get(recipeID) + " has been successfully saved.");
+                        }
+                    }
+                }
+        );
+
 
     }
 
