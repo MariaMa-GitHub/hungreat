@@ -1,11 +1,10 @@
-package interface_adapter;
+package interface_adapter.display;
 
 import data_access.TemporaryRecipeDataAccessObject;
 import entity.NutritionData;
 import entity.Recipe;
 import entity.RecipeInfo;
-import interface_adapter.display.DisplayController;
-import interface_adapter.display.DisplayPresenter;
+import interface_adapter.RecipeViewModel;
 import org.junit.jupiter.api.Test;
 import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.display.*;

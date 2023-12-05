@@ -25,10 +25,9 @@ public class RecipeInfo implements Serializable {
         this.isUserCreatedRecipe = false;
     }
 
+
     public RecipeInfo(int servings, int readyInMinutes,
                       Collection<String> ingredients, Collection<String> instructions) {
-
-        //This constructor is only for user-created recipes
         this.recipeID = userCreatedRecipeID;
         userCreatedRecipeID--;
         this.servings = servings;
@@ -36,9 +35,14 @@ public class RecipeInfo implements Serializable {
         this.ingredients = ingredients;
         this.instructions = instructions;
         this.healthScore = -1;
-        this.isUserCreatedRecipe = true;
-    }
+        this.isUserCreatedRecipe = true;}
 
+    public boolean isUserCreatedRecipe() {
+        return isUserCreatedRecipe;}
+
+    public static int getUserCreatedRecipeID() {
+        return userCreatedRecipeID;
+    }
     public int getRecipeID() {
         return recipeID;
     }
