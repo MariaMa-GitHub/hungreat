@@ -69,7 +69,7 @@ public class BrowseView extends JFrame implements ActionListener {
         dietInputDropdown = new CustomDropdownMenu(dietOptions).dropdown;
 
         dietInputDropdown.setEditable(true);
-        dietInputDropdown.setSelectedItem("Select/unselect from list.");
+        dietInputDropdown.setSelectedItem("Select/unselect from list");
         dietInputDropdown.setEditable(false);
 
         dietInputDropdown.addActionListener(this);
@@ -117,7 +117,7 @@ public class BrowseView extends JFrame implements ActionListener {
         intolerancesInputDropdown = new CustomDropdownMenu(intolerancesOptions).dropdown;
 
         intolerancesInputDropdown.setEditable(true);
-        intolerancesInputDropdown.setSelectedItem("Select/unselect from list.");
+        intolerancesInputDropdown.setSelectedItem("Select/unselect from list");
         intolerancesInputDropdown.setEditable(false);
 
         intolerancesInputDropdown.addActionListener(this);
