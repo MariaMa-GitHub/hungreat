@@ -19,7 +19,7 @@ import java.util.Objects;
 public class RecipeView extends JFrame {
 
     final JButton save;
-    final JButton delete;
+    final JButton Unsave;
     final JButton analyze;
     final JPanel recipeInfo;
     final JButton similar;
@@ -67,8 +67,8 @@ public class RecipeView extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        delete = new JButton("Delete Recipe");
-        recipeWindow.add(delete, gbc);
+        Unsave = new JButton("Unsave Recipe");
+        recipeWindow.add(Unsave, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -133,7 +133,6 @@ public class RecipeView extends JFrame {
                             //need a message box here
                             if (recipeID < 0) {
                                 JOptionPane.showMessageDialog(similar, "Similar recipes is not available for user created recipes.");
-                                return;
                             }
                             else{
                             getSimilarRecipesController.execute(recipeID);
@@ -156,11 +155,11 @@ public class RecipeView extends JFrame {
                     }
                 }
         );
-        delete.addActionListener(
+        Unsave.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(delete)) {
+                        if (evt.getSource().equals(Unsave)) {
 
                             // TODO chloe you need to pass in the nutrition data according to the corresponding id.
                             //need a message box here
