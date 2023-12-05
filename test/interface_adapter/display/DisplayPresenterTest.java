@@ -65,7 +65,7 @@ public class DisplayPresenterTest {
         DisplayInputBoundary interactor = new DisplayInteractor(temporaryRecipeDataAccessObject, successPresenter);
         DisplayController controller = new DisplayController(interactor);
         controller.execute(9);
-        assertEquals("Recipe dose not exist.", recipeViewModel.getRecipeString());
+        assertEquals("Recipe does not exist.", recipeViewModel.getRecipeString());
 
     }
 }
