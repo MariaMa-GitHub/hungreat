@@ -3,13 +3,11 @@ package app;
 import data_access.RecipeDataAccessObject;
 import data_access.SavedRecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
-import interface_adapter.AnalysisViewModel;
-import interface_adapter.DisplayViewModel;
-import interface_adapter.RecipeViewModel;
-import interface_adapter.SaveViewModel;
+import interface_adapter.*;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.create.CreateController;
+import interface_adapter.delete.DeleteController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
@@ -33,6 +31,7 @@ public class Main {
         RecipeViewModel recipeViewModel = new RecipeViewModel();
         AnalysisViewModel analysisViewModel = new AnalysisViewModel();
         SaveViewModel saveViewModel = new SaveViewModel();
+
 
 
         RecipeDataAccessObject dataAccessObject = null;
@@ -65,6 +64,7 @@ public class Main {
 
         SaveController saveController = SaveUseCaseFactory.create(saveViewModel, temporaryRecipeDataAccessObject, savedRecipeDataAccessObject);
 
+        DeleteController deleteController = DeleteUseCaseFactory.create(saveViewModel, temporaryRecipeDataAccessObject, savedRecipeDataAccessObject);
         HomeView homeView = new HomeView(
                 browseController,
                 recommendController,
@@ -76,7 +76,8 @@ public class Main {
                 recipeViewModel,
                 getSimilarRecipesController,
                 saveController,
-                saveViewModel);
+                saveViewModel,
+                deleteController);
 
         application.add(homeView);
 

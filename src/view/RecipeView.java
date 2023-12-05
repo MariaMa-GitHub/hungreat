@@ -4,6 +4,7 @@ import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
+import interface_adapter.delete.DeleteController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.save.SaveController;
 
@@ -11,12 +12,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Objects;
 
 
 public class RecipeView extends JFrame {
 
     final JButton save;
-    final JButton export;
+    final JButton delete;
     final JButton analyze;
     final JPanel recipeInfo;
     final JButton similar;
@@ -26,15 +29,17 @@ public class RecipeView extends JFrame {
     final AnalysisViewModel analysisViewModel;
 
     final GetSimilarRecipesController getSimilarRecipesController;
+    final DeleteController deleteController;
 
 
-    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController) {
+    public RecipeView(Integer recipeID, String recipeTitle, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController, DeleteController deleteController){
 
         this.recipeID = recipeID;
         this.recipeViewModel = recipeViewModel;
         this.setTitle(recipeTitle);
         this.analysisViewModel = analysisViewModel;
         this.getSimilarRecipesController = getSimilarRecipesController;
+        this.deleteController = deleteController;
 
         JPanel recipeWindow = new JPanel();
         recipeWindow.setLayout(new GridBagLayout());
@@ -62,8 +67,8 @@ public class RecipeView extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        export = new JButton("Export Recipe");
-        recipeWindow.add(export, gbc);
+        delete = new JButton("Delete Recipe");
+        recipeWindow.add(delete, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -141,6 +146,31 @@ public class RecipeView extends JFrame {
                             //need a message box here
                             saveController.execute(recipeID);
                             JOptionPane.showMessageDialog(null, saveViewModel.getSavedRecipes().get(recipeID) + " has been successfully saved.");
+                        }
+                    }
+                }
+        );
+        delete.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(delete)) {
+
+                            // TODO chloe you need to pass in the nutrition data according to the corresponding id.
+                            //need a message box here
+
+                            try {
+                                deleteController.execute(recipeID);
+                            } catch (IOException | ClassNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if(!Objects.equals(saveViewModel.getErrorForDelete(), "")) {
+                                JOptionPane.showMessageDialog(delete, "Successfully deleted.");
+                            }
+                            else{
+                                String message = saveViewModel.getErrorForDelete();
+                                JOptionPane.showMessageDialog(delete, message);
+                            }
                         }
                     }
                 }

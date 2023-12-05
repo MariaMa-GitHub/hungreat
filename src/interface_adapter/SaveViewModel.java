@@ -12,6 +12,7 @@ public class SaveViewModel {
 
     public SaveViewModel() {
         this.savedRecipes = new HashMap<>();
+        this.error = "";
     }
 
     public Map<Integer, String> getSavedRecipes() {
@@ -33,6 +34,9 @@ public class SaveViewModel {
     public void add(Integer recipeID, String title) {
         savedRecipes.put(recipeID, title);
     }
+    public void remove(Integer recipeID) {
+        savedRecipes.remove(recipeID);
+    }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
@@ -48,6 +52,14 @@ public class SaveViewModel {
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
+    }
+
+    public void setEorrorForDelete(String error) {
+        this.error = error;
+    }
+
+    public String getErrorForDelete() {
+        return this.error;
     }
 
 }
