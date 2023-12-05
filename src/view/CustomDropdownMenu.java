@@ -52,7 +52,7 @@ public class CustomDropdownMenu {
             Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
             // Customize background color of the dropdown list
-            c.setBackground(UIManager.getColor ( "Panel.background" ));
+            c.setBackground(UIManager.getColor("Panel.background"));
             c.setForeground(Color.DARK_GRAY);
             if (isSelected) {
                 c.setBackground(Color.LIGHT_GRAY);
