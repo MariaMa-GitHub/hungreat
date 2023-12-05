@@ -42,7 +42,7 @@ public class CreateView extends JFrame{
         this.analysisController = analysisController;
         this.analysisViewModel = analysisViewModel;
 
-        this.setTitle("Create");
+        this.setTitle("Create Recipe");
 
         JPanel createWindow = new JPanel();
         createWindow.setLayout(new GridBagLayout());
@@ -74,7 +74,7 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.ipadx = 600;
+        gbc.ipadx = 300;
 
         titleInput = new JTextField("");
         titleInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -104,7 +104,7 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.ipadx = 600;
+        gbc.ipadx = 300;
 
         servingsInput = new JTextField("");
         servingsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -134,7 +134,7 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 3;
-        gbc.ipadx = 600;
+        gbc.ipadx = 300;
 
         readyInMinutesInput = new JTextField("");
         readyInMinutesInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -164,8 +164,8 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 4;
-        gbc.ipadx = 600;
-        gbc.ipady = 150;
+        gbc.ipadx = 300;
+        gbc.ipady = 50;
 
         ingredientsInput = new JTextArea("");
         ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -197,8 +197,8 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.ipadx = 600;
-        gbc.ipady = 350;
+        gbc.ipadx = 300;
+        gbc.ipady = 150;
 
         instructionsInput = new JTextArea("");
         instructionsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -255,7 +255,7 @@ public class CreateView extends JFrame{
 
         this.add(createWindow);
 
-        this.setSize(900, 900);
+        this.setSize(800, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
