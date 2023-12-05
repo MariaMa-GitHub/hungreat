@@ -95,14 +95,15 @@ public class HomeView extends JPanel {
             noSavedRecipes.setVerticalAlignment(SwingConstants.CENTER);
             savedRecipesList.add(noSavedRecipes);
         } else {
-        for (int i = 0; i < saveViewModel.getSavedRecipes().size(); i++) {
 
-            JButton button = getjButton(new ArrayList<>(saveViewModel.getSavedRecipes().keySet()), saveViewModel.getSavedRecipes(), i, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
-            button.setPreferredSize(new Dimension(490, 100));
-            savedRecipesList.add(button);
+            for (int i = 0; i < saveViewModel.getSavedRecipes().size(); i++) {
 
+                JButton button = getjButton(new ArrayList<>(saveViewModel.getSavedRecipes().keySet()), saveViewModel.getSavedRecipes(), i, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
+                button.setPreferredSize(new Dimension(490, 100));
+                savedRecipesList.add(button);
+
+            }
         }
-    }
 
 
 

@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class NutritionData {
+public class NutritionData implements Serializable {
 
     private int recipeID;
     private Map<String, String> nutrients;

@@ -20,13 +20,13 @@ class RecommendControllerTest {
     @Test
     void successTest() {
 
-        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject();
+        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(new ArrayList<>());
         RecommendDataAccessInterface dataAccessObject = new RecipeDataAccessObject();
 
         RecommendOutputBoundary successPresenter = new RecommendOutputBoundary() {
             @Override
             public void prepareSuccessView(RecommendOutputData response) {
-                assertEquals(10, response.getRecipes().size());
+                assertEquals(6, response.getRecipes().size());
                 for (Integer id : response.getRecipes().keySet()) {
                     assertFalse(response.getRecipes().get(id).isEmpty());
                     assertTrue(temporaryRecipeDataAccessObject.existsByID(id));

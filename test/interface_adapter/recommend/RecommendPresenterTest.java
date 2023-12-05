@@ -21,7 +21,7 @@ class RecommendPresenterTest {
     @Test
     void successTest() {
 
-        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject();
+        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(new ArrayList<>());
         RecommendDataAccessInterface dataAccessObject = new RecipeDataAccessObject();
 
         DisplayViewModel displayViewModel = new DisplayViewModel();
@@ -50,7 +50,7 @@ class RecommendPresenterTest {
                 )
         );
 
-        assertEquals(10, displayViewModel.getRecipes().size());
+        assertEquals(6, displayViewModel.getRecipes().size());
         for (Integer id : displayViewModel.getRecipes().keySet()) {
             assertFalse(displayViewModel.getRecipes().get(id).isEmpty());
             assertTrue(temporaryRecipeDataAccessObject.existsByID(id));

@@ -1,9 +1,10 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class RecipeInfo {
+public class RecipeInfo implements Serializable {
 
     private int recipeID;
     private int servings;

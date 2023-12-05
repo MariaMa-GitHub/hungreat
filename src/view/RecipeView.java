@@ -140,7 +140,7 @@ public class RecipeView extends JFrame {
                         if (evt.getSource().equals(save)) {
                             //need a message box here
                             saveController.execute(recipeID);
-                            JOptionPane.showMessageDialog(save, saveViewModel.getSavedRecipes());
+                            JOptionPane.showMessageDialog(null, saveViewModel.getSavedRecipes().get(recipeID) + " has been successfully saved.");
                         }
                     }
                 }

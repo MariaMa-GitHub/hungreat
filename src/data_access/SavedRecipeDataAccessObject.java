@@ -12,9 +12,11 @@ import java.util.ArrayList;
  */
 
 public class SavedRecipeDataAccessObject implements SaveDataAccessInterface, CreateDataAccessInterface {
-    private ArrayList<Recipe> savedRecipes = new ArrayList<>();
+    private ArrayList<Recipe> savedRecipes;
 
     public SavedRecipeDataAccessObject() throws IOException, ClassNotFoundException {
+
+        this.savedRecipes = new ArrayList<>();
         this.read();
     }
 
