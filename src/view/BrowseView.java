@@ -11,6 +11,8 @@ import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.save.SaveController;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.metal.MetalComboBoxButton;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class BrowseView extends JFrame implements ActionListener {
         gbc.ipady = 10;
 
         String[] dietOptions = {"Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"};
-        dietInputDropdown = new JComboBox(dietOptions);
+        dietInputDropdown = new CustomDropdownMenu(dietOptions).dropdown;
 
         dietInputDropdown.setEditable(true);
         dietInputDropdown.setSelectedItem("Select/unselect from list.");
@@ -80,7 +82,7 @@ public class BrowseView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 3;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         dietInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
         dietInputDropdown.setForeground(Color.DARK_GRAY);
@@ -96,6 +98,15 @@ public class BrowseView extends JFrame implements ActionListener {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
+
+        dietInputDropdown.setOpaque(false);
+        dietInputDropdown.setEditable(true);
+        JTextField boxField1 = (JTextField) dietInputDropdown.getEditor().getEditorComponent();
+        boxField1.setBorder(BorderFactory.createEmptyBorder());
+        boxField1.setBackground(new Color(0, 0, 0, 0));
+        boxField1.setForeground(Color.DARK_GRAY);
+        boxField1.setFocusable(false);
+
         searchWindow.add(dietInputDropdown, gbc);
 
         // intolerances
@@ -105,12 +116,13 @@ public class BrowseView extends JFrame implements ActionListener {
         gbc.ipadx = 20;
 
         String[] intolerancesOptions = {"Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy", "Sulfite", "Tree Nut", "Wheat"};
-        intolerancesInputDropdown = new JComboBox(intolerancesOptions);
-        intolerancesInputDropdown.addActionListener(this);
+        intolerancesInputDropdown = new CustomDropdownMenu(intolerancesOptions).dropdown;
 
         intolerancesInputDropdown.setEditable(true);
         intolerancesInputDropdown.setSelectedItem("Select/unselect from list.");
         intolerancesInputDropdown.setEditable(false);
+
+        intolerancesInputDropdown.addActionListener(this);
 
         JLabel intolerances = new JLabel("Intolerances", SwingConstants.CENTER);
         intolerances.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -118,7 +130,7 @@ public class BrowseView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 4;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         intolerancesInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
         intolerancesInputDropdown.setForeground(Color.DARK_GRAY);
@@ -134,6 +146,15 @@ public class BrowseView extends JFrame implements ActionListener {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
+
+        intolerancesInputDropdown.setOpaque(false);
+        intolerancesInputDropdown.setEditable(true);
+        JTextField boxField2 = (JTextField) intolerancesInputDropdown.getEditor().getEditorComponent();
+        boxField2.setBorder(BorderFactory.createEmptyBorder());
+        boxField2.setBackground(new Color(0, 0, 0, 0));
+        boxField2.setForeground(Color.DARK_GRAY);
+        boxField2.setFocusable(false);
+
         searchWindow.add(intolerancesInputDropdown, gbc);
 
         // ingredients
@@ -148,7 +169,7 @@ public class BrowseView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         ingredientsInput = new PTextField("Separate fields by comma");
         ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -179,7 +200,7 @@ public class BrowseView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 6;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         excludeIngredientsInput = new PTextField("Separate fields by comma");
         excludeIngredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -210,7 +231,7 @@ public class BrowseView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 7;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         nutrientsInput = new PTextField("Separate fields (nutrient : range) by comma");
         nutrientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -240,7 +261,7 @@ public class BrowseView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 8;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         queryInput = new PTextField("Enter a keyword");
         queryInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -301,6 +322,9 @@ public class BrowseView extends JFrame implements ActionListener {
         this.setSize(600, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        search.requestFocusInWindow();
+
     }
 
     public ArrayList<String> getDietInput() {
@@ -379,6 +403,14 @@ public class BrowseView extends JFrame implements ActionListener {
             cb.setSelectedItem(String.join(", ", intolerances));
         }
         cb.setEditable(false);
+
+        cb.setOpaque(false);
+        cb.setEditable(true);
+        JTextField boxField = (JTextField) cb.getEditor().getEditorComponent();
+        boxField.setBorder(BorderFactory.createEmptyBorder());
+        boxField.setBackground(new Color(0, 0, 0, 0));
+        boxField.setForeground(Color.DARK_GRAY);
+        boxField.setFocusable(false);
     }
 }
 
