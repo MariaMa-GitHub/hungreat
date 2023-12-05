@@ -1,5 +1,6 @@
 package entity;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -7,8 +8,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class RecipeInfoTest {
-    private RecipeInfo info;
+    public RecipeInfo info;
+    @BeforeEach
     void init() {
         Collection<String> ingredients = new ArrayList<>();
         ingredients.add("apple");
@@ -20,38 +24,76 @@ public class RecipeInfoTest {
         info = new RecipeInfo(1, 2, 3, 4, ingredients, instructions);
     }
     @Test
-    void getRecipeID() {
+    void getId() {
+        assertEquals(1, info.getRecipeID());
     }
-
     @Test
     void getServings() {
+        assertEquals(2, info.getServings());
     }
 
     @Test
     void getReadyInMinutes() {
+        assertEquals(3, info.getReadyInMinutes());
     }
 
     @Test
     void getHealthScore() {
+        assertEquals(4, info.getHealthScore());
     }
 
     @Test
     void getIngredients() {
+        assertEquals("apple", info.getIngredients().toArray()[0]);
     }
 
     @Test
     void getInstructions() {
+        assertEquals("fried in pan.", info.getInstructions().toArray()[0]);
     }
 
     @Test
     void ingredientsToString() {
+        assertEquals("Apple" + "\n", info.ingredientsToString());
     }
 
     @Test
     void testToString() {
+        assertEquals("Servings:2" + "\n" +
+                "ReadyInMinutes:3" + "\n" +
+                "HealthScore:4" + "\n" +
+                "Ingredients:" + "\n" +
+                "Apple" + "\n" + "\n" +
+
+                "Instructions:" + "\n" +
+                "1: fried in pan." + "\n", info.toString());
     }
 
     @Test
     void instructionsToString() {
+        assertEquals("\n"+"1: fried in pan." + "\n", info.instructionsToString());
+    }
+
+    @Test
+    void RecipeInfoTest() {
+        RecipeInfo info = new RecipeInfo(1, 2, 3, 4, null, null);
+        assertEquals(1, info.getRecipeID());
+        assertEquals(2, info.getServings());
+        assertEquals(3, info.getReadyInMinutes());
+        assertEquals(4, info.getHealthScore());
+        assertEquals(null, info.getIngredients());
+    }
+
+    @Test
+    void RecipeInfoTest2() {
+        RecipeInfo info2 = new RecipeInfo(2, 3, info.getIngredients(), info.getInstructions());
+        assertEquals(-1, info2.getRecipeID());
+        assertEquals(2, info2.getServings());
+        assertEquals(3, info2.getReadyInMinutes());
+        assertEquals(-1, info2.getHealthScore());
+        Collection<String> ingredients = new ArrayList<>();
+        ingredients.add("apple");
+        assertEquals(ingredients, info2.getIngredients());;
+        assertEquals(true, info2.isUserCreatedRecipe());
     }
 }

@@ -3,6 +3,7 @@ package interface_adapter;
 import data_access.TemporaryRecipeDataAccessObject;
 import entity.NutritionData;
 import entity.Recipe;
+import entity.RecipeInfo;
 import entity.RecipeInfoTest;
 import interface_adapter.display.DisplayController;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ public class DisplayControllerTest {
         Map<String, String> nutrients = new HashMap<>();
         nutrients.put("key", "value");
         NutritionData nutrition = new NutritionData(9, nutrients);
-        RecipeInfoTest info = new RecipeInfoTest(1, 2, 3, 4, ingredients, instructions);
+        RecipeInfo info = new RecipeInfo(1, 2, 3, 4, ingredients, instructions);
         Recipe giveRecipe = new Recipe(9, "title", "url", "imageUrl", info, nutrition);
         ArrayList<Recipe> savedRecipes = new ArrayList<>();
         savedRecipes.add(giveRecipe);
@@ -54,7 +55,7 @@ public class DisplayControllerTest {
         Map<String, String> nutrients = new HashMap<>();
         nutrients.put("key", "value");
         NutritionData nutrition = new NutritionData(9, nutrients);
-        RecipeInfoTest info = new RecipeInfoTest(1, 2, 3, 4, ingredients, instructions);
+        RecipeInfo info = new RecipeInfo(1, 2, 3, 4, ingredients, instructions);
         Recipe recipe = new Recipe(0, "title", "url", "imageUrl", info, nutrition);
         ArrayList<Recipe> savedRecipes = new ArrayList<>();
         savedRecipes.add(recipe);

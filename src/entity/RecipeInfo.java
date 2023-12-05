@@ -24,10 +24,11 @@ public class RecipeInfo {
         this.isUserCreatedRecipe = false;
     }
 
+
     public RecipeInfo(int servings, int readyInMinutes,
                       Collection<String> ingredients, Collection<String> instructions) {
 
-        //This constructor is only for user-created recipes
+
         this.recipeID = userCreatedRecipeID;
         userCreatedRecipeID--;
         this.servings = servings;
@@ -38,6 +39,9 @@ public class RecipeInfo {
         this.isUserCreatedRecipe = true;
     }
 
+    public boolean isUserCreatedRecipe() {
+        return isUserCreatedRecipe;
+    }
     public int getRecipeID() {
         return recipeID;
     }

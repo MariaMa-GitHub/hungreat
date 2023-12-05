@@ -27,7 +27,51 @@ public class RecipeTest {
         savedRecipes.add(giveRecipe);
         recipe = giveRecipe;
     }
+    @Test
+    void getId() {
+        assertEquals(9, recipe.getID());
+    }
 
+    @Test
+    void getTitle() {
+        assertEquals("title", recipe.getTitle());
+    }
 
+    @Test
+    void getUrl() {
+        assertEquals("url", recipe.getUrl());
+    }
 
+    @Test
+    void getImageUrl() {
+        assertEquals("imageUrl", recipe.getImageUrl());
+    }
+
+    @Test
+    void getInfo() {
+        assertEquals("Apple" + "\n", recipe.getInfo().ingredientsToString());
+    }
+
+    @Test
+    void getNutrition() {
+        assertEquals("value", recipe.getNutrition().getNutrients().get("key"));
+    }
+
+    @Test
+    void testToString() {
+        assertEquals( "title" + "\n" +
+                "Servings:2" + "\n" +
+                "ReadyInMinutes:3" + "\n" +
+                "HealthScore:4" + "\n" +
+                "Ingredients:" + "\n" +
+                "Apple" + "\n" + "\n" +
+                "Instructions:" + "\n" +
+                "1: fried in pan." + "\n", recipe.toString());
+    }
+
+    @Test
+    void nutritionToString() {
+        assertEquals(
+                "key: value" + "\n", recipe.nutritionToString());
+    }
 }
