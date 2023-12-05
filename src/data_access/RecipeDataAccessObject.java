@@ -28,6 +28,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
 
     public ArrayList<Recipe> browse(BrowseFilter browseFilter) {
         String url = getBrowseUrl(browseFilter);
+        System.out.println(url);
         return complexSearch(url);
     }
 

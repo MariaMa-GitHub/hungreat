@@ -12,7 +12,7 @@ public class RecipeInfo implements Serializable {
     private int healthScore;
     private Collection<String> ingredients;
     private Collection<String> instructions;
-    private boolean isUserCreatedRecipe;
+    private final boolean isUserCreatedRecipe;
     private static int userCreatedRecipeID = -1;
 
     public RecipeInfo(int recipeID, int servings, int readyInMinutes, int healthScore, Collection<String> ingredients, Collection<String> instructions) {
@@ -29,7 +29,6 @@ public class RecipeInfo implements Serializable {
                       Collection<String> ingredients, Collection<String> instructions) {
 
         //This constructor is only for user-created recipes
-        //TO Chloe: toString for user=-created recipe should NOT contain health score
         this.recipeID = userCreatedRecipeID;
         userCreatedRecipeID--;
         this.servings = servings;
@@ -76,8 +75,14 @@ public class RecipeInfo implements Serializable {
     @Override
     public String toString() {
         //TODO update to string for user-created recipes (Michelle)
-        return "Servings:"+ servings + "\n" + "ReadyInMinutes:" + readyInMinutes + "\n" + "HealthScore:" + healthScore
-                + "\n" + "Ingredients:" + "\n" + ingredientsToString() + "\n" + "Instructions:" + instructionsToString();
+        //TO Chloe: toString for user-created recipe should NOT contain health score
+        if (!this.isUserCreatedRecipe) {
+            return "Servings:"+ servings + "\n" + "ReadyInMinutes:" + readyInMinutes + "\n" + "HealthScore:" + healthScore
+                    + "\n" + "Ingredients:" + "\n" + ingredientsToString() + "\n" + "Instructions:" + instructionsToString();
+        } else {    // this.isUserCreatedRecipe == true
+            return "Servings:"+ servings + "\n" + "ReadyInMinutes:" + readyInMinutes + "\n" + "Ingredients:"
+                    + "\n" + ingredientsToString() + "\n" + "Instructions:" + instructionsToString();
+        }
     }
 
     public String instructionsToString(){

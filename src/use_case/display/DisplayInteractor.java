@@ -17,10 +17,17 @@ public class DisplayInteractor implements DisplayInputBoundary{
     }
 
     @Override
-    public void execute(DisplayInputData displayInputData) {
+    public void execute(DisplayInputData displayInputData){
+
         Integer recipeID =  displayInputData.getRecipeID();
         Recipe recipe = temporaryRecipeDataAccessObject.getFromID(recipeID);
+        if (recipe != null){
         DisplayOutputData displayOutputData = new DisplayOutputData(recipe.toString());
-        displayPresenter.prepareView(displayOutputData);
+        displayPresenter.prepareView(displayOutputData);}
+
+        else{
+        DisplayOutputData displayOutputData = new DisplayOutputData("Recipe dose not exist.");
+        displayPresenter.prepareView(displayOutputData);}
+
     }
 }

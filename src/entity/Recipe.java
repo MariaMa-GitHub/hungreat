@@ -15,7 +15,7 @@ public class Recipe implements Serializable {
     private RecipeInfo info;
     private NutritionData nutrition;
     private Collection<Recipe> similarRecipes;
-    private boolean isUserCreatedRecipe;
+    private final boolean isUserCreatedRecipe;
 
 
     public Recipe(int ID, String title, String url, String imageUrl, RecipeInfo info, NutritionData nutrition) {
@@ -30,8 +30,6 @@ public class Recipe implements Serializable {
 
     public Recipe(int id, String title, RecipeInfo info) {
         //This constructor is only for user-created recipes
-        // TO Chloe: toString for user-created recipe should be the same as normal recipes,
-        // but it does not have nutrition so no analyze feature.
         this.ID = id;
         this.title = title;
         this.info = info;
@@ -73,17 +71,23 @@ public class Recipe implements Serializable {
 
     @Override
     public String toString(){
+        // TO Chloe: toString for user-created recipe should be the same as normal recipes,
+        // but it does not have nutrition so no analyze feature.
         return title + "\n" + info.toString();
     }
     // TODO Wright a toString method prepare for analysis.
     // TODO: update toString for user-created recipes (Michelle)
     public String nutritionToString(){
-        StringBuilder nutritions = new StringBuilder();
-       for (Map.Entry<String, String> entry : nutrition.getNutrients().entrySet()){
-           String key = entry.getKey();
-           String value = entry.getValue();
-           nutritions.append(key).append(": ").append(value).append("\n");
-       }
-        return nutritions.toString();
+        if (!this.isUserCreatedRecipe) {
+            StringBuilder nutritions = new StringBuilder();
+            for (Map.Entry<String, String> entry : nutrition.getNutrients().entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                nutritions.append(key).append(": ").append(value).append("\n");
+            }
+            return nutritions.toString();
+        } else{     // this.isUserCreatedRecipes == true
+            return "The analyzing option is not available for user-created recipes.";
+        }
     }
 }
