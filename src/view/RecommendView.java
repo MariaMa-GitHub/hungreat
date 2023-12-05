@@ -73,7 +73,7 @@ public class RecommendView extends JFrame implements ActionListener {
         cuisineInputDropdown = new CustomDropdownMenu(cuisineOptions).dropdown;
 
         cuisineInputDropdown.setEditable(true);
-        cuisineInputDropdown.setSelectedItem("Select/unselect from list.");
+        cuisineInputDropdown.setSelectedItem("Select/unselect from list");
         cuisineInputDropdown.setEditable(false);
 
         cuisineInputDropdown.addActionListener(this);
@@ -120,7 +120,7 @@ public class RecommendView extends JFrame implements ActionListener {
         excludeCuisineInputDropdown = new CustomDropdownMenu(excludeCuisineOptions).dropdown;
 
         excludeCuisineInputDropdown.setEditable(true);
-        excludeCuisineInputDropdown.setSelectedItem("Select/unselect from list.");
+        excludeCuisineInputDropdown.setSelectedItem("Select/unselect from list");
         excludeCuisineInputDropdown.setEditable(false);
 
         excludeCuisineInputDropdown.addActionListener(this);
@@ -216,7 +216,7 @@ public class RecommendView extends JFrame implements ActionListener {
         intolerancesInputDropdown = new CustomDropdownMenu(intolerancesOptions).dropdown;
 
         intolerancesInputDropdown.setEditable(true);
-        intolerancesInputDropdown.setSelectedItem("Select/unselect from list.");
+        intolerancesInputDropdown.setSelectedItem("Select/unselect from list");
         intolerancesInputDropdown.setEditable(false);
 
         intolerancesInputDropdown.addActionListener(this);
