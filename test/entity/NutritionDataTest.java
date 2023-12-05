@@ -24,12 +24,12 @@ public class NutritionDataTest {
     }
 
     @Test
-    void getRecipeID() {
+    void getRecipeIDTest() {
         assertEquals(9, nutrition.getRecipeID());
     }
 
     @Test
-    void getNutrients() {
+    void getNutrientsTest() {
         assertEquals("value", nutrition.getNutrients().get("key"));
     }
 }

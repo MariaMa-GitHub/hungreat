@@ -24,41 +24,41 @@ public class RecipeInfoTest {
         info = new RecipeInfo(1, 2, 3, 4, ingredients, instructions);
     }
     @Test
-    void getId() {
+    void getIdTest() {
         assertEquals(1, info.getRecipeID());
     }
     @Test
-    void getServings() {
+    void getServingsTest() {
         assertEquals(2, info.getServings());
     }
 
     @Test
-    void getReadyInMinutes() {
+    void getReadyInMinutesTest() {
         assertEquals(3, info.getReadyInMinutes());
     }
 
     @Test
-    void getHealthScore() {
+    void getHealthScoreTest() {
         assertEquals(4, info.getHealthScore());
     }
 
     @Test
-    void getIngredients() {
+    void getIngredientsTest() {
         assertEquals("apple", info.getIngredients().toArray()[0]);
     }
 
     @Test
-    void getInstructions() {
+    void getInstructionsTest() {
         assertEquals("fried in pan.", info.getInstructions().toArray()[0]);
     }
 
     @Test
-    void ingredientsToString() {
+    void ingredientsToStringTest() {
         assertEquals("Apple" + "\n", info.ingredientsToString());
     }
 
     @Test
-    void testToString() {
+    void toStringTest() {
         assertEquals("Servings:2" + "\n" +
                 "ReadyInMinutes:3" + "\n" +
                 "HealthScore:4" + "\n" +
@@ -70,7 +70,19 @@ public class RecipeInfoTest {
     }
 
     @Test
-    void instructionsToString() {
+    void userCreatedRecipeToStringTest() {
+        RecipeInfo info2 = new RecipeInfo(2, 3, info.getIngredients(), info.getInstructions());
+        assertEquals("Servings:2" + "\n" +
+                "ReadyInMinutes:3" + "\n" +
+                "Ingredients:" + "\n" +
+                "Apple" + "\n" + "\n" +
+
+                "Instructions:" + "\n" +
+                "1: fried in pan." + "\n", info2.toString());
+    }
+
+    @Test
+    void instructionsToStringTest() {
         assertEquals("\n"+"1: fried in pan." + "\n", info.instructionsToString());
     }
 
@@ -87,7 +99,7 @@ public class RecipeInfoTest {
     @Test
     void RecipeInfoTest2() {
         RecipeInfo info2 = new RecipeInfo(2, 3, info.getIngredients(), info.getInstructions());
-        assertEquals(-1, info2.getRecipeID());
+        assert (info2.getUserCreatedRecipeID() < 0);
         assertEquals(2, info2.getServings());
         assertEquals(3, info2.getReadyInMinutes());
         assertEquals(-1, info2.getHealthScore());
@@ -96,4 +108,10 @@ public class RecipeInfoTest {
         assertEquals(ingredients, info2.getIngredients());;
         assertEquals(true, info2.isUserCreatedRecipe());
     }
+
+    @Test
+    void isUserCreatedRecipeTest(){
+        assertEquals(false, info.isUserCreatedRecipe());
+    }
+
 }

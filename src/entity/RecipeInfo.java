@@ -27,8 +27,6 @@ public class RecipeInfo {
 
     public RecipeInfo(int servings, int readyInMinutes,
                       Collection<String> ingredients, Collection<String> instructions) {
-
-
         this.recipeID = userCreatedRecipeID;
         userCreatedRecipeID--;
         this.servings = servings;
@@ -36,11 +34,13 @@ public class RecipeInfo {
         this.ingredients = ingredients;
         this.instructions = instructions;
         this.healthScore = -1;
-        this.isUserCreatedRecipe = true;
-    }
+        this.isUserCreatedRecipe = true;}
 
     public boolean isUserCreatedRecipe() {
-        return isUserCreatedRecipe;
+        return isUserCreatedRecipe;}
+
+    public static int getUserCreatedRecipeID() {
+        return userCreatedRecipeID;
     }
     public int getRecipeID() {
         return recipeID;
