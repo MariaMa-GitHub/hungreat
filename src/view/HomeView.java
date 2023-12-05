@@ -225,7 +225,8 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                 for (int i = 0; i < this.savedRecipes.size(); i++) {
 
                     JButton button = getjButton(new ArrayList<>(this.savedRecipes.keySet()), this.savedRecipes, i, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveController, saveViewModel);
-                    button.setPreferredSize(new Dimension(490, 100));
+                    button.setPreferredSize(new Dimension(490, 20));
+                    button.setMaximumSize(new Dimension(490, 20));
                     savedRecipesList.add(button);
 
                 }
