@@ -12,9 +12,11 @@ import java.util.ArrayList;
  */
 
 public class SavedRecipeDataAccessObject implements SaveDataAccessInterface, CreateDataAccessInterface {
-    private ArrayList<Recipe> savedRecipes = new ArrayList<>();
+    private ArrayList<Recipe> savedRecipes;
 
     public SavedRecipeDataAccessObject() throws IOException, ClassNotFoundException {
+
+        this.savedRecipes = new ArrayList<>();
         this.read();
     }
 
@@ -41,7 +43,6 @@ public class SavedRecipeDataAccessObject implements SaveDataAccessInterface, Cre
             ObjectInputStream ois = new ObjectInputStream(fis);
             ArrayList<Recipe> previouslySavedRecipes = (ArrayList<Recipe>) ois.readObject(); // down-casting object
             savedRecipes = previouslySavedRecipes;
-
             // closing streams
             ois.close();
         } catch (IOException e) {

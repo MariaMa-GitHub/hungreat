@@ -13,6 +13,7 @@ import interface_adapter.create.CreateController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
+import interface_adapter.save.SaveController;
 import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.getSimilarRecipes.GetSimilarRecipesDataAccessInterface;
 import view.HomeView;
@@ -62,6 +63,8 @@ public class Main {
 
         CreateController createController = CreateUseCaseFactory.create(savedRecipeDataAccessObject, saveViewModel);
 
+        SaveController saveController = SaveUseCaseFactory.create(saveViewModel, temporaryRecipeDataAccessObject, savedRecipeDataAccessObject);
+
         HomeView homeView = new HomeView(
                 browseController,
                 recommendController,
@@ -71,7 +74,9 @@ public class Main {
                 displayViewModel,
                 displayController,
                 recipeViewModel,
-                getSimilarRecipesController);
+                getSimilarRecipesController,
+                saveController,
+                saveViewModel);
 
 
         application.add(homeView);

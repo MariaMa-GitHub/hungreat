@@ -3,10 +3,12 @@ package view;
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
+import interface_adapter.save.SaveController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +33,7 @@ public class RecommendView extends JFrame {
     private final DisplayController displayController;
     private final RecipeViewModel recipeViewModel;
 
-    public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController,GetSimilarRecipesController getSimilarRecipesController) {
+    public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController) {
 
         this.recommendController = recommendController;
         this.displayViewModel = displayViewModel;
@@ -303,7 +305,7 @@ public class RecommendView extends JFrame {
                                 getNutrientsInput()
                         );
 
-                        DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController);
+                        DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
 
                         JComponent comp = (JComponent) evt.getSource();
                         Window win = SwingUtilities.getWindowAncestor(comp);
