@@ -57,7 +57,7 @@ public class CreateView extends JFrame{
         gbc.gridwidth = 2;
         gbc.ipady = 50;
 
-        JLabel pageTitle = new JLabel("Create a Customized Recipe", SwingConstants.CENTER);
+        JLabel pageTitle = new JLabel("Create Customized Recipe", SwingConstants.CENTER);
         pageTitle.setFont(new Font("Helvetica", Font.BOLD, 24));
         createWindow.add(pageTitle, gbc);
 
@@ -74,7 +74,7 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.ipadx = 300;
+        gbc.ipadx = 400;
 
         titleInput = new JTextField("");
         titleInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -96,6 +96,7 @@ public class CreateView extends JFrame{
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.ipadx = 20;
+        gbc.insets = new Insets(5,5,5,5);
 
         // servings (input field)
         JLabel servings = new JLabel("Servings", SwingConstants.CENTER);
@@ -104,7 +105,8 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.ipadx = 300;
+        gbc.ipadx = 400;
+
 
         servingsInput = new JTextField("");
         servingsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -127,6 +129,7 @@ public class CreateView extends JFrame{
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.ipadx = 20;
+        gbc.insets = new Insets(5,5,5,5);
 
         JLabel readyInMinutes = new JLabel("Cooking Time", SwingConstants.CENTER);
         readyInMinutes.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -134,7 +137,8 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 3;
-        gbc.ipadx = 300;
+        gbc.ipadx = 400;
+
 
         readyInMinutesInput = new JTextField("");
         readyInMinutesInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -157,6 +161,7 @@ public class CreateView extends JFrame{
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.ipadx = 20;
+        gbc.insets = new Insets(5,5,5,5);
 
         JLabel ingredients = new JLabel("Ingredients", SwingConstants.CENTER);
         ingredients.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -164,8 +169,9 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 4;
-        gbc.ipadx = 300;
+        gbc.ipadx = 400;
         gbc.ipady = 50;
+
 
         ingredientsInput = new JTextArea("");
         ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -183,6 +189,8 @@ public class CreateView extends JFrame{
                 )
         );
         JScrollPane ingredientsScrollPane = new JScrollPane(ingredientsInput);
+        ingredientsScrollPane.getViewport().setBackground(UIManager.getColor("Panel.background"));
+        ingredientsScrollPane.setBorder(BorderFactory.createEmptyBorder());
         createWindow.add(ingredientsScrollPane, gbc);
 
         // instructions (input field)
@@ -190,6 +198,7 @@ public class CreateView extends JFrame{
         gbc.gridy = 5;
         gbc.ipadx = 20;
         gbc.ipady = 10;
+        gbc.insets = new Insets(5,5,5,5);
 
         JLabel instructions = new JLabel("Instructions", SwingConstants.CENTER);
         instructions.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -197,8 +206,9 @@ public class CreateView extends JFrame{
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.ipadx = 300;
-        gbc.ipady = 150;
+        gbc.ipadx = 400;
+        gbc.ipady = 100;
+
 
         instructionsInput = new JTextArea("");
         instructionsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -216,6 +226,8 @@ public class CreateView extends JFrame{
                 )
         );
         JScrollPane instructionsScrollPane = new JScrollPane(instructionsInput);
+        instructionsScrollPane.getViewport().setBackground(UIManager.getColor("Panel.background"));
+        instructionsScrollPane.setBorder(BorderFactory.createEmptyBorder());
         createWindow.add(instructionsScrollPane, gbc);
 
         // save button
@@ -224,7 +236,8 @@ public class CreateView extends JFrame{
         gbc.ipady = 30;
         gbc.ipadx = 50;
         gbc.gridwidth = 2;
-        gbc.insets = new Insets(30, 400, 30, 400);
+        gbc.insets = new Insets(5,5,5,5);
+//        gbc.insets = new Insets(30, 400, 30, 400);
 
         JButton save = new JButton("Save");
         save.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -255,9 +268,12 @@ public class CreateView extends JFrame{
 
         this.add(createWindow);
 
-        this.setSize(800, 600);
+        this.setSize(600, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        save.requestFocusInWindow();
+
     }
 
     public String getTitleInput() {
