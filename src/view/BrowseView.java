@@ -18,13 +18,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BrowseView extends JFrame {
-    final JTextField dietInput;
-    final JTextField intolerancesInput;
+public class BrowseView extends JFrame implements ActionListener {
+//    final JTextField dietInput;
+    final JComboBox dietInputDropdown;
+    final JComboBox intolerancesInputDropdown;
     final JTextField ingredientsInput;
     final JTextField excludeIngredientsInput;
     final JTextField nutrientsInput;
     final JTextField queryInput;
+    private ArrayList<String> diet = new ArrayList<>();
+    private ArrayList<String> intolerances = new ArrayList<>();
 
     private final BrowseController controller;
     private final DisplayViewModel displayViewModel;
@@ -62,6 +65,15 @@ public class BrowseView extends JFrame {
         gbc.ipadx = 20;
         gbc.ipady = 10;
 
+        String[] dietOptions = {"Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"};
+        dietInputDropdown = new JComboBox(dietOptions);
+
+        dietInputDropdown.setEditable(true);
+        dietInputDropdown.setSelectedItem("Select/unselect from list.");
+        dietInputDropdown.setEditable(false);
+
+        dietInputDropdown.addActionListener(this);
+
         JLabel diet = new JLabel("Preferred Diet", SwingConstants.CENTER);
         diet.setFont(new Font("Arial", Font.PLAIN, 18));
         searchWindow.add(diet, gbc);
@@ -70,11 +82,10 @@ public class BrowseView extends JFrame {
         gbc.gridy = 3;
         gbc.ipadx = 350;
 
-        dietInput = new PTextField("Separate fields by comma");
-        dietInput.setFont(new Font("Arial", Font.PLAIN, 18));
-        dietInput.setForeground(Color.DARK_GRAY);
-        dietInput.setOpaque(false);
-        dietInput.setBorder(
+        dietInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
+        dietInputDropdown.setForeground(Color.DARK_GRAY);
+        dietInputDropdown.setOpaque(false);
+        dietInputDropdown.setBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createTitledBorder(
                                 null, "",
@@ -85,13 +96,21 @@ public class BrowseView extends JFrame {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
-        searchWindow.add(dietInput, gbc);
+        searchWindow.add(dietInputDropdown, gbc);
 
         // intolerances
 
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.ipadx = 20;
+
+        String[] intolerancesOptions = {"Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy", "Sulfite", "Tree Nut", "Wheat"};
+        intolerancesInputDropdown = new JComboBox(intolerancesOptions);
+        intolerancesInputDropdown.addActionListener(this);
+
+        intolerancesInputDropdown.setEditable(true);
+        intolerancesInputDropdown.setSelectedItem("Select/unselect from list.");
+        intolerancesInputDropdown.setEditable(false);
 
         JLabel intolerances = new JLabel("Intolerances", SwingConstants.CENTER);
         intolerances.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -101,11 +120,10 @@ public class BrowseView extends JFrame {
         gbc.gridy = 4;
         gbc.ipadx = 350;
 
-        intolerancesInput = new PTextField("Separate fields by comma");
-        intolerancesInput.setFont(new Font("Arial", Font.PLAIN, 18));
-        intolerancesInput.setForeground(Color.DARK_GRAY);
-        intolerancesInput.setOpaque(false);
-        intolerancesInput.setBorder(
+        intolerancesInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
+        intolerancesInputDropdown.setForeground(Color.DARK_GRAY);
+        intolerancesInputDropdown.setOpaque(false);
+        intolerancesInputDropdown.setBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createTitledBorder(
                                 null, "",
@@ -116,7 +134,7 @@ public class BrowseView extends JFrame {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
-        searchWindow.add(intolerancesInput, gbc);
+        searchWindow.add(intolerancesInputDropdown, gbc);
 
         // ingredients
 
@@ -286,21 +304,11 @@ public class BrowseView extends JFrame {
     }
 
     public ArrayList<String> getDietInput() {
-        String text = dietInput.getText().strip();
-        if (text.equals("Separate fields by comma")) {
-            text = "";
-        }
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        return inputs;
+        return diet;
     }
 
     public ArrayList<String> getIntolerancesInput() {
-        String text = intolerancesInput.getText().strip();
-        if (text.equals("Separate fields by comma")) {
-            text = "";
-        }
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        return inputs;
+        return intolerances;
     }
 
     public ArrayList<String> getIngredientsInput() {
@@ -345,6 +353,32 @@ public class BrowseView extends JFrame {
             text = "";
         }
         return text;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JComboBox cb = (JComboBox) e.getSource();
+        String selectedItem = (String) cb.getSelectedItem();
+        cb.setEditable(true);
+        if (cb.equals(dietInputDropdown)) {
+            if (diet.contains(selectedItem)) {
+                diet.remove(selectedItem);
+            }
+            else {
+                diet.add(selectedItem);
+            }
+            cb.setSelectedItem(String.join(", ", diet));
+        }
+        else if (cb.equals(intolerancesInputDropdown)) {
+            if (intolerances.contains(selectedItem)) {
+                intolerances.remove(selectedItem);
+            }
+            else {
+                intolerances.add(selectedItem);
+            }
+            cb.setSelectedItem(String.join(", ", intolerances));
+        }
+        cb.setEditable(false);
     }
 }
 
