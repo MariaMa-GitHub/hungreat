@@ -5,7 +5,6 @@ import use_case.recommend.RecommendInputBoundary;
 import use_case.recommend.RecommendInputData;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class RecommendController implements SearchController {

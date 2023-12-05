@@ -2,21 +2,16 @@ package view;
 
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
-import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.create.CreateController;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.display.DisplayController;
-import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
-import interface_adapter.save.SaveController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CreateView extends JFrame{
     final JTextField titleInput;
