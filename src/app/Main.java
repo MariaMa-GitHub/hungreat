@@ -61,7 +61,7 @@ public class Main {
 
         GetSimilarRecipesController getSimilarRecipesController = GetSimilarRecipesUseCaseFactory.create(recipeDataAccessObject, recipeViewModel);
 
-        CreateController createController = CreateUseCaseFactory.create(savedRecipeDataAccessObject, saveViewModel);
+        CreateController createController = CreateUseCaseFactory.create(savedRecipeDataAccessObject, saveViewModel, temporaryRecipeDataAccessObject);
 
         SaveController saveController = SaveUseCaseFactory.create(saveViewModel, temporaryRecipeDataAccessObject, savedRecipeDataAccessObject);
 
@@ -77,7 +77,6 @@ public class Main {
                 getSimilarRecipesController,
                 saveController,
                 saveViewModel);
-
 
         application.add(homeView);
 

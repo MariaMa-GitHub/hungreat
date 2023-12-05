@@ -4,6 +4,7 @@ import entity.Recipe;
 import entity.RecipeFactory;
 import entity.RecipeInfo;
 import entity.RecipeInfoFactory;
+import use_case.TemporaryRecipeDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,15 +16,19 @@ public class CreateInteractor implements CreateInputBoundary {
     final RecipeFactory recipeFactory;
     final RecipeInfoFactory recipeInfoFactory;
 
+    final TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject;
+
     public CreateInteractor(
             CreateDataAccessInterface dataAccessObject,
             CreateOutputBoundary createPresenter,
             RecipeFactory recipeFactory,
-            RecipeInfoFactory recipeInfoFactory) {
+            RecipeInfoFactory recipeInfoFactory,
+            TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject) {
         this.dataAccessObject = dataAccessObject;
         this.createPresenter = createPresenter;
         this.recipeFactory = recipeFactory;
         this.recipeInfoFactory = recipeInfoFactory;
+        this.temporaryRecipeDataAccessObject = temporaryRecipeDataAccessObject;
     }
 
     public void execute(CreateInputData createInputData) {
@@ -45,6 +50,7 @@ public class CreateInteractor implements CreateInputBoundary {
 
             try {
                 dataAccessObject.save(recipe);
+                temporaryRecipeDataAccessObject.storeRecipe(recipe);
             } catch (IOException | ClassNotFoundException e) {
                 createPresenter.prepareFailView("Unable to Save.");
                 //TODO update after exceptions in savedDAO has been handled

@@ -21,13 +21,12 @@ public class DisplayInteractor implements DisplayInputBoundary{
 
         Integer recipeID =  displayInputData.getRecipeID();
         Recipe recipe = temporaryRecipeDataAccessObject.getFromID(recipeID);
-        if (recipe != null){
-        DisplayOutputData displayOutputData = new DisplayOutputData(recipe.toString());
-        displayPresenter.prepareView(displayOutputData);}
-
+        if (recipe != null) {
+            DisplayOutputData displayOutputData = new DisplayOutputData(recipe.toString());
+            displayPresenter.prepareView(displayOutputData);
+        }
         else{
-        DisplayOutputData displayOutputData = new DisplayOutputData("Recipe dose not exist.");
-        displayPresenter.prepareView(displayOutputData);}
-
-    }
+            DisplayOutputData displayOutputData = new DisplayOutputData("Recipe does not exist.");
+            displayPresenter.prepareView(displayOutputData);}
+        }
 }
