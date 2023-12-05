@@ -69,8 +69,10 @@ public class RecipeInfo implements Serializable {
 
     public  String ingredientsToString() {
         String ingredientString = "";
+        Integer i = 1;
         for (String item : ingredients) {
-            ingredientString += item.substring(0, 1).toUpperCase() + item.substring(1) +"\n";
+            ingredientString += i.toString() + ":" + item.substring(0, 1).toUpperCase() + item.substring(1) +"\n";
+            i++;
         }
         return ingredientString;
     }

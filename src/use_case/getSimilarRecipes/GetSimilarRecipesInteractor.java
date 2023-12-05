@@ -36,10 +36,8 @@ public class GetSimilarRecipesInteractor implements GetSimilarRecipesInputBounda
             getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
         }
         catch (Exception e){
-            String errorMessage = e.getMessage();
-            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData(errorMessage);
-
-            getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
+            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData("Get similar recipes is not available for user created recipes.");
+                    getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
         }
     }
 }
