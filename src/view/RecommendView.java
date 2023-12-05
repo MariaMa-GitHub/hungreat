@@ -16,15 +16,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RecommendView extends JFrame {
-
-    final JTextField cuisineInput;
-    final JTextField excludeCuisineInput;
-    final JTextField dietInput;
-    final JTextField intolerancesInput;
+public class RecommendView extends JFrame implements ActionListener {
     final JTextField ingredientsInput;
     final JTextField excludeIngredientsInput;
     final JTextField nutrientsInput;
+    private final JComboBox cuisineInputDropdown;
+    private final JComboBox excludeCuisineInputDropdown;
+    private final JComboBox dietInputDropdown;
+    private final JComboBox intolerancesInputDropdown;
+    private ArrayList<String> cuisine = new ArrayList<>();
+    private ArrayList<String> excludeCuisine = new ArrayList<>();
+    private ArrayList<String> diet = new ArrayList<>();
+    private ArrayList<String> intolerances = new ArrayList<>();
 
     private final RecommendController recommendController;
     private final DisplayViewModel displayViewModel;
@@ -66,19 +69,27 @@ public class RecommendView extends JFrame {
         gbc.ipadx = 20;
         gbc.ipady = 10;
 
+        String[] cuisineOptions = {"African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European", "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish", "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai", "Vietnamese"};
+        cuisineInputDropdown = new CustomDropdownMenu(cuisineOptions).dropdown;
+
+        cuisineInputDropdown.setEditable(true);
+        cuisineInputDropdown.setSelectedItem("Select/unselect from list.");
+        cuisineInputDropdown.setEditable(false);
+
+        cuisineInputDropdown.addActionListener(this);
+
         JLabel cuisine = new JLabel("Include Cuisine", SwingConstants.CENTER);
         cuisine.setFont(new Font("Arial", Font.PLAIN, 18));
         searchWindow.add(cuisine, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
-        cuisineInput = new PTextField("Separate fields by comma");
-        cuisineInput.setFont(new Font("Arial", Font.PLAIN, 18));
-        cuisineInput.setForeground(Color.DARK_GRAY);
-        cuisineInput.setOpaque(false);
-        cuisineInput.setBorder(
+        cuisineInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
+        cuisineInputDropdown.setForeground(Color.DARK_GRAY);
+        cuisineInputDropdown.setOpaque(false);
+        cuisineInputDropdown.setBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createTitledBorder(
                                 null, "",
@@ -89,13 +100,30 @@ public class RecommendView extends JFrame {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
-        searchWindow.add(cuisineInput, gbc);
 
+        cuisineInputDropdown.setOpaque(false);
+        cuisineInputDropdown.setEditable(true);
+        JTextField boxField1 = (JTextField) cuisineInputDropdown.getEditor().getEditorComponent();
+        boxField1.setBorder(BorderFactory.createEmptyBorder());
+        boxField1.setBackground(new Color(0, 0, 0, 0));
+        boxField1.setForeground(Color.DARK_GRAY);
+        boxField1.setFocusable(false);
+
+        searchWindow.add(cuisineInputDropdown, gbc);
+
+        // excludeCuisine
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.ipadx = 20;
 
-        // excludeCuisine
+        String[] excludeCuisineOptions = {"African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European", "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish", "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai", "Vietnamese"};
+        excludeCuisineInputDropdown = new CustomDropdownMenu(excludeCuisineOptions).dropdown;
+
+        excludeCuisineInputDropdown.setEditable(true);
+        excludeCuisineInputDropdown.setSelectedItem("Select/unselect from list.");
+        excludeCuisineInputDropdown.setEditable(false);
+
+        excludeCuisineInputDropdown.addActionListener(this);
 
         JLabel excludeCuisine = new JLabel("Exclude Cuisine", SwingConstants.CENTER);
         excludeCuisine.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -103,13 +131,12 @@ public class RecommendView extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
-        excludeCuisineInput = new PTextField("Separate fields by comma");
-        excludeCuisineInput.setFont(new Font("Arial", Font.PLAIN, 18));
-        excludeCuisineInput.setForeground(Color.DARK_GRAY);
-        excludeCuisineInput.setOpaque(false);
-        excludeCuisineInput.setBorder(
+        excludeCuisineInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
+        excludeCuisineInputDropdown.setForeground(Color.DARK_GRAY);
+        excludeCuisineInputDropdown.setOpaque(false);
+        excludeCuisineInputDropdown.setBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createTitledBorder(
                                 null, "",
@@ -120,7 +147,16 @@ public class RecommendView extends JFrame {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
-        searchWindow.add(excludeCuisineInput, gbc);
+
+        excludeCuisineInputDropdown.setOpaque(false);
+        excludeCuisineInputDropdown.setEditable(true);
+        JTextField boxField2 = (JTextField) excludeCuisineInputDropdown.getEditor().getEditorComponent();
+        boxField2.setBorder(BorderFactory.createEmptyBorder());
+        boxField2.setBackground(new Color(0, 0, 0, 0));
+        boxField2.setForeground(Color.DARK_GRAY);
+        boxField2.setFocusable(false);
+
+        searchWindow.add(excludeCuisineInputDropdown, gbc);
 
         // diet
 
@@ -128,19 +164,27 @@ public class RecommendView extends JFrame {
         gbc.gridy = 3;
         gbc.ipadx = 20;
 
+        String[] dietOptions = {"Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"};
+        dietInputDropdown = new CustomDropdownMenu(dietOptions).dropdown;
+
+        dietInputDropdown.setEditable(true);
+        dietInputDropdown.setSelectedItem("Select/unselect from list");
+        dietInputDropdown.setEditable(false);
+
+        dietInputDropdown.addActionListener(this);
+
         JLabel diet = new JLabel("Preferred Diet", SwingConstants.CENTER);
         diet.setFont(new Font("Arial", Font.PLAIN, 18));
         searchWindow.add(diet, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
-        dietInput = new PTextField("Separate fields by comma");
-        dietInput.setFont(new Font("Arial", Font.PLAIN, 18));
-        dietInput.setForeground(Color.DARK_GRAY);
-        dietInput.setOpaque(false);
-        dietInput.setBorder(
+        dietInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
+        dietInputDropdown.setForeground(Color.DARK_GRAY);
+        dietInputDropdown.setOpaque(false);
+        dietInputDropdown.setBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createTitledBorder(
                                 null, "",
@@ -151,7 +195,16 @@ public class RecommendView extends JFrame {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
-        searchWindow.add(dietInput, gbc);
+
+        dietInputDropdown.setOpaque(false);
+        dietInputDropdown.setEditable(true);
+        JTextField boxField3 = (JTextField) dietInputDropdown.getEditor().getEditorComponent();
+        boxField3.setBorder(BorderFactory.createEmptyBorder());
+        boxField3.setBackground(new Color(0, 0, 0, 0));
+        boxField3.setForeground(Color.DARK_GRAY);
+        boxField3.setFocusable(false);
+
+        searchWindow.add(dietInputDropdown, gbc);
 
         // intolerances
 
@@ -159,19 +212,27 @@ public class RecommendView extends JFrame {
         gbc.gridy = 4;
         gbc.ipadx = 20;
 
+        String[] intolerancesOptions = {"Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy", "Sulfite", "Tree Nut", "Wheat"};
+        intolerancesInputDropdown = new CustomDropdownMenu(intolerancesOptions).dropdown;
+
+        intolerancesInputDropdown.setEditable(true);
+        intolerancesInputDropdown.setSelectedItem("Select/unselect from list.");
+        intolerancesInputDropdown.setEditable(false);
+
+        intolerancesInputDropdown.addActionListener(this);
+
         JLabel intolerances = new JLabel("Intolerances", SwingConstants.CENTER);
         intolerances.setFont(new Font("Arial", Font.PLAIN, 18));
         searchWindow.add(intolerances, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 4;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
-        intolerancesInput = new PTextField("Separate fields by comma");
-        intolerancesInput.setFont(new Font("Arial", Font.PLAIN, 18));
-        intolerancesInput.setForeground(Color.DARK_GRAY);
-        intolerancesInput.setOpaque(false);
-        intolerancesInput.setBorder(
+        intolerancesInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
+        intolerancesInputDropdown.setForeground(Color.DARK_GRAY);
+        intolerancesInputDropdown.setOpaque(false);
+        intolerancesInputDropdown.setBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createTitledBorder(
                                 null, "",
@@ -182,7 +243,16 @@ public class RecommendView extends JFrame {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
-        searchWindow.add(intolerancesInput, gbc);
+
+        intolerancesInputDropdown.setOpaque(false);
+        intolerancesInputDropdown.setEditable(true);
+        JTextField boxField4 = (JTextField) intolerancesInputDropdown.getEditor().getEditorComponent();
+        boxField4.setBorder(BorderFactory.createEmptyBorder());
+        boxField4.setBackground(new Color(0, 0, 0, 0));
+        boxField4.setForeground(Color.DARK_GRAY);
+        boxField4.setFocusable(false);
+
+        searchWindow.add(intolerancesInputDropdown, gbc);
 
         // ingredients
 
@@ -196,7 +266,7 @@ public class RecommendView extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         ingredientsInput = new PTextField("Separate fields by comma");
         ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -227,7 +297,7 @@ public class RecommendView extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 6;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         excludeIngredientsInput = new PTextField("Separate fields by comma");
         excludeIngredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -258,7 +328,7 @@ public class RecommendView extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 7;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         nutrientsInput = new PTextField("Separate fields (nutrient : range) by comma");
         nutrientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -315,42 +385,29 @@ public class RecommendView extends JFrame {
             }
         );
 
-
         this.add(searchWindow);
 
         this.setSize(600, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        search.requestFocusInWindow();
     }
 
     public ArrayList<String> getCuisineInput() {
-        String text = cuisineInput.getText().strip();
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        return inputs;
+        return cuisine;
     }
 
     public ArrayList<String> getExcludeCuisineInput() {
-        String text = excludeCuisineInput.getText().strip();
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        return inputs;
+        return excludeCuisine;
     }
 
     public ArrayList<String> getDietInput() {
-        String text = dietInput.getText().strip();
-        if (text.equals("Separate fields by comma")) {
-            text = "";
-        }
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        return inputs;
+        return diet;
     }
 
     public ArrayList<String> getIntolerancesInput() {
-        String text = intolerancesInput.getText().strip();
-        if (text.equals("Separate fields by comma")) {
-            text = "";
-        }
-        ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-        return inputs;
+        return intolerances;
     }
 
     public ArrayList<String> getIngredientsInput() {
@@ -387,5 +444,59 @@ public class RecommendView extends JFrame {
             }
             return nutrients;
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JComboBox cb = (JComboBox) e.getSource();
+        String selectedItem = (String) cb.getSelectedItem();
+        cb.setEditable(true);
+        if (cb.equals(cuisineInputDropdown)) {
+            if (cuisine.contains(selectedItem)) {
+                cuisine.remove(selectedItem);
+            }
+            else {
+                cuisine.add(selectedItem);
+            }
+            cb.setSelectedItem(String.join(", ", cuisine));
+        }
+        else if (cb.equals(excludeCuisineInputDropdown)) {
+            if (excludeCuisine.contains(selectedItem)) {
+                excludeCuisine.remove(selectedItem);
+            }
+            else {
+                excludeCuisine.add(selectedItem);
+            }
+            cb.setSelectedItem(String.join(", ", excludeCuisine));
+        }
+
+        else if (cb.equals(dietInputDropdown)) {
+            if (diet.contains(selectedItem)) {
+                diet.remove(selectedItem);
+            }
+            else {
+                diet.add(selectedItem);
+            }
+            cb.setSelectedItem(String.join(", ", diet));
+        }
+        else if (cb.equals(intolerancesInputDropdown)) {
+            if (intolerances.contains(selectedItem)) {
+                intolerances.remove(selectedItem);
+            }
+            else {
+                intolerances.add(selectedItem);
+            }
+            cb.setSelectedItem(String.join(", ", intolerances));
+        }
+        cb.setEditable(false);
+
+        cb.setOpaque(false);
+        cb.setEditable(true);
+        JTextField boxField = (JTextField) cb.getEditor().getEditorComponent();
+        boxField.setBorder(BorderFactory.createEmptyBorder());
+        boxField.setBackground(new Color(0, 0, 0, 0));
+        boxField.setForeground(Color.DARK_GRAY);
+        boxField.setFocusable(false);
+
     }
 }
