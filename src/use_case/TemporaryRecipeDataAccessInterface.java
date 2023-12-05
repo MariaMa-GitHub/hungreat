@@ -13,5 +13,6 @@ public interface TemporaryRecipeDataAccessInterface {
 
     void storeRecipes(ArrayList<Recipe> recipeList);
     void storeRecipe(Recipe recipe) ;
+    void unStoreRecipe(Recipe recipe) ;
 
 }

@@ -1,12 +1,10 @@
 package view;
 
-import interface_adapter.AnalysisViewModel;
-import interface_adapter.DisplayViewModel;
-import interface_adapter.RecipeViewModel;
-import interface_adapter.SaveViewModel;
+import interface_adapter.*;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.browse.BrowseController;
 import interface_adapter.create.CreateController;
+import interface_adapter.delete.DeleteController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
@@ -41,6 +39,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
     private GetSimilarRecipesController getSimilarRecipesController;
     private SaveController saveController;
     private SaveViewModel saveViewModel;
+    private DeleteController deleteController;
 
     public HomeView(
             BrowseController browseController,
@@ -53,7 +52,8 @@ public class HomeView extends JPanel implements PropertyChangeListener {
             RecipeViewModel recipeViewModel,
             GetSimilarRecipesController getSimilarRecipesController,
             SaveController saveController,
-            SaveViewModel saveViewModel)
+            SaveViewModel saveViewModel,
+            DeleteController deleteController)
     {
 
         this.recipeViewModel = recipeViewModel;
@@ -68,6 +68,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(800, 600));
         this.displayController = displayController;
+        this.deleteController = deleteController;
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5,5,5,5);
@@ -146,7 +147,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                         if (evt.getSource().equals(browse)) {
 
                             // TODO (Everyone)
-                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
+                            BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
                         }
                     }
                 }
@@ -160,7 +161,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
 
                             // TODO (Maria)
 
-                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
+                            RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
 
                         }
                     }
@@ -186,7 +187,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
     }
 
     @NotNull
-    private static JButton getjButton(ArrayList<Integer> recipeIDs, Map<Integer, String> recipes, int i, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveController saveController, SaveViewModel saveViewModel) {
+    private static JButton getjButton(ArrayList<Integer> recipeIDs, Map<Integer, String> recipes, int i, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveController saveController, SaveViewModel saveViewModel, DeleteController deleteController) {
         Integer recipeID = recipeIDs.get(i);
 
         JButton button = new JButton(recipes.get(recipeID));
@@ -197,7 +198,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                         if (evt.getSource().equals(button)) {
 
                             displayController.execute(recipeID);
-                            RecipeView recipeView = new RecipeView(recipeID, recipes.get(recipeID), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
+                            RecipeView recipeView = new RecipeView(recipeID, recipes.get(recipeID), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
 
 
                         }
@@ -224,9 +225,8 @@ public class HomeView extends JPanel implements PropertyChangeListener {
 
                 for (int i = 0; i < this.savedRecipes.size(); i++) {
 
-                    JButton button = getjButton(new ArrayList<>(this.savedRecipes.keySet()), this.savedRecipes, i, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveController, saveViewModel);
-                    button.setPreferredSize(new Dimension(490, 20));
-                    button.setMaximumSize(new Dimension(490, 20));
+                    JButton button = getjButton(new ArrayList<>(this.savedRecipes.keySet()), this.savedRecipes, i, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveController, saveViewModel, deleteController);
+                    button.setPreferredSize(new Dimension(490, 100));
                     savedRecipesList.add(button);
 
                 }

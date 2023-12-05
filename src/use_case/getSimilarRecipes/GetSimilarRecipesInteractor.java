@@ -25,7 +25,7 @@ public class GetSimilarRecipesInteractor implements GetSimilarRecipesInputBounda
     @Override
     public void execute(GetSimilarRecipesInputData getSimilarRecipesInputData) {
         Recipe recipe = null;
-        try{
+        if (getSimilarRecipesInputData.getRecipeID() > 0) {
             ArrayList<Recipe> recipes = this.recipeDataAccessObject.getSimilarRecipes(getSimilarRecipesInputData.getRecipeID());
             StringBuilder title = new StringBuilder();
             for (int i = 0; i < recipes.size(); i++) {
@@ -35,8 +35,8 @@ public class GetSimilarRecipesInteractor implements GetSimilarRecipesInputBounda
             GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData(title.toString());
             getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
         }
-        catch (Exception e){
-            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData("Get similar recipes is not available for user created recipes.");
+        else{
+            GetSimilarRecipesOutputData getSimilarRecipesOutputData = new GetSimilarRecipesOutputData("No similar recipes found");
                     getSimilarRecipesPresenter.prepareView(getSimilarRecipesOutputData);
         }
     }

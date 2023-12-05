@@ -38,4 +38,9 @@ public class TemporaryRecipeDataAccessObject implements TemporaryRecipeDataAcces
         recipes.put(recipe.getID(), recipe);
     }
 
+    @Override
+    public void unStoreRecipe(Recipe recipe) {
+        recipes.remove(recipe.getID());
+    }
+
 }

@@ -1,10 +1,8 @@
 package view;
 
-import interface_adapter.AnalysisViewModel;
-import interface_adapter.RecipeViewModel;
-import interface_adapter.DisplayViewModel;
-import interface_adapter.SaveViewModel;
+import interface_adapter.*;
 import interface_adapter.analysis.AnalysisController;
+import interface_adapter.delete.DeleteController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.recommend.RecommendController;
@@ -36,7 +34,7 @@ public class RecommendView extends JFrame implements ActionListener {
     private final DisplayController displayController;
     private final RecipeViewModel recipeViewModel;
 
-    public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController) {
+    public RecommendView(RecommendController recommendController, DisplayViewModel displayViewModel, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController, DeleteController deleteController) {
 
         this.recommendController = recommendController;
         this.displayViewModel = displayViewModel;
@@ -72,7 +70,7 @@ public class RecommendView extends JFrame implements ActionListener {
         gbc.ipady = 10;
 
         String[] cuisineOptions = {"African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European", "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish", "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai", "Vietnamese"};
-        cuisineInputDropdown = new JComboBox(cuisineOptions);
+        cuisineInputDropdown = new CustomDropdownMenu(cuisineOptions).dropdown;
 
         cuisineInputDropdown.setEditable(true);
         cuisineInputDropdown.setSelectedItem("Select/unselect from list.");
@@ -86,7 +84,7 @@ public class RecommendView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         cuisineInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
         cuisineInputDropdown.setForeground(Color.DARK_GRAY);
@@ -102,6 +100,15 @@ public class RecommendView extends JFrame implements ActionListener {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
+
+        cuisineInputDropdown.setOpaque(false);
+        cuisineInputDropdown.setEditable(true);
+        JTextField boxField1 = (JTextField) cuisineInputDropdown.getEditor().getEditorComponent();
+        boxField1.setBorder(BorderFactory.createEmptyBorder());
+        boxField1.setBackground(new Color(0, 0, 0, 0));
+        boxField1.setForeground(Color.DARK_GRAY);
+        boxField1.setFocusable(false);
+
         searchWindow.add(cuisineInputDropdown, gbc);
 
         // excludeCuisine
@@ -110,8 +117,7 @@ public class RecommendView extends JFrame implements ActionListener {
         gbc.ipadx = 20;
 
         String[] excludeCuisineOptions = {"African", "Asian", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European", "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish", "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai", "Vietnamese"};
-        excludeCuisineInputDropdown = new JComboBox(excludeCuisineOptions);
-
+        excludeCuisineInputDropdown = new CustomDropdownMenu(excludeCuisineOptions).dropdown;
 
         excludeCuisineInputDropdown.setEditable(true);
         excludeCuisineInputDropdown.setSelectedItem("Select/unselect from list.");
@@ -125,7 +131,7 @@ public class RecommendView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         excludeCuisineInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
         excludeCuisineInputDropdown.setForeground(Color.DARK_GRAY);
@@ -141,6 +147,15 @@ public class RecommendView extends JFrame implements ActionListener {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
+
+        excludeCuisineInputDropdown.setOpaque(false);
+        excludeCuisineInputDropdown.setEditable(true);
+        JTextField boxField2 = (JTextField) excludeCuisineInputDropdown.getEditor().getEditorComponent();
+        boxField2.setBorder(BorderFactory.createEmptyBorder());
+        boxField2.setBackground(new Color(0, 0, 0, 0));
+        boxField2.setForeground(Color.DARK_GRAY);
+        boxField2.setFocusable(false);
+
         searchWindow.add(excludeCuisineInputDropdown, gbc);
 
         // diet
@@ -150,7 +165,7 @@ public class RecommendView extends JFrame implements ActionListener {
         gbc.ipadx = 20;
 
         String[] dietOptions = {"Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"};
-        dietInputDropdown = new JComboBox(dietOptions);
+        dietInputDropdown = new CustomDropdownMenu(dietOptions).dropdown;
 
         dietInputDropdown.setEditable(true);
         dietInputDropdown.setSelectedItem("Select/unselect from list");
@@ -164,7 +179,7 @@ public class RecommendView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 3;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         dietInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
         dietInputDropdown.setForeground(Color.DARK_GRAY);
@@ -180,6 +195,15 @@ public class RecommendView extends JFrame implements ActionListener {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
+
+        dietInputDropdown.setOpaque(false);
+        dietInputDropdown.setEditable(true);
+        JTextField boxField3 = (JTextField) dietInputDropdown.getEditor().getEditorComponent();
+        boxField3.setBorder(BorderFactory.createEmptyBorder());
+        boxField3.setBackground(new Color(0, 0, 0, 0));
+        boxField3.setForeground(Color.DARK_GRAY);
+        boxField3.setFocusable(false);
+
         searchWindow.add(dietInputDropdown, gbc);
 
         // intolerances
@@ -189,8 +213,7 @@ public class RecommendView extends JFrame implements ActionListener {
         gbc.ipadx = 20;
 
         String[] intolerancesOptions = {"Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy", "Sulfite", "Tree Nut", "Wheat"};
-        intolerancesInputDropdown = new JComboBox(intolerancesOptions);
-        intolerancesInputDropdown.setPrototypeDisplayValue("damn");
+        intolerancesInputDropdown = new CustomDropdownMenu(intolerancesOptions).dropdown;
 
         intolerancesInputDropdown.setEditable(true);
         intolerancesInputDropdown.setSelectedItem("Select/unselect from list.");
@@ -204,7 +227,7 @@ public class RecommendView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 4;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         intolerancesInputDropdown.setFont(new Font("Arial", Font.PLAIN, 18));
         intolerancesInputDropdown.setForeground(Color.DARK_GRAY);
@@ -220,6 +243,15 @@ public class RecommendView extends JFrame implements ActionListener {
                         javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 5)
                 )
         );
+
+        intolerancesInputDropdown.setOpaque(false);
+        intolerancesInputDropdown.setEditable(true);
+        JTextField boxField4 = (JTextField) intolerancesInputDropdown.getEditor().getEditorComponent();
+        boxField4.setBorder(BorderFactory.createEmptyBorder());
+        boxField4.setBackground(new Color(0, 0, 0, 0));
+        boxField4.setForeground(Color.DARK_GRAY);
+        boxField4.setFocusable(false);
+
         searchWindow.add(intolerancesInputDropdown, gbc);
 
         // ingredients
@@ -234,7 +266,7 @@ public class RecommendView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 5;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         ingredientsInput = new PTextField("Separate fields by comma");
         ingredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -265,7 +297,7 @@ public class RecommendView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 6;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         excludeIngredientsInput = new PTextField("Separate fields by comma");
         excludeIngredientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -296,7 +328,7 @@ public class RecommendView extends JFrame implements ActionListener {
 
         gbc.gridx = 1;
         gbc.gridy = 7;
-        gbc.ipadx = 350;
+        gbc.ipadx = 200;
 
         nutrientsInput = new PTextField("Separate fields (nutrient : range) by comma");
         nutrientsInput.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -341,7 +373,7 @@ public class RecommendView extends JFrame implements ActionListener {
                                 getNutrientsInput()
                         );
 
-                        DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
+                        DisplayView displayView = new DisplayView(displayController, displayViewModel.getRecipes(), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
 
                         JComponent comp = (JComponent) evt.getSource();
                         Window win = SwingUtilities.getWindowAncestor(comp);
@@ -353,12 +385,13 @@ public class RecommendView extends JFrame implements ActionListener {
             }
         );
 
-
         this.add(searchWindow);
 
         this.setSize(600, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        search.requestFocusInWindow();
     }
 
     public ArrayList<String> getCuisineInput() {
@@ -456,5 +489,14 @@ public class RecommendView extends JFrame implements ActionListener {
             cb.setSelectedItem(String.join(", ", intolerances));
         }
         cb.setEditable(false);
+
+        cb.setOpaque(false);
+        cb.setEditable(true);
+        JTextField boxField = (JTextField) cb.getEditor().getEditorComponent();
+        boxField.setBorder(BorderFactory.createEmptyBorder());
+        boxField.setBackground(new Color(0, 0, 0, 0));
+        boxField.setForeground(Color.DARK_GRAY);
+        boxField.setFocusable(false);
+
     }
 }

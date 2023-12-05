@@ -4,6 +4,7 @@ import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
 import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
+import interface_adapter.delete.DeleteController;
 import interface_adapter.display.DisplayController;
 import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import interface_adapter.save.SaveController;
@@ -22,7 +23,7 @@ public class DisplayView extends JFrame {
                        Map<Integer, String> recipes,
                        RecipeViewModel recipeViewModel,
                        AnalysisViewModel analysisViewModel,
-                       AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController) {
+                       AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController, DeleteController deleteController) {
 
         this.setTitle("View Recommendations");
 
@@ -31,7 +32,7 @@ public class DisplayView extends JFrame {
 
         for (int i = 0; i < Math.min(6, recipes.size()); i++) {
 
-            JButton button = getjButton(new ArrayList<>(recipes.keySet()), recipes, i, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
+            JButton button = getjButton(new ArrayList<>(recipes.keySet()), recipes, i, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
 
 
 
@@ -48,7 +49,7 @@ public class DisplayView extends JFrame {
     }
 
     @NotNull//getjButton is the process create and set a button this button will relate to the recipe id.
-    private static JButton getjButton(ArrayList<Integer> recipeIDs, Map<Integer, String> recipes, int i, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController) {
+    private static JButton getjButton(ArrayList<Integer> recipeIDs, Map<Integer, String> recipes, int i, DisplayController displayController, RecipeViewModel recipeViewModel, AnalysisViewModel analysisViewModel, AnalysisController analysisController, GetSimilarRecipesController getSimilarRecipesController, SaveViewModel saveViewModel, SaveController saveController, DeleteController deleteController) {
         Integer recipeID = recipeIDs.get(i);
 
         JButton button = new JButton(recipes.get(recipeID));
@@ -60,7 +61,7 @@ public class DisplayView extends JFrame {
 
                             // TODO (Everyone and Maria)
                             displayController.execute(recipeID);
-                            RecipeView recipeView = new RecipeView(recipeID, recipes.get(recipeID), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController);
+                            RecipeView recipeView = new RecipeView(recipeID, recipes.get(recipeID), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
                       
 
                         }
