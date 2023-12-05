@@ -6,7 +6,7 @@ import use_case.create.CreateOutputData;
 
 public class CreatePresenter implements CreateOutputBoundary {
 
-    private  final SaveViewModel saveViewModel;
+    private final SaveViewModel saveViewModel;
 
     public CreatePresenter(SaveViewModel saveViewModel) {
         this.saveViewModel = saveViewModel;
