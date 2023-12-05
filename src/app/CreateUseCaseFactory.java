@@ -17,7 +17,9 @@ import java.io.IOException;
 public class CreateUseCaseFactory {
     private CreateUseCaseFactory() {}
 
-    public static CreateController create(CreateDataAccessInterface dataAccessObject, SaveViewModel saveViewModel, TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject) {
+    public static CreateController create(CreateDataAccessInterface dataAccessObject,
+                                          SaveViewModel saveViewModel,
+                                          TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject) {
 
         try {
             CreateController createController = createCreateUseCase(dataAccessObject, saveViewModel, temporaryRecipeDataAccessObject);
@@ -29,14 +31,17 @@ public class CreateUseCaseFactory {
         return null;
     }
 
-    private static CreateController createCreateUseCase(CreateDataAccessInterface dataAccessObject, SaveViewModel saveViewModel, TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject) throws IOException{
+    private static CreateController createCreateUseCase(CreateDataAccessInterface dataAccessObject,
+                                                        SaveViewModel saveViewModel,
+                                                        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject) throws IOException{
 
         CreateOutputBoundary createOutputBoundary = new CreatePresenter(saveViewModel);
 
         RecipeFactory recipeFactory = new RecipeFactory();
         RecipeInfoFactory recipeInfoFactory = new RecipeInfoFactory();
 
-        CreateInputBoundary createInteractor = new CreateInteractor(dataAccessObject, createOutputBoundary, recipeFactory, recipeInfoFactory, temporaryRecipeDataAccessObject);
+        CreateInputBoundary createInteractor =
+                new CreateInteractor(dataAccessObject, createOutputBoundary, recipeFactory, recipeInfoFactory, temporaryRecipeDataAccessObject);
 
         return new CreateController(createInteractor);
     }
