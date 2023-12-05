@@ -21,7 +21,8 @@ public class DeletePresenter implements DeleteOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        saveViewModel.setEorrorForDelete(error);
+        saveViewModel.setError(error);
+        saveViewModel.failFirePropertyChanged();
     }
 }
 

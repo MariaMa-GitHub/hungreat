@@ -54,12 +54,4 @@ public class SaveViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public void setEorrorForDelete(String error) {
-        this.error = error;
-    }
-
-    public String getErrorForDelete() {
-        return this.error;
-    }
-
 }
