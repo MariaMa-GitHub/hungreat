@@ -1,8 +1,5 @@
 package interface_adapter;
 
-import java.sql.SQLOutput;
-import java.util.Map;
-
 public class RecipeViewModel{
     private String recipeString;
     private String tittle;
@@ -24,7 +21,7 @@ public class RecipeViewModel{
             return recipeString;
     }
 
-    public String getTittle() {
+    public String getTitle() {
         return tittle;
     }
 }

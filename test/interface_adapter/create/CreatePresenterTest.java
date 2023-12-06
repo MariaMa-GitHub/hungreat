@@ -8,6 +8,7 @@ import entity.Recipe;
 import entity.RecipeFactory;
 import entity.RecipeInfoFactory;
 import interface_adapter.DisplayViewModel;
+import interface_adapter.SaveState;
 import interface_adapter.SaveViewModel;
 import interface_adapter.recommend.RecommendController;
 import interface_adapter.recommend.RecommendPresenter;
@@ -59,7 +60,9 @@ public class CreatePresenterTest {
                 new ArrayList<>()
         );
 
-        assertNotNull(saveViewModel.getSavedRecipes());
+        SaveState state = saveViewModel.getState();
+
+        assertNotNull(state.getSavedRecipes());
 
     }
 
@@ -100,7 +103,8 @@ public class CreatePresenterTest {
                 new ArrayList<>()
         );
 
-        assertNotNull(saveViewModel2.getError());
+        SaveState state = saveViewModel2.getState();
+        assertNotNull(state.getError());
 
     }
 }

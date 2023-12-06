@@ -62,7 +62,8 @@ public class HomeView extends JPanel implements PropertyChangeListener {
         this.saveController = saveController;
         this.saveViewModel = saveViewModel;
 
-        this.savedRecipes = saveViewModel.getSavedRecipes();
+        SaveState state = saveViewModel.getState();
+        this.savedRecipes = state.getSavedRecipes();
 
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(800, 600));
@@ -199,9 +200,9 @@ public class HomeView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("savedRecipes")) {
+        if (evt.getPropertyName().equals("state")) {
 
-            this.savedRecipes = (Map<Integer, String>) evt.getNewValue();
+            this.savedRecipes = ((SaveState) evt.getNewValue()).getSavedRecipes();
 
             this.savedRecipesList.removeAll();
 

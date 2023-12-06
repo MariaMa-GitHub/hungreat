@@ -1,5 +1,6 @@
 package interface_adapter.create;
 
+import interface_adapter.SaveState;
 import interface_adapter.SaveViewModel;
 import use_case.create.CreateOutputBoundary;
 import use_case.create.CreateOutputData;
@@ -14,13 +15,17 @@ public class CreatePresenter implements CreateOutputBoundary {
 
     @Override
     public void prepareSuccessView(CreateOutputData createOutputData) {
-        saveViewModel.add(createOutputData.getId(), createOutputData.getTitle());
-        saveViewModel.successFirePropertyChanged();
+        SaveState state = saveViewModel.getState();
+        state.add(createOutputData.getId(), createOutputData.getTitle());
+        saveViewModel.setState(state);
+        saveViewModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        saveViewModel.setError(error);
-        saveViewModel.failFirePropertyChanged();
+        SaveState state = saveViewModel.getState();
+        state.setError(error);
+        saveViewModel.setState(state);
+        saveViewModel.firePropertyChanged();
     }
 }

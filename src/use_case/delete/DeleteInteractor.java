@@ -25,18 +25,18 @@ public class DeleteInteractor implements DeleteInputBoundary {
     @Override
     public void execute(DeleteInputData deleteInputData) throws IOException, ClassNotFoundException {
         Integer recipeID = deleteInputData.getRecipeID();
-            try {
-                Recipe deleteRecipe = temporaryRecipeDataAccessInterface.getFromID(recipeID);
-                deletedRecipeDataAccessInterface.delete(deleteRecipe);
+        try {
+            Recipe deleteRecipe = temporaryRecipeDataAccessInterface.getFromID(recipeID);
+            deletedRecipeDataAccessInterface.delete(deleteRecipe);
 
-                DeleteOutputData deleteOutputData = new DeleteOutputData(deleteRecipe.getID(),deleteRecipe.getTitle());
-                deleteOutputBoundary.prepareSuccessView(deleteOutputData);
+            DeleteOutputData deleteOutputData = new DeleteOutputData(deleteRecipe.getID(),deleteRecipe.getTitle());
+            deleteOutputBoundary.prepareSuccessView(deleteOutputData);
 
-            } catch (Exception e) {
-                String errorMessage = e.getMessage();
-                deleteOutputBoundary.prepareFailView(errorMessage);
-            }
-
+        } catch (Exception e) {
+            String errorMessage = e.getMessage();
+            deleteOutputBoundary.prepareFailView(errorMessage);
         }
+
     }
+}
 
