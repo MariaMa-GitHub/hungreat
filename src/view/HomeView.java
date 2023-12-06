@@ -18,7 +18,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class HomeView extends JPanel implements PropertyChangeListener {
@@ -81,13 +80,6 @@ public class HomeView extends JPanel implements PropertyChangeListener {
         appName.setFont(new Font("Helvetica", Font.BOLD, 24));
         this.add(appName, gbc);
 
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        gbc.ipady = 50;
-//        JLabel slogan = new JLabel("Your Personalized Meal Planner", SwingConstants.CENTER);
-//        slogan.setFont(new Font("Helvetica", Font.PLAIN, 16));
-//        this.add(slogan, gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.ipady = 50;
@@ -127,7 +119,6 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(create)) {
-                            // TODO (Michelle)
                             CreateView createView = new CreateView(
                                     createController,
                                     displayViewModel,
@@ -146,8 +137,8 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(browse)) {
 
-                            // TODO (Everyone)
                             BrowseView browseView = new BrowseView(browseController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
+
                         }
                     }
                 }
@@ -158,8 +149,6 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(recommend)) {
-
-                            // TODO (Maria)
 
                             RecommendView recommendView = new RecommendView(recommendController, displayViewModel, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
 
@@ -174,16 +163,12 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(export)) {
 
-                            // TODO (Chloe)
-
                         }
                     }
                 }
         );
-
         saveViewModel.addPropertyChangeListener(this);
         saveController.execute(null);
-
     }
 
     @NotNull
@@ -231,9 +216,11 @@ public class HomeView extends JPanel implements PropertyChangeListener {
 
                 }
             }
-
             this.repaint();
             this.revalidate();
+        } else if (evt.getPropertyName().equals("error")) {
+
+            JOptionPane.showMessageDialog(null, (String) evt.getNewValue());
 
         }
     }
