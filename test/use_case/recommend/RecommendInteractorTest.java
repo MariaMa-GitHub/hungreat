@@ -48,10 +48,7 @@ class RecommendInteractorTest {
        RecommendInputBoundary interactor = new RecommendInteractor(
                dataAccessObject,
                temporaryRecipeDataAccessObject,
-               successPresenter,
-               new RecipeFactory(),
-               new RecipeInfoFactory(),
-               new NutritionDataFactory()
+               successPresenter
        );
 
        interactor.execute(inputData);

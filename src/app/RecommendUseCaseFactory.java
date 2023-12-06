@@ -35,11 +35,7 @@ public class RecommendUseCaseFactory {
 
         RecommendOutputBoundary recommendOutputBoundary = new RecommendPresenter(displayViewModel);
 
-        RecipeFactory recipeFactory = new RecipeFactory();
-        RecipeInfoFactory recipeInfoFactory = new RecipeInfoFactory();
-        NutritionDataFactory nutritionDataFactory = new NutritionDataFactory();
-
-        RecommendInputBoundary recommendInteractor = new RecommendInteractor(dataAccessObject, temporaryRecipeDataAccessObject, recommendOutputBoundary, recipeFactory, recipeInfoFactory, nutritionDataFactory);
+        RecommendInputBoundary recommendInteractor = new RecommendInteractor(dataAccessObject, temporaryRecipeDataAccessObject, recommendOutputBoundary);
 
         return new RecommendController(recommendInteractor);
     }

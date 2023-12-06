@@ -30,10 +30,7 @@ class RecommendPresenterTest {
         RecommendInputBoundary interactor = new RecommendInteractor(
                 dataAccessObject,
                 temporaryRecipeDataAccessObject,
-                successPresenter,
-                new RecipeFactory(),
-                new RecipeInfoFactory(),
-                new NutritionDataFactory()
+                successPresenter
         );
 
         RecommendController controller = new RecommendController(interactor);
