@@ -45,8 +45,9 @@ public class SaveInteractor implements SaveInputBoundary {
                 saveOutputBoundary.prepareSuccessView(saveOutputData);
             }
             catch (Exception e){
-                String errorMessage = e.getMessage();
-                saveOutputBoundary.prepareFailView(errorMessage);
+
+                saveOutputBoundary.prepareFailView("Sorry an error has occurred. The recipe could not be saved. Please try again.");
+
             }
 
         }
