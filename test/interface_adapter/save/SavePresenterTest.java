@@ -1,12 +1,12 @@
-package use_case.save;
+package interface_adapter.save;
 
-import data_access.TemporaryRecipeDataAccessObject;
 import data_access.SavedRecipeDataAccessObject;
+import data_access.TemporaryRecipeDataAccessObject;
 import entity.Recipe;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import interface_adapter.SaveViewModel;
 import org.junit.jupiter.api.Test;
 import use_case.TemporaryRecipeDataAccessInterface;
+import use_case.save.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,9 +14,37 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SaveInteractorTest {
+class SavePresenterTest {
     @Test
-    void successTest() {
+    void successtest1() {
+        new File("SavedRecipes.txt").delete();
+        Recipe recipe = new Recipe(1, "title", "url", "imageurl", null, null);
+
+        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(new ArrayList<>());
+        temporaryRecipeDataAccessObject.storeRecipe(recipe);
+        SaveDataAccessInterface saveDataAccessObject = null;
+        try {
+            saveDataAccessObject = new SavedRecipeDataAccessObject();
+            saveDataAccessObject.save(recipe);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        SaveViewModel saveViewModel = new SaveViewModel();
+
+        SaveOutputBoundary savePresenter = new SavePresenter(saveViewModel);
+
+        SaveInteractor saveInteractor = new SaveInteractor(savePresenter, temporaryRecipeDataAccessObject, saveDataAccessObject);
+
+        SaveController saveController = new SaveController(saveInteractor);
+        saveController.execute(null);
+
+        assertEquals(1, saveViewModel.getSavedRecipes().size());
+    }
+
+    @Test
+    void successtest2() {
         new File("SavedRecipes.txt").delete();
         Recipe recipe = new Recipe(1, "title", "url", "imageurl", null, null);
 
@@ -31,56 +59,18 @@ class SaveInteractorTest {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        SaveOutputBoundary savePresenter = new SaveOutputBoundary() {
-            @Override
-            public void prepareSuccessView(SaveOutputData response) {
-                assertEquals(1, response.getRecipeID());
-                assertEquals("title", response.getTitle());
-            }
+        SaveViewModel saveViewModel = new SaveViewModel();
 
-            @Override
-            public void prepareFailView(String errorMessage) {
+        SaveOutputBoundary savePresenter = new SavePresenter(saveViewModel);
 
-                fail();
-            }
-        };
         SaveInteractor saveInteractor = new SaveInteractor(savePresenter, temporaryRecipeDataAccessObject, saveDataAccessObject);
-        saveInteractor.execute(saveInputData);
 
-        assertEquals(1, saveDataAccessObject.getSavedRecipes().size());
+        SaveController saveController = new SaveController(saveInteractor);
+        saveController.execute(1);
+
+        assertEquals(1, saveViewModel.getSavedRecipes().size());
     }
 
-    @Test
-    void successTest2(){
-        new File("SavedRecipes.txt").delete();
-        Recipe recipe = new Recipe(1, "title", "url", "imageurl", null, null);
-
-
-        SaveInputData saveInputData = new SaveInputData(null);
-        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(new ArrayList<>());
-        temporaryRecipeDataAccessObject.storeRecipe(recipe);
-        SaveDataAccessInterface saveDataAccessObject = null;
-        try {
-            saveDataAccessObject = new SavedRecipeDataAccessObject();
-            saveDataAccessObject.save(recipe);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        SaveOutputBoundary savePresenter = new SaveOutputBoundary() {
-            @Override
-            public void prepareSuccessView(SaveOutputData response) {
-                assertEquals(1, response.getSavedRecipes().size());
-            }
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail();
-            }
-        };
-        SaveInteractor saveInteractor = new SaveInteractor(savePresenter, temporaryRecipeDataAccessObject, saveDataAccessObject);
-        saveInteractor.execute(saveInputData);
-    }
 
     @Test
     void failTest() {
@@ -103,20 +93,15 @@ class SaveInteractorTest {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        SaveOutputBoundary savePresenter = new SaveOutputBoundary() {
-            @Override
-            public void prepareSuccessView(SaveOutputData response) {
-                fail();
-            }
+        SaveViewModel saveViewModel = new SaveViewModel();
 
-            @Override
-            public void prepareFailView(String errorMessage) {
-                assertEquals("Sorry an error has occurred. The recipe could not be saved. Please try again.", errorMessage);
-            }
-        };
+        SaveOutputBoundary savePresenter = new SavePresenter(saveViewModel);
+
         SaveInteractor saveInteractor = new SaveInteractor(savePresenter, temporaryRecipeDataAccessObject, saveDataAccessObject);
-        saveInteractor.execute(saveInputData);
 
-        assertEquals(0, saveDataAccessObject.getSavedRecipes().size());
+        SaveController saveController = new SaveController(saveInteractor);
+        saveController.execute(1);
+
+        assertEquals(0, saveViewModel.getSavedRecipes().size());
     }
 }
