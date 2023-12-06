@@ -19,22 +19,13 @@ public class RecommendInteractor implements RecommendInputBoundary {
     final RecommendDataAccessInterface dataAccessObject;
     final TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject;
     final RecommendOutputBoundary recommendPresenter;
-    final RecipeFactory recipeFactory;
-    final RecipeInfoFactory recipeInfoFactory;
-    final NutritionDataFactory nutritionDataFactory;
 
     public RecommendInteractor(RecommendDataAccessInterface dataAccessInterface,
                                TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject,
-                               RecommendOutputBoundary recommendOutputBoundary,
-                               RecipeFactory recipeFactory,
-                               RecipeInfoFactory recipeInfoFactory,
-                               NutritionDataFactory nutritionDataFactory) {
+                               RecommendOutputBoundary recommendOutputBoundary) {
         this.dataAccessObject = dataAccessInterface;
         this.temporaryRecipeDataAccessObject = temporaryRecipeDataAccessObject;
         this.recommendPresenter = recommendOutputBoundary;
-        this.recipeFactory = recipeFactory;
-        this.recipeInfoFactory = recipeInfoFactory;
-        this.nutritionDataFactory = nutritionDataFactory;
     }
 
     @Override
