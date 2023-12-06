@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.SaveState;
 import interface_adapter.SaveViewModel;
 import interface_adapter.analysis.AnalysisController;
 import interface_adapter.delete.DeleteController;
@@ -13,7 +14,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Objects;
 
 
 public class RecipeView extends JFrame {
@@ -126,13 +126,12 @@ public class RecipeView extends JFrame {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(similar)) {
                             if (recipeID < 0) {
-                                JOptionPane.showMessageDialog(similar, "Similar recipes is not available for user created recipes.");
+                                JOptionPane.showMessageDialog(similar, "Similar recipes are not available for user-created recipes.");
 
                             }
                             else{
                                 getSimilarRecipesController.execute(recipeID);
-                                    System.out.println(recipeViewModel.getTittle());
-                                JOptionPane.showMessageDialog(similar, recipeViewModel.getTittle());}
+                                JOptionPane.showMessageDialog(similar, recipeViewModel.getTitle());}
                             }
                         }
                     }
@@ -145,7 +144,8 @@ public class RecipeView extends JFrame {
                         if (evt.getSource().equals(save)) {
                             //need a message box here
                             saveController.execute(recipeID);
-                            JOptionPane.showMessageDialog(null, saveViewModel.getSavedRecipes().get(recipeID) + " has been successfully saved.");
+                            SaveState state = saveViewModel.getState();
+                            JOptionPane.showMessageDialog(null, state.getSavedRecipes().get(recipeID) + " has been successfully saved.");
                         }
                     }
                 }
@@ -161,13 +161,15 @@ public class RecipeView extends JFrame {
                             } catch (IOException | ClassNotFoundException e) {
                                 throw new RuntimeException(e);
                             }
-                            if(saveViewModel.getError().strip().equals("")) {
+                            SaveState state = saveViewModel.getState();
+                            if(state.getError().strip().equals("")) {
                                 JOptionPane.showMessageDialog(null, "Successfully deleted.");
                             }
                             else{
-                                String message = saveViewModel.getError();
-                                System.out.println(message);
+                                String message = state.getError();
                                 JOptionPane.showMessageDialog(null, message);
+                                state.setError("");
+                                saveViewModel.setState(state);
                             }
                         }
                     }

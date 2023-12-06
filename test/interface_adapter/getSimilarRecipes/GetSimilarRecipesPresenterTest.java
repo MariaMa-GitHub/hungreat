@@ -1,15 +1,11 @@
 package interface_adapter.getSimilarRecipes;
 
 import app.MockRecipeDataAccessObject;
-import data_access.TemporaryRecipeDataAccessObject;
 import entity.NutritionData;
 import entity.Recipe;
 import entity.RecipeInfo;
 import interface_adapter.RecipeViewModel;
-import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
-import interface_adapter.getSimilarRecipes.GetSimilarRecipesPresenter;
 import org.junit.jupiter.api.Test;
-import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.getSimilarRecipes.GetSimilarRecipesDataAccessInterface;
 import use_case.getSimilarRecipes.GetSimilarRecipesInputBoundary;
 import use_case.getSimilarRecipes.GetSimilarRecipesInteractor;
@@ -46,7 +42,7 @@ public class GetSimilarRecipesPresenterTest {
         GetSimilarRecipesInputBoundary interactor = new GetSimilarRecipesInteractor(mockRecipeDataAccessObject, successPresenter);
         GetSimilarRecipesController controller = new GetSimilarRecipesController(interactor);
         controller.execute(9);
-        assertEquals("title2"+"\n", recipeViewModel.getTittle());
+        assertEquals("title2"+"\n", recipeViewModel.getTitle());
 
 
     }
@@ -71,7 +67,7 @@ public class GetSimilarRecipesPresenterTest {
         GetSimilarRecipesInputBoundary interactor = new GetSimilarRecipesInteractor(mockRecipeDataAccessObject, successPresenter);
         GetSimilarRecipesController controller = new GetSimilarRecipesController(interactor);
         controller.execute(-1);
-        assertEquals("No similar recipes found.", recipeViewModel.getTittle());
+        assertEquals("No similar recipes found.", recipeViewModel.getTitle());
 
     }
 }

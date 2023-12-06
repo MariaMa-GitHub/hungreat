@@ -30,15 +30,16 @@ public class SavedRecipeDataAccessObject implements SaveDataAccessInterface, Cre
     @Override
     public void delete(Recipe recipe) throws IOException, ClassNotFoundException {
         if (savedRecipes.contains(recipe)){
-        savedRecipes.remove(recipe);
+            savedRecipes.remove(recipe);
 
-        // Serializing 'a'
-        FileOutputStream fos = new FileOutputStream("SavedRecipes.txt");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(savedRecipes);
+            // Serializing 'a'
+            FileOutputStream fos = new FileOutputStream("SavedRecipes.txt");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(savedRecipes);
 
-        // closing streams
-        oos.close();}
+            // closing streams
+            oos.close();
+        }
         else{
             throw new RuntimeException("Recipe not found");
         }

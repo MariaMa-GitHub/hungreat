@@ -1,5 +1,6 @@
 package interface_adapter.save;
 
+import interface_adapter.SaveState;
 import interface_adapter.SaveViewModel;
 import use_case.save.SaveOutputBoundary;
 import use_case.save.SaveOutputData;
@@ -14,18 +15,23 @@ public class SavePresenter implements SaveOutputBoundary {
 
     @Override
     public void prepareSuccessView(SaveOutputData response) {
+        SaveState state = saveViewModel.getState();
         if (response.getSavedRecipes() != null) {
-            saveViewModel.setSavedRecipes(response.getSavedRecipes());
-            saveViewModel.successFirePropertyChanged();
+            state.setSavedRecipes(response.getSavedRecipes());
+            saveViewModel.setState(state);
+            saveViewModel.firePropertyChanged();
         } else {
-            saveViewModel.add(response.getRecipeID(), response.getTitle());
-            saveViewModel.successFirePropertyChanged();
+            state.add(response.getRecipeID(), response.getTitle());
+            saveViewModel.setState(state);
+            saveViewModel.firePropertyChanged();
         }
     }
 
     @Override
     public void prepareFailView(String error) {
-        saveViewModel.setError(error);
-        saveViewModel.failFirePropertyChanged();
+        SaveState state = saveViewModel.getState();
+        state.setError(error);
+        saveViewModel.setState(state);
+        saveViewModel.firePropertyChanged();
     }
 }

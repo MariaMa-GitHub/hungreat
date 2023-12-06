@@ -1,5 +1,6 @@
 package interface_adapter.delete;
 
+import interface_adapter.SaveState;
 import use_case.delete.DeleteOutputBoundary;
 import use_case.delete.DeleteOutputData;
 import interface_adapter.SaveViewModel;
@@ -15,14 +16,18 @@ public class DeletePresenter implements DeleteOutputBoundary {
     
     @Override
     public void prepareSuccessView(DeleteOutputData deleteOutputData) {
-        saveViewModel.remove(deleteOutputData.getRecipeID());
-        saveViewModel.successFirePropertyChanged();
+        SaveState state = saveViewModel.getState();
+        state.remove(deleteOutputData.getRecipeID());
+        saveViewModel.setState(state);
+        saveViewModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        saveViewModel.setError(error);
-        saveViewModel.failFirePropertyChanged();
+        SaveState state = saveViewModel.getState();
+        state.setError(error);
+        saveViewModel.setState(state);
+        saveViewModel.firePropertyChanged();
     }
 }
 
