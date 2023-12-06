@@ -1,13 +1,19 @@
-package interface_adapter.display;
+package interface_adapter.getSimilarRecipes;
 
+import app.MockRecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
 import entity.NutritionData;
 import entity.Recipe;
 import entity.RecipeInfo;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesPresenter;
 import org.junit.jupiter.api.Test;
 import use_case.TemporaryRecipeDataAccessInterface;
-import use_case.display.*;
+import use_case.getSimilarRecipes.GetSimilarRecipesDataAccessInterface;
+import use_case.getSimilarRecipes.GetSimilarRecipesInputBoundary;
+import use_case.getSimilarRecipes.GetSimilarRecipesInteractor;
+import use_case.getSimilarRecipes.GetSimilarRecipesOutputBoundary;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +22,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DisplayPresenterTest {
+public class GetSimilarRecipesPresenterTest {
     @Test
     void successTest() {
         Collection<String> ingredients = new ArrayList<>();
@@ -30,17 +36,18 @@ public class DisplayPresenterTest {
         Recipe giveRecipe = new Recipe(9, "title", "url", "imageUrl", info, nutrition);
         ArrayList<Recipe> savedRecipes = new ArrayList<>();
         savedRecipes.add(giveRecipe);
-        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(savedRecipes);
+        GetSimilarRecipesDataAccessInterface mockRecipeDataAccessObject = new MockRecipeDataAccessObject();
 
 
         RecipeViewModel recipeViewModel = new RecipeViewModel();
-        DisplayOutputBoundary successPresenter = new DisplayPresenter(recipeViewModel);
+        GetSimilarRecipesOutputBoundary successPresenter = new GetSimilarRecipesPresenter(recipeViewModel);
 
 
-        DisplayInputBoundary interactor = new DisplayInteractor(temporaryRecipeDataAccessObject, successPresenter);
-        DisplayController controller = new DisplayController(interactor);
+        GetSimilarRecipesInputBoundary interactor = new GetSimilarRecipesInteractor(mockRecipeDataAccessObject, successPresenter);
+        GetSimilarRecipesController controller = new GetSimilarRecipesController(interactor);
         controller.execute(9);
-        assertEquals(giveRecipe.toString(), recipeViewModel.getRecipeString());
+        assertEquals("title2"+"\n", recipeViewModel.getTittle());
+
 
     }
     @Test
@@ -56,16 +63,15 @@ public class DisplayPresenterTest {
         Recipe recipe = new Recipe(0, "title", "url", "imageUrl", info, nutrition);
         ArrayList<Recipe> savedRecipes = new ArrayList<>();
         savedRecipes.add(recipe);
-        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(savedRecipes);
-
+        GetSimilarRecipesDataAccessInterface mockRecipeDataAccessObject = new MockRecipeDataAccessObject();
 
 
         RecipeViewModel recipeViewModel = new RecipeViewModel();
-        DisplayOutputBoundary successPresenter = new DisplayPresenter(recipeViewModel);
-        DisplayInputBoundary interactor = new DisplayInteractor(temporaryRecipeDataAccessObject, successPresenter);
-        DisplayController controller = new DisplayController(interactor);
-        controller.execute(9);
-        assertEquals("Recipe does not exist.", recipeViewModel.getRecipeString());
+        GetSimilarRecipesOutputBoundary successPresenter = new GetSimilarRecipesPresenter(recipeViewModel);
+        GetSimilarRecipesInputBoundary interactor = new GetSimilarRecipesInteractor(mockRecipeDataAccessObject, successPresenter);
+        GetSimilarRecipesController controller = new GetSimilarRecipesController(interactor);
+        controller.execute(-1);
+        assertEquals("No similar recipes found.", recipeViewModel.getTittle());
 
     }
 }

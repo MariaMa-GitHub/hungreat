@@ -19,7 +19,7 @@ import java.util.Objects;
 public class RecipeView extends JFrame {
 
     final JButton save;
-    final JButton delete;
+    final JButton Unsave;
     final JButton analyze;
     final JPanel recipeInfo;
     final JButton similar;
@@ -67,8 +67,8 @@ public class RecipeView extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        delete = new JButton("Delete Recipe");
-        recipeWindow.add(delete, gbc);
+        Unsave = new JButton("Unsave Recipe");
+        recipeWindow.add(Unsave, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -90,8 +90,10 @@ public class RecipeView extends JFrame {
         b.setPreferredSize(new Dimension(490, 100));
         recipeInfo.add(b);
 
+
         JScrollPane scrPane = new JScrollPane(recipeInfo);
         scrPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
@@ -148,11 +150,11 @@ public class RecipeView extends JFrame {
                     }
                 }
         );
-        delete.addActionListener(
+        Unsave.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(delete)) {
+                        if (evt.getSource().equals(Unsave)) {
 
                             try {
                                 deleteController.execute(recipeID);

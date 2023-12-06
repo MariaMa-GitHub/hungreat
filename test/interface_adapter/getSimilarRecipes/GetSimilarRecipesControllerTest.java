@@ -1,12 +1,15 @@
-package use_case.display;
+package interface_adapter.getSimilarRecipes;
 
+import app.MockRecipeDataAccessObject;
+import data_access.RecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
 import entity.NutritionData;
 import entity.Recipe;
 import entity.RecipeInfo;
-import entity.RecipeInfoTest;
+import interface_adapter.getSimilarRecipes.GetSimilarRecipesController;
 import org.junit.jupiter.api.Test;
 import use_case.TemporaryRecipeDataAccessInterface;
+import use_case.getSimilarRecipes.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +18,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DisplayInteractorTest {
+public class GetSimilarRecipesControllerTest {
     @Test
     void successTest() {
         Collection<String> ingredients = new ArrayList<>();
@@ -29,18 +32,19 @@ public class DisplayInteractorTest {
         Recipe giveRecipe = new Recipe(9, "title", "url", "imageUrl", info, nutrition);
         ArrayList<Recipe> savedRecipes = new ArrayList<>();
         savedRecipes.add(giveRecipe);
-        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(savedRecipes);
+        GetSimilarRecipesDataAccessInterface mockRecipeDataAccessObject = new MockRecipeDataAccessObject();
 
-        DisplayInputData displayInputData = new DisplayInputData(9);
-        DisplayOutputBoundary successPresenter = new DisplayOutputBoundary() {
+        GetSimilarRecipesInputData getSimilarRecipesInputData = new GetSimilarRecipesInputData(9);
+        GetSimilarRecipesOutputBoundary successPresenter = new GetSimilarRecipesOutputBoundary() {
             @Override
-            public void prepareView(DisplayOutputData recipeString) {
-                assertEquals(giveRecipe.toString(), recipeString.getRecipeString());
+            public void prepareView(GetSimilarRecipesOutputData recipeString) {
+                assertEquals("title2"+"\n", recipeString.getTitle());
 
             }
         };
-        DisplayInputBoundary interactor = new DisplayInteractor(temporaryRecipeDataAccessObject, successPresenter);
-        interactor.execute(displayInputData);
+        GetSimilarRecipesInputBoundary interactor = new GetSimilarRecipesInteractor(mockRecipeDataAccessObject, successPresenter);
+        GetSimilarRecipesController controller = new GetSimilarRecipesController(interactor);
+        controller.execute(9);
 
     }
     @Test
@@ -56,18 +60,18 @@ public class DisplayInteractorTest {
         Recipe recipe = new Recipe(0, "title", "url", "imageUrl", info, nutrition);
         ArrayList<Recipe> savedRecipes = new ArrayList<>();
         savedRecipes.add(recipe);
-        TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(savedRecipes);
+        GetSimilarRecipesDataAccessInterface mockRecipeDataAccessObject = new MockRecipeDataAccessObject();
 
-        DisplayInputData displayInputData = new DisplayInputData(9);
-        DisplayOutputBoundary successPresenter = new DisplayOutputBoundary() {
+        GetSimilarRecipesInputData getSimilarRecipesInputData = new GetSimilarRecipesInputData(-1);
+        GetSimilarRecipesOutputBoundary successPresenter = new GetSimilarRecipesOutputBoundary() {
             @Override
-            public void prepareView(DisplayOutputData recipeString) {
-                assertEquals("Recipe does not exist.", recipeString.getRecipeString());
+            public void prepareView(GetSimilarRecipesOutputData recipeString) {
+                assertEquals("No similar recipes found.", recipeString.getTitle());
             }
         };
-        DisplayInputBoundary interactor = new DisplayInteractor(temporaryRecipeDataAccessObject, successPresenter);
-        interactor.execute(displayInputData);
+        GetSimilarRecipesInputBoundary interactor = new GetSimilarRecipesInteractor(mockRecipeDataAccessObject,  successPresenter);
+        GetSimilarRecipesController controller = new GetSimilarRecipesController(interactor);
+        controller.execute(-1);
 
     }
 }
-

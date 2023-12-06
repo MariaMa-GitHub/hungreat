@@ -63,7 +63,7 @@ public class DisplayControllerTest {
         DisplayOutputBoundary successPresenter = new DisplayOutputBoundary() {
             @Override
             public void prepareView(DisplayOutputData recipeString) {
-                assertEquals("Recipe dose not exist.", recipeString.getRecipeString());
+                assertEquals("Recipe does not exist.", recipeString.getRecipeString());
             }
         };
         DisplayInputBoundary interactor = new DisplayInteractor(temporaryRecipeDataAccessObject, successPresenter);

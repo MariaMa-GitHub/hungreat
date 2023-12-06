@@ -18,7 +18,7 @@ public class BrowseInteractor implements BrowseInputBoundary {
     final TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject;
 
     public BrowseInteractor(BrowseDataAccessInterface dataAccessInterface,
-                           BrowseOutputBoundary browseOutputBoundary,TemporaryRecipeDataAccessObject temporaryRecipeDataAccessObject) {
+                           BrowseOutputBoundary browseOutputBoundary,TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject) {
         this.dataAccessObject = dataAccessInterface;
         this.browsePresenter = browseOutputBoundary;
         this.temporaryRecipeDataAccessObject = temporaryRecipeDataAccessObject;
@@ -33,9 +33,9 @@ public class BrowseInteractor implements BrowseInputBoundary {
         String query = browseInputData.getQuery();
         ArrayList<String> includeIngredients = browseInputData.getIncludeIngredients();
 
-        BrowseFilter browseFilter = new BrowseFilter(diet, intolerance, includeIngredients,excludeIngredients, nutrients, query);
-        try{ArrayList<Recipe> recipes = this.dataAccessObject.browse(browseFilter);
-        //if not Arrylist then handle failveiw.If yes, then give presenter an arrylist of recipes.
+        BrowseFilter browseFilter = new BrowseFilter(diet, intolerance, includeIngredients, excludeIngredients, nutrients, query);
+        ArrayList<Recipe> recipes = this.dataAccessObject.browse(browseFilter);
+        //if not Arraylist then handle fail view. If yes, then give presenter an arraylist of recipes.
             temporaryRecipeDataAccessObject.storeRecipes(recipes);
             Map<Integer, String> idTitle = new HashMap<>();
             for (int i = 0; i < recipes.size(); i++) {
@@ -46,13 +46,9 @@ public class BrowseInteractor implements BrowseInputBoundary {
             BrowseOutputData browseOutputData = new BrowseOutputData(idTitle);
             browsePresenter.prepareSuccessView(browseOutputData);
             }
-            catch (Exception e){
-                String errorMessage = e.getMessage();
-                browsePresenter.prepareFailView(errorMessage);
-            }
 
         }
 
 
-}
+
 

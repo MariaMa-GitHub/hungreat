@@ -1,13 +1,18 @@
-package interface_adapter.display;
+package interface_adapter.analysis;
 
 import data_access.TemporaryRecipeDataAccessObject;
 import entity.NutritionData;
 import entity.Recipe;
 import entity.RecipeInfo;
+import interface_adapter.AnalysisViewModel;
 import interface_adapter.RecipeViewModel;
+import interface_adapter.analysis.AnalysisController;
+import interface_adapter.analysis.AnalysisPresenter;
 import org.junit.jupiter.api.Test;
 import use_case.TemporaryRecipeDataAccessInterface;
-import use_case.display.*;
+import use_case.analysis.AnalysisInputBoundary;
+import use_case.analysis.AnalysisInteractor;
+import use_case.analysis.AnalysisOutputBoundary;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +21,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DisplayPresenterTest {
+public class AnalysisPresenterTest {
     @Test
     void successTest() {
         Collection<String> ingredients = new ArrayList<>();
@@ -33,14 +38,14 @@ public class DisplayPresenterTest {
         TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(savedRecipes);
 
 
-        RecipeViewModel recipeViewModel = new RecipeViewModel();
-        DisplayOutputBoundary successPresenter = new DisplayPresenter(recipeViewModel);
+        AnalysisViewModel analysisViewModel = new AnalysisViewModel();
+        AnalysisOutputBoundary successPresenter = new AnalysisPresenter(analysisViewModel);
 
 
-        DisplayInputBoundary interactor = new DisplayInteractor(temporaryRecipeDataAccessObject, successPresenter);
-        DisplayController controller = new DisplayController(interactor);
+        AnalysisInputBoundary interactor = new AnalysisInteractor(temporaryRecipeDataAccessObject, successPresenter);
+        AnalysisController controller = new AnalysisController(interactor);
         controller.execute(9);
-        assertEquals(giveRecipe.toString(), recipeViewModel.getRecipeString());
+        assertEquals(giveRecipe.nutritionToString(), analysisViewModel.getNutritionToString());
 
     }
     @Test
@@ -60,12 +65,12 @@ public class DisplayPresenterTest {
 
 
 
-        RecipeViewModel recipeViewModel = new RecipeViewModel();
-        DisplayOutputBoundary successPresenter = new DisplayPresenter(recipeViewModel);
-        DisplayInputBoundary interactor = new DisplayInteractor(temporaryRecipeDataAccessObject, successPresenter);
-        DisplayController controller = new DisplayController(interactor);
+        AnalysisViewModel analysisViewModel = new AnalysisViewModel();
+        AnalysisOutputBoundary successPresenter = new AnalysisPresenter(analysisViewModel);
+        AnalysisInputBoundary interactor = new AnalysisInteractor(temporaryRecipeDataAccessObject, successPresenter);
+        AnalysisController controller = new AnalysisController(interactor);
         controller.execute(9);
-        assertEquals("Recipe does not exist.", recipeViewModel.getRecipeString());
+        assertEquals("Analysis not available for this recipe.", analysisViewModel.getNutritionToString());
 
     }
 }

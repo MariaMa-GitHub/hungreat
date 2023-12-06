@@ -21,8 +21,13 @@ public class AnalysisInteractor implements AnalysisInputBoundary {
     @Override
     public void execute(AnalysisInputData analysisInputData) {
         Integer recipeID =  analysisInputData.getRecipeID();
-        Recipe recipe = temporaryRecipeDataAccessObject.getFromID(recipeID);
-        AnalysisOutputData analysisOutputData = new AnalysisOutputData(recipe.nutritionToString());
-        analysisPresenter.prepareView(analysisOutputData);
+        try {
+            Recipe recipe = temporaryRecipeDataAccessObject.getFromID(recipeID);
+            AnalysisOutputData analysisOutputData = new AnalysisOutputData(recipe.nutritionToString());
+            analysisPresenter.prepareView(analysisOutputData);
+        } catch (Exception e) {
+            AnalysisOutputData analysisOutputData = new AnalysisOutputData("Analysis not available for this recipe.");
+            analysisPresenter.prepareView(analysisOutputData);
+        }
     }
 }
