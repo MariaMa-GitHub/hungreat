@@ -25,7 +25,9 @@ public class DeleteInteractorTest {
         TemporaryRecipeDataAccessInterface temporaryRecipeDataAccessObject = new TemporaryRecipeDataAccessObject(new ArrayList<>());
         temporaryRecipeDataAccessObject.storeRecipe(recipe);
         try {
-            savedDataAccessObject = new SavedRecipeDataAccessObject();
+            SavedRecipeDataAccessObject object = new SavedRecipeDataAccessObject();
+            object.save(recipe);
+            savedDataAccessObject = object;
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -44,11 +46,7 @@ public class DeleteInteractorTest {
             }
         };
         DeleteInteractor deleteInteractor = new DeleteInteractor(deletePresenter, temporaryRecipeDataAccessObject, savedDataAccessObject);
-        try{
-            deleteInteractor.execute(deleteInputData);
-        } catch (Exception e) {
-        }
-        assertEquals(true, savedDataAccessObject!=null);
+        deleteInteractor.execute(deleteInputData);
     }
 
     @Test
