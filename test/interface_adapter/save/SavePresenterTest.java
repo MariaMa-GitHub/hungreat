@@ -3,6 +3,7 @@ package interface_adapter.save;
 import data_access.SavedRecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
 import entity.Recipe;
+import interface_adapter.SaveState;
 import interface_adapter.SaveViewModel;
 import org.junit.jupiter.api.Test;
 import use_case.TemporaryRecipeDataAccessInterface;
@@ -40,7 +41,8 @@ class SavePresenterTest {
         SaveController saveController = new SaveController(saveInteractor);
         saveController.execute(null);
 
-        assertEquals(1, saveViewModel.getSavedRecipes().size());
+        SaveState state = saveViewModel.getState();
+        assertEquals(1, state.getSavedRecipes().size());
     }
 
     @Test
@@ -68,7 +70,8 @@ class SavePresenterTest {
         SaveController saveController = new SaveController(saveInteractor);
         saveController.execute(1);
 
-        assertEquals(1, saveViewModel.getSavedRecipes().size());
+        SaveState state = saveViewModel.getState();
+        assertEquals(1, state.getSavedRecipes().size());
     }
 
 
@@ -102,6 +105,7 @@ class SavePresenterTest {
         SaveController saveController = new SaveController(saveInteractor);
         saveController.execute(1);
 
-        assertEquals(0, saveViewModel.getSavedRecipes().size());
+        SaveState state = saveViewModel.getState();
+        assertEquals(0, state.getSavedRecipes().size());
     }
 }
