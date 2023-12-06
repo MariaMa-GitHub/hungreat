@@ -27,7 +27,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
     final JButton create;
     final JButton browse;
     final JButton recommend;
-    final JButton export;
+    final JButton exit;
     final JPanel savedRecipesList;
     final DisplayController displayController;
     private RecipeViewModel recipeViewModel;
@@ -106,10 +106,11 @@ public class HomeView extends JPanel implements PropertyChangeListener {
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        export = new JButton("Export");
-        this.add(export, gbc);
+        exit = new JButton("Exit Program");
+        this.add(exit, gbc);
 
-        savedRecipesList = new JPanel(new GridLayout(0, 1));
+        savedRecipesList = new JPanel();
+        savedRecipesList.setLayout(new BoxLayout(savedRecipesList, BoxLayout.Y_AXIS));
 
         JScrollPane scrPane = new JScrollPane(savedRecipesList);
         scrPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -168,13 +169,16 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                 }
         );
 
-        export.addActionListener(
+        exit.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(export)) {
+                        if (evt.getSource().equals(exit)) {
 
-                            // TODO (Chloe)
+                            JComponent comp = (JComponent) evt.getSource();
+                            Window win = SwingUtilities.getWindowAncestor(comp);
+                            win.dispose();
+                            System.exit(0);
 
                         }
                     }
@@ -216,17 +220,14 @@ public class HomeView extends JPanel implements PropertyChangeListener {
 
             this.savedRecipesList.removeAll();
 
-            if (this.savedRecipes.isEmpty()) {
-                JLabel noSavedRecipes = new JLabel("No Saved Recipes");
-                noSavedRecipes.setHorizontalAlignment(SwingConstants.CENTER);
-                noSavedRecipes.setVerticalAlignment(SwingConstants.CENTER);
-                savedRecipesList.add(noSavedRecipes);
-            } else {
+            if (!this.savedRecipes.isEmpty()) {
 
                 for (int i = 0; i < this.savedRecipes.size(); i++) {
 
                     JButton button = getjButton(new ArrayList<>(this.savedRecipes.keySet()), this.savedRecipes, i, displayController, recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveController, saveViewModel, deleteController);
-                    button.setPreferredSize(new Dimension(490, 100));
+                    button.setMinimumSize(new Dimension(500, 100));
+                    button.setMaximumSize(new Dimension(500, 100));
+                    button.setPreferredSize(new Dimension(500, 100));
                     savedRecipesList.add(button);
 
                 }
