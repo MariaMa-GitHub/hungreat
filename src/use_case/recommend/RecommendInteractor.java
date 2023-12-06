@@ -1,15 +1,8 @@
 package use_case.recommend;
 
 import entity.*;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import use_case.TemporaryRecipeDataAccessInterface;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +31,7 @@ public class RecommendInteractor implements RecommendInputBoundary {
           recommendInputData.getExcludeIngredients(),
           recommendInputData.getCuisine(),
           recommendInputData.getExcludeCuisine(),
-          // TODO: get actual TYPE input from user
-          "type",
+          "", // changed from "type" to ""
           recommendInputData.getNutrients()
         );
 
@@ -55,7 +47,6 @@ public class RecommendInteractor implements RecommendInputBoundary {
 
         RecommendOutputData recommendOutputData = new RecommendOutputData(recipeIdAndTitle);
 
-        // TODO: handle exception
         recommendPresenter.prepareSuccessView(recommendOutputData);
 
 
