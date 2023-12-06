@@ -357,15 +357,22 @@ public class BrowseView extends JFrame implements ActionListener {
             Map<String, Float[]> nutrients = Map.of("Calories" , new Float[]{0f, 1000000f});
             return nutrients;
         } else {
-            ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
-            Map<String, Float[]> nutrients = new HashMap<>();
-            for (String input : inputs) {
-                ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
-                ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
-                Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
-                nutrients.put(nutrient.get(0), values);
+            try {
+                ArrayList<String> inputs = new ArrayList<>(Arrays.asList(text.split("[ ]*,[ ]*")));
+                Map<String, Float[]> nutrients = new HashMap<>();
+                for (String input : inputs) {
+                    ArrayList<String> nutrient = new ArrayList<>(Arrays.asList(input.split("[ ]*:[ ]*")));
+                    ArrayList<String> range = new ArrayList<>(Arrays.asList(nutrient.get(1).split("[ ]*-[ ]*")));
+                    Float[] values = {Float.valueOf(range.get(0)), Float.valueOf(range.get(1))};
+                    nutrients.put(nutrient.get(0), values);
+                }
+                return nutrients;
             }
-            return nutrients;
+            catch (Exception e) {
+                Map<String, Float[]> nutrients = Map.of("Calories" , new Float[]{0f, 1000000f});
+                return nutrients;
+            }
+
         }
     }
 

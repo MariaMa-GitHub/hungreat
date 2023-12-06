@@ -85,10 +85,10 @@ public class Main {
 
         application.pack();
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) screenSize.getWidth() / 2 - application.getWidth() / 2;
-        int y = (int) screenSize.getHeight() / 2 - application.getHeight() / 2;
-        application.setLocation(x, y);
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        int x = (int) screenSize.getWidth() / 2 - application.getWidth() / 2;
+//        int y = (int) screenSize.getHeight() / 2 - application.getHeight() / 2;
+//        application.setLocation(x, y);
 
         application.setSize(800, 600);
         application.setLocationRelativeTo(null);
