@@ -19,10 +19,5 @@ public class BrowsePresenter implements BrowseOutputBoundary {
         displayViewModel.setRecipeIDs(response.getRecipes());
     }
 
-    @Override
-    public void prepareFailView(String error) {
-        // Display error view with the provided error message
-        System.err.println("Error occurred: " + error);
-    }
 }
 

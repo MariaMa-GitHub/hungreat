@@ -3,6 +3,7 @@ package app;
 import entity.NutritionData;
 import entity.Recipe;
 import entity.RecipeInfo;
+import use_case.TemporaryRecipeDataAccessInterface;
 import use_case.getSimilarRecipes.GetSimilarRecipesDataAccessInterface;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MockRecipeDataAccessObject implements GetSimilarRecipesDataAccessInterface {
+public class MockRecipeDataAccessObject implements GetSimilarRecipesDataAccessInterface, TemporaryRecipeDataAccessInterface{
 
     @Override
     public ArrayList<Recipe> getSimilarRecipes(int id) {
@@ -26,5 +27,30 @@ public class MockRecipeDataAccessObject implements GetSimilarRecipesDataAccessIn
         Recipe giveRecipe = new Recipe(2, "title2", "url", "imageUrl", info, nutrition);
         savedRecipes.add(giveRecipe);
         return savedRecipes;}
+
+        @Override
+        public Recipe getFromID(int id) {
+            return null;
+        }
+
+        @Override
+        public boolean existsByID(int id) {
+            return false;
+        }
+
+        @Override
+        public void storeRecipes(ArrayList<Recipe> recipeList) {
+
+        }
+
+        @Override
+        public void storeRecipe(Recipe recipe) {
+
+        }
+
+        @Override
+        public void unStoreRecipe(Recipe recipe) {
+
+        }
 
 }
