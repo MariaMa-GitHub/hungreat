@@ -23,7 +23,7 @@ public class DeleteInteractor implements DeleteInputBoundary {
     }
 
     @Override
-    public void execute(DeleteInputData deleteInputData) throws IOException, ClassNotFoundException {
+    public void execute(DeleteInputData deleteInputData) {
         Integer recipeID = deleteInputData.getRecipeID();
             try {
                 Recipe deleteRecipe = temporaryRecipeDataAccessInterface.getFromID(recipeID);
