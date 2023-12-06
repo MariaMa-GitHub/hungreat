@@ -1,8 +1,5 @@
 package app;
 
-import entity.NutritionDataFactory;
-import entity.RecipeFactory;
-import entity.RecipeInfoFactory;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.recommend.RecommendController;
 import interface_adapter.recommend.RecommendPresenter;
