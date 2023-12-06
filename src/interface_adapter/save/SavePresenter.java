@@ -4,7 +4,6 @@ import interface_adapter.SaveViewModel;
 import use_case.save.SaveOutputBoundary;
 import use_case.save.SaveOutputData;
 
-import java.util.HashMap;
 
 public class SavePresenter implements SaveOutputBoundary {
     private final SaveViewModel saveViewModel;
