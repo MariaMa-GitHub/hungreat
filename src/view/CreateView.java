@@ -248,7 +248,6 @@ public class CreateView extends JFrame{
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(save)) {
-                        //TODO
                         createController.execute(
                                 getTitleInput(),
                                 getServingsInput(),
@@ -287,7 +286,7 @@ public class CreateView extends JFrame{
             int servings = Integer.parseInt(text);
             return servings;
         } catch (NumberFormatException e) {
-            return -1;    //TODO handle exception
+            return -1;
         }
     }
 
@@ -297,19 +296,19 @@ public class CreateView extends JFrame{
             int cookingTime = Integer.parseInt(text);
             return cookingTime;
         } catch (NumberFormatException e) {
-            return -1;    //TODO handle exception
+            return -1;
         }
     }
 
     public ArrayList<String> getIngredientsInput() {
         String text = ingredientsInput.getText().strip();
-        ArrayList<String> ingredients = new ArrayList<>(Arrays.asList(text.split("\\s*\\n\\s*")));  //TODO need to test regex
+        ArrayList<String> ingredients = new ArrayList<>(Arrays.asList(text.split("\\s*\\n\\s*")));
         return ingredients;
     }
 
     public ArrayList<String> getInstructionsInput() {
         String text = instructionsInput.getText().strip();
-        ArrayList<String> instructions = new ArrayList<>(Arrays.asList(text.split("\\s*\\n\\s*")));   //TODO need to test regex
+        ArrayList<String> instructions = new ArrayList<>(Arrays.asList(text.split("\\s*\\n\\s*")));
         return instructions;
     }
 }

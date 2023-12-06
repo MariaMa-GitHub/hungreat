@@ -37,7 +37,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
     }
 
     @Override
-    public ArrayList<Recipe> getSimilarRecipes(int id) {    //TODO fix json bug
+    public ArrayList<Recipe> getSimilarRecipes(int id) {
         ArrayList<Recipe> similarRecipes = new ArrayList<>();
 
         //get ids of the similar recipes using the getSimilarRecipes API call
@@ -172,7 +172,7 @@ public class RecipeDataAccessObject implements BrowseDataAccessInterface, Recomm
         return null;
     }
 
-    private Recipe convertJsonRecipeToRecipeEntity(JSONObject rawRecipe) {      //TODO: fix nutrition bug
+    private Recipe convertJsonRecipeToRecipeEntity(JSONObject rawRecipe) {
         int id = rawRecipe.getInt("id");
         String title = rawRecipe.getString("title");
         String imageUrl = rawRecipe.getString("image");

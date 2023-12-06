@@ -75,8 +75,7 @@ public class Recipe implements Serializable {
         // but it does not have nutrition so no analyze feature.
         return title + "\n" + info.toString();
     }
-    // TODO Wright a toString method prepare for analysis.
-    // TODO: update toString for user-created recipes (Michelle)
+
     public String nutritionToString(){
         if (!this.isUserCreatedRecipe) {
             StringBuilder nutritions = new StringBuilder();

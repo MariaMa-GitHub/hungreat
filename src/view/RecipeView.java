@@ -90,11 +90,8 @@ public class RecipeView extends JFrame {
         b.setPreferredSize(new Dimension(490, 100));
         recipeInfo.add(b);
 
-        //TODO put your text here, assign recipeinfor to recipe.toString
-//        String recipeInfo = recipeViewModel.getRecipeString();
         JScrollPane scrPane = new JScrollPane(recipeInfo);
         scrPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        scrPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;
@@ -115,8 +112,6 @@ public class RecipeView extends JFrame {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(analyze)) {
 
-                            // TODO chloe you need to pass in the nutrition data according to the corresponding id.
-                            //need a message box here
                             analysisController.execute(recipeID);
                             JOptionPane.showMessageDialog(analyze, analysisViewModel.getNutritionToString());
                         }
@@ -128,21 +123,18 @@ public class RecipeView extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(similar)) {
-
-                            // TODO chloe you need to pass in the nutrition data according to the corresponding id.
-                            //need a message box here
                             if (recipeID < 0) {
                                 JOptionPane.showMessageDialog(similar, "Similar recipes is not available for user created recipes.");
-                                return;
+
                             }
                             else{
-                            getSimilarRecipesController.execute(recipeID);
-                                System.out.println(recipeViewModel.getTittle());
-                            JOptionPane.showMessageDialog(similar, recipeViewModel.getTittle());}
+                                getSimilarRecipesController.execute(recipeID);
+                                    System.out.println(recipeViewModel.getTittle());
+                                JOptionPane.showMessageDialog(similar, recipeViewModel.getTittle());}
+                            }
                         }
                     }
-                }
-        );
+                );
 
         save.addActionListener(
                 new ActionListener() {
@@ -161,9 +153,6 @@ public class RecipeView extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(delete)) {
-
-                            // TODO chloe you need to pass in the nutrition data according to the corresponding id.
-                            //need a message box here
 
                             try {
                                 deleteController.execute(recipeID);
