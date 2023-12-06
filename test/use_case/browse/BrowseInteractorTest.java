@@ -2,12 +2,8 @@ package use_case.browse;
 
 import data_access.RecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
-import entity.NutritionDataFactory;
-import entity.RecipeFactory;
-import entity.RecipeInfoFactory;
 import org.junit.jupiter.api.Test;
 import use_case.TemporaryRecipeDataAccessInterface;
-import use_case.browse.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +11,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BrwoseInteractorTest {
+class BrowseInteractorTest {
    @Test
    void successTest() {
 
