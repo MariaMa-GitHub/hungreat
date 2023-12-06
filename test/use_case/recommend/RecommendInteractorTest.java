@@ -2,10 +2,6 @@ package use_case.recommend;
 
 import data_access.RecipeDataAccessObject;
 import data_access.TemporaryRecipeDataAccessObject;
-import entity.NutritionDataFactory;
-import entity.RecipeFactory;
-import entity.RecipeInfoFactory;
-import interface_adapter.DisplayViewModel;
 import org.junit.jupiter.api.Test;
 import use_case.TemporaryRecipeDataAccessInterface;
 
