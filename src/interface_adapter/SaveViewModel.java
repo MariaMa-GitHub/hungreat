@@ -41,12 +41,10 @@ public class SaveViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void successFirePropertyChanged() {
-        // TODO: Check whether null is appropriate for the first argument
         support.firePropertyChange("savedRecipes", null, this.savedRecipes);
     }
 
     public void failFirePropertyChanged() {
-        // TODO: Check whether null is appropriate for the first argument
         support.firePropertyChange("error", null, this.error);
     }
 

@@ -80,12 +80,10 @@ public class RecipeInfo implements Serializable {
 
     @Override
     public String toString() {
-        //TODO update to string for user-created recipes (Michelle)
-        //TO Chloe: toString for user-created recipe should NOT contain health score
         if (!this.isUserCreatedRecipe) {
             return "Servings:"+ servings + "\n" + "ReadyInMinutes:" + readyInMinutes + "\n" + "HealthScore:" + healthScore
                     + "\n" + "Ingredients:" + "\n" + ingredientsToString() + "\n" + "Instructions:" + instructionsToString();
-        } else {    // this.isUserCreatedRecipe == true
+        } else {
             return "Servings:"+ servings + "\n" + "ReadyInMinutes:" + readyInMinutes + "\n" + "Ingredients:"
                     + "\n" + ingredientsToString() + "\n" + "Instructions:" + instructionsToString();
         }

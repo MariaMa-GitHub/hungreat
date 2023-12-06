@@ -53,7 +53,6 @@ public class CreateInteractor implements CreateInputBoundary {
                 temporaryRecipeDataAccessObject.storeRecipe(recipe);
             } catch (IOException | ClassNotFoundException e) {
                 createPresenter.prepareFailView("Unable to Save.");
-                //TODO update after exceptions in savedDAO has been handled
             }
 
             CreateOutputData createOutputData = new CreateOutputData(id, title);

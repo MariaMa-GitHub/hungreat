@@ -59,7 +59,6 @@ public class DisplayView extends JFrame {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(button)) {
 
-                            // TODO (Everyone and Maria)
                             displayController.execute(recipeID);
                             RecipeView recipeView = new RecipeView(recipeID, recipes.get(recipeID), recipeViewModel, analysisViewModel, analysisController, getSimilarRecipesController, saveViewModel, saveController, deleteController);
                       

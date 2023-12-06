@@ -1,8 +1,5 @@
 package app;
 
-import entity.NutritionDataFactory;
-import entity.RecipeFactory;
-import entity.RecipeInfoFactory;
 import interface_adapter.DisplayViewModel;
 import interface_adapter.recommend.RecommendController;
 import interface_adapter.recommend.RecommendPresenter;
@@ -35,11 +32,7 @@ public class RecommendUseCaseFactory {
 
         RecommendOutputBoundary recommendOutputBoundary = new RecommendPresenter(displayViewModel);
 
-        RecipeFactory recipeFactory = new RecipeFactory();
-        RecipeInfoFactory recipeInfoFactory = new RecipeInfoFactory();
-        NutritionDataFactory nutritionDataFactory = new NutritionDataFactory();
-
-        RecommendInputBoundary recommendInteractor = new RecommendInteractor(dataAccessObject, temporaryRecipeDataAccessObject, recommendOutputBoundary, recipeFactory, recipeInfoFactory, nutritionDataFactory);
+        RecommendInputBoundary recommendInteractor = new RecommendInteractor(dataAccessObject, temporaryRecipeDataAccessObject, recommendOutputBoundary);
 
         return new RecommendController(recommendInteractor);
     }
