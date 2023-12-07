@@ -292,7 +292,7 @@ public class CreateView extends JFrame{
 
     public int getReadyInMinutesInput() {
         try{
-            String text = servingsInput.getText().strip();
+            String text = readyInMinutesInput.getText().strip();
             int cookingTime = Integer.parseInt(text);
             return cookingTime;
         } catch (NumberFormatException e) {
