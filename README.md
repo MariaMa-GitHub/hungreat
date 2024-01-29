@@ -1,1 +1,1 @@
-# UofT CSC207 Project - Book Recommendation System
+# UofT CSC207 Project - Recipe Recommendation System
